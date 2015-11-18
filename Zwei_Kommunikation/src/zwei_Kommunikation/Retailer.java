@@ -35,7 +35,7 @@ public class Retailer {
 		bestellung=0;
 	}
 	@ScheduledMethod(start=2,interval=1,priority=2)
-	public void lagerAuffüllen(){
+	public void lagerAuffÃ¼llen(){
 		if(untergrenze>=lager){
 			lager=lager+untergrenze;
 		}
