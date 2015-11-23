@@ -9,14 +9,14 @@ public class Retailer {
 	private int untergrenze=20;
 	private int bestellungsAnzahl=1;
 	public Retailer(){
+		
 	}
 	public void bestellung(int bestellung, Customer cus) {
 		meinKunde = cus;
 		this.bestellung=bestellung;
 	}
-	@ScheduledMethod(start=2,interval=1,priority=1)
+	@ScheduledMethod(start=1,interval=1,priority=1)
 	public void pruefeAuftraege(){
-		
 		if(bestellung!=0){
 			untergrenze= (((untergrenze/2*bestellungsAnzahl)+bestellung)/bestellungsAnzahl)*2;
 			bestellungsAnzahl++;
