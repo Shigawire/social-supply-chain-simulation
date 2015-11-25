@@ -1,6 +1,6 @@
-package ticks_implement;
+package simulation_implement;
 
-import ticks_interface.InventoryAgent;
+import simulation_interface.InventoryAgent;
 
 public class RInventoryAgent implements InventoryAgent{
 	private double inventory=20;
@@ -13,7 +13,7 @@ public class RInventoryAgent implements InventoryAgent{
 	@Override
 	public void remove(double shipment) {
 		inventory=inventory-shipment;
-		//jetzt müsste eigentlich hier bestellt werden
+		//jetzt mï¿½sste eigentlich hier bestellt werden
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package ticks_interface;
+package simulation_interface;
 
 public interface TrustAgent {
 	//method for choose where to buy from

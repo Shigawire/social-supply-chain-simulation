@@ -1,4 +1,4 @@
-package ticks_interface;
+package simulation_interface;
 
 public interface InventoryAgent {
 	//method for checking Inventory

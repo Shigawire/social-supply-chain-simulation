@@ -1,7 +1,7 @@
-package ticks_implement;
+package simulation_implement;
 
-import ticks_interface.ChainLink_simple;
-import ticks_interface.TrustAgent;
+import simulation_interface.ChainLink_simple;
+import simulation_interface.TrustAgent;
 
 public class RTrustAgent implements TrustAgent{
 

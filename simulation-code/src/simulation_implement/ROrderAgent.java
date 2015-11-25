@@ -1,7 +1,7 @@
-package ticks_implement;
+package simulation_implement;
 
-import ticks_interface.ChainLink_between;
-import ticks_interface.OrderAgent;
+import simulation_interface.ChainLink_between;
+import simulation_interface.OrderAgent;
 
 public class ROrderAgent implements OrderAgent{
 

@@ -1,7 +1,7 @@
-package ticks_implement;
+package simulation_implement;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import ticks_interface.ChainLink_simple;
+import simulation_interface.ChainLink_simple;
 
 
 public class Customer implements ChainLink_simple{
@@ -11,7 +11,7 @@ public class Customer implements ChainLink_simple{
 	CForecastAgent forecastAgent;
 	Retailer meinRetailer;
 	double demand;
-	public Customer(CInventoryAgent a,COrderAgent b, CTrustAgent c,CForecastAgent d,double realDemand){
+	public Customer(CInventoryAgent a,COrderAgent b, CTrustAgent c,ForecastAgent d,double realDemand){
 		inventoryAgent=a;
 		orderAgent=b;
 		trustAgent=c;

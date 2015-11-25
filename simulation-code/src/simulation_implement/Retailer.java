@@ -1,14 +1,14 @@
-package ticks_implement;
+package simulation_implement;
 
-import ticks_interface.ChainLink_between;
+import simulation_interface.ChainLink_between;
 
 public class Retailer implements ChainLink_between{
 	
-	private RInventoryAgent inventoryAgent;
-	private ROrderAgent orderAgent;
-	private RTrustAgent trustAgent;
-	private RForecastAgent forecastAgent;
-	private RDeliveryAgent deliveryAgent;
+	private InventoryAgent inventoryAgent;
+	private OrderAgent orderAgent;
+	private TrustAgent trustAgent;
+	private ForecastAgent forecastAgent;
+	private DeliveryAgent deliveryAgent;
 	private double demand =0;
 	public Retailer(RInventoryAgent a,ROrderAgent b, RTrustAgent c,RForecastAgent d, RDeliveryAgent e, double realDemand){
 		inventoryAgent=a;

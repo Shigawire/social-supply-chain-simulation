@@ -1,4 +1,4 @@
-package ticks_interface;
+package simulation_interface;
 //interface for the simpliest chain link(e.g. customer)s
 public interface ChainLink_simple {
 	public double getDemand();

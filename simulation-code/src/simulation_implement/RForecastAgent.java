@@ -1,6 +1,6 @@
-package ticks_implement;
+package simulation_implement;
 
-import ticks_interface.ForecastAgent;
+import simulation_interface.ForecastAgent;
 
 public class RForecastAgent implements ForecastAgent{
 

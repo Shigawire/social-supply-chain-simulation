@@ -1,6 +1,6 @@
-package ticks_implement;
+package simulation_implement;
 
-import ticks_interface.InventoryAgent;
+import simulation_interface.InventoryAgent;
 
 public class CInventoryAgent implements InventoryAgent{
 	public double inventory=10;
