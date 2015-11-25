@@ -4,6 +4,7 @@ import repast.simphony.random.RandomHelper;
 
 public class Customer extends Echelon{
 	private Retailer retailer;
+	private int current_demand;
 	
 	@ScheduledMethod(start=1,interval=1)
 	public void run() {
@@ -18,7 +19,8 @@ public class Customer extends Echelon{
 	}
 	
 	private int newDemand() {
-		return RandomHelper.nextIntFromTo(1,  30);
+		current_demand = RandomHelper.nextIntFromTo(1,  30);
+		return current_demand;
 	}
 	
 	public void setRetailer(Retailer retailer) {
@@ -27,6 +29,10 @@ public class Customer extends Echelon{
 	
 	public void beSupplied(Order order) {
 		System.out.println("[Customer] - Yeah, just got delivered with Order.  (Order ID: " + order.getId() + ")");
+	}
+	
+	public int getLatestDemand() {
+		return current_demand;
 	}
 
 }

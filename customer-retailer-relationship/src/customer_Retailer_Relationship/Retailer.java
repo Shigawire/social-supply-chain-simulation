@@ -8,6 +8,8 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 public class Retailer extends Echelon {
 	private int stock;
 	//private Order[] orderQueue;
+	private int current_demand;
+	
 	private List<Order> incomingOrderQueue = new ArrayList<Order>();
 	
 	private List<Order> historicalOrders = new ArrayList<Order>();
@@ -48,7 +50,7 @@ public class Retailer extends Echelon {
 	}
 	
 	private int[] replenishmentStrategy() {
-		//return: if lower than 10, restock with qty. 15
+		//return: if lower than 10, restock with qty. 30, resp. the replenishment Strategy
 		
 		double accumulated = 0;
 		
@@ -60,7 +62,7 @@ public class Retailer extends Echelon {
 		if (historicalOrders.size() > 0) {
 			simple_forecast = (accumulated/historicalOrders.size()) * incomingOrderQueue.size();
 		}
-						
+				
 		int[] thresholds = {10, (int)simple_forecast};
 		return thresholds;
 	}
@@ -79,6 +81,7 @@ public class Retailer extends Echelon {
 		
 		//actually, we would need to send an order. Incoming orders are processed elsewhere;
 		stock += quantity_to_restock;
+		current_demand = quantity_to_restock;
 	}
 	
 	private void sendOrder(int quantity) {
@@ -91,6 +94,10 @@ public class Retailer extends Echelon {
 	
 	public int getBacklogSize() {
 		return incomingOrderQueue.size();
+	}
+	
+	public int getLatestDemand() {
+		return current_demand;
 	}
 	
 }
