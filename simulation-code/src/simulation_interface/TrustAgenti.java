@@ -1,8 +1,8 @@
 package simulation_interface;
 
-public interface TrustAgent {
+public interface TrustAgenti {
 	//method for choose where to buy from
-	public ChainLink_simple chooseSailor();
+	public ChainLink chooseSailor();
 	public void updateTrust(int someValue);
 	
 }

@@ -1,21 +1,23 @@
 package simulation_implement;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import simulation_interface.ChainLink_simple;
+import repast.simphony.random.RandomHelper;
+import simulation_interface.ChainLink_customer;
 
 
-public class Customer implements ChainLink_simple{
+public class Customer implements ChainLink_customer{
 	CInventoryAgent inventoryAgent;
-	COrderAgent orderAgent;
-	CTrustAgent trustAgent;
-	CForecastAgent forecastAgent;
+	OrderAgent orderAgent;
+	TrustAgent trustAgent;
+	ForecastAgent forecastAgent;
 	Retailer meinRetailer;
 	double demand;
-	public Customer(CInventoryAgent a,COrderAgent b, CTrustAgent c,ForecastAgent d,double realDemand){
-		inventoryAgent=a;
-		orderAgent=b;
-		trustAgent=c;
-		forecastAgent=d;
+	public Customer(Retailer retailer, double realDemand,Retailer erster, Retailer zweiter){
+		meinRetailer=retailer;
+		inventoryAgent=new CInventoryAgent();
+		orderAgent= new OrderAgent();
+		trustAgent=new TrustAgent(erster, zweiter);
+		forecastAgent=new ForecastAgent();
 		demand=realDemand;
 	}
 	
@@ -24,7 +26,7 @@ public class Customer implements ChainLink_simple{
 		demand=forecastAgent.calculateDemand();
 		demand=inventoryAgent.checkInventory(demand);
 		meinRetailer=(Retailer) trustAgent.chooseSailor();
-		orderAgent.order(meinRetailer, demand);
+		orderAgent.order(this,meinRetailer, demand);
 	}
 	@Override
 	public double getDemand() {
@@ -40,7 +42,9 @@ public class Customer implements ChainLink_simple{
 
 	@Override
 	public void receiveShipment(double shipment) {
-		// TODO Auto-generated method stub
+		// recieving stoesst weitere Prozess an
+		inventoryAgent.store(shipment);
+		trustAgent.updateTrust(RandomHelper.nextIntFromTo(4, 20));
 		
 	}
 
