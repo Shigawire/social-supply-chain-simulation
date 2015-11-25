@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Aggergated Demand Data</name>
+  <name>Retailer Data</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,25 +11,25 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1106495013</hashCode>
+    <hashCode>-333829539</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Retailer Demand</string>
+      <string>Retailer Stock</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Retailer Demand</id>
+        <id>Retailer Stock</id>
         <className>customer_Retailer_Relationship.Retailer</className>
-        <methodName>getLatestDemand</methodName>
+        <methodName>getStock</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Customer Demand</string>
+      <string>Retailer Backlog</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Customer Demand</id>
-        <className>customer_Retailer_Relationship.Customer</className>
-        <methodName>getLatestDemand</methodName>
+        <id>Retailer Backlog</id>
+        <className>customer_Retailer_Relationship.Retailer</className>
+        <methodName>getBacklogSize</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
