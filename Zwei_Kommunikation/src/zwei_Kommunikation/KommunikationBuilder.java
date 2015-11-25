@@ -19,9 +19,7 @@ public class KommunikationBuilder implements ContextBuilder<Object>{
 		context.add(neuer);
 		
 		RunEnvironment.getInstance().setScheduleTickDelay(100);
-		
-		System.out.println (re);
-		
+				
 		return context;
 	}
 
