@@ -1,18 +1,20 @@
-package customer_Retailer_Relationship;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
+
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
-import repast.simphony.engine.environment.RunEnvironment;
+import simulation_implement.Customer;
+import simulation_implement.Retailer;
 
-public class RelationshipBuilder implements ContextBuilder<Object> {
+
+public class SimulationBuilder implements ContextBuilder<Object> {
 	
 	@Override
 	public Context<Object> build(Context<Object> context) {
 		
-		List<Echelon[]> echelon = new ArrayList<Echelon[]>();
+		List<Echelon[]> echelons = new ArrayList<Echelon[]>();
 		List<Retailer> echelonList["retailer"] = new ArrayList<Retailer>();
 		
 		
@@ -29,4 +31,5 @@ public class RelationshipBuilder implements ContextBuilder<Object> {
 		
 		return context;
 	}
+
 }

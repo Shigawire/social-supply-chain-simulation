@@ -5,7 +5,7 @@ import repast.simphony.random.RandomHelper;
 import simulation_interface.ChainLink_customer;
 
 
-public class Customer implements ChainLink_customer{
+public class Customer implements Echelon{
 	CInventoryAgent inventoryAgent;
 	OrderAgent orderAgent;
 	TrustAgent trustAgent;

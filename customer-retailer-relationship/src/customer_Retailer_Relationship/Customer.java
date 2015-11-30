@@ -1,38 +1,57 @@
 package customer_Retailer_Relationship;
-import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.random.RandomHelper;
 
-public class Customer extends Echelon{
-	private Retailer retailer;
-	private int current_demand;
+public class Customer extends SupplyChainMember {
+	private int demand_amount;
+	private int next_demand;
+	private int current_inventory_level;
+	private int order_quantity;
 	
-	@ScheduledMethod(start=1,interval=1)
+	public OrderAgent orderAgent;
+	
+	public Customer() {
+		inventoryAgent = new InventoryAgent();
+		orderAgent = new OrderAgent(this);
+	}
+	
 	public void run() {
-		this.sendOrder(newDemand());
+		//TODO
+		//1. processShipments()
+		this.processShipments();
+		//2. updateTrust()
+		//3. consume()
+		this.consume();
+		//4. calculateDemand()
+		next_demand = this.forecastAgent.calculateDemand();
+		//5. order()
+		this.order();
 	}
 	
-	private void sendOrder(int quantity) {
-		Order order = new Order(quantity, this);
-		System.out.println("[Customer] - Going to order some shit, yeah! (Order ID: " + order.getId() + ")");
-
-		retailer.receiveOrder(order);
+	public void consume() {
+		//TODO temporär, muss noch implementiert werden
+		demand_amount = 10;//forecastAgent.getNextDemand();
+		current_inventory_level = inventoryAgent.getInventoryLevel();
+		if (demand_amount > current_inventory_level) {
+			//TODO strafkosten/reaktion
+			//Inventory ist geringer als Nachfrage
+			inventoryAgent.setInventoryLevel(0);
+		} else {
+			inventoryAgent.setInventoryLevel(current_inventory_level - demand_amount);
+		}
 	}
 	
-	private int newDemand() {
-		current_demand = RandomHelper.nextIntFromTo(1,  30);
-		return current_demand;
+	
+	public void order() {
+		order_quantity = next_demand - inventoryAgent.getInventoryLevel();//
+		//TODO replenishment policy
+		if (order_quantity <= 0) return;
+		
+		Order order = new Order(order_quantity, this.orderAgent);
+		//Choose retailer
+		orderAgent.order(this.trustAgent, order);
 	}
 	
-	public void setRetailer(Retailer retailer) {
-		this.retailer = retailer;
-	}
-	
-	public void beSupplied(Order order) {
-		System.out.println("[Customer] - Yeah, just got delivered with Order.  (Order ID: " + order.getId() + ")");
-	}
-	
-	public int getLatestDemand() {
-		return current_demand;
+	private void processShipments() {
+		this.orderAgent.processShipments(this.inventoryAgent);
 	}
 
 }

@@ -7,14 +7,16 @@ public class Order {
 	private int ordered_at;
 	private int backlog;
 	private String id;
-	private Echelon orderer;
+	private OrderAgent orderAgent;
+	private boolean processed;
 	
-	public Order(int quantity, Echelon orderer) {
+	public Order(int quantity, OrderAgent orderAgent) {
 		this.quantity = quantity;
 		//generate an ID, so it is easier to track the Order through the system :)
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		this.ordered_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-		this.orderer = orderer;
+		this.orderAgent = orderAgent;
+		this.processed = false;
 	}
 	
 	public int getQuantity() {
@@ -37,7 +39,21 @@ public class Order {
 		return this.ordered_at;
 	}
 	
-	public Echelon getOrderer() {
-		return this.orderer;
+	public SupplyChainMember getOrderer() {
+		return this.orderAgent.getOrderer();
 	}
+	
+	public void setProcessed(boolean pr) {
+		this.processed = true;
+	}
+	
+	public OrderAgent getOrderAgent() {
+		return this.orderAgent;
+		
+	}
+	
+	public int getAmount() {
+		return this.quantity;
+	}
+	
 }
