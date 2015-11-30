@@ -1,6 +1,6 @@
 package simulation_interface;
 
-public interface ForecastAgent {
+public interface ForecastAgenti {
 	//method calculating the demand
 	public double calculateDemand();
 }
