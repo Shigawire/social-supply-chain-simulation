@@ -19,7 +19,7 @@ public class Customer extends SupplyChainMember {
 		this.processShipments();
 		//2. updateTrust()
 		//3. consume()
-		this.consume();
+		this.consume();sdfsdfdsff
 		//4. calculateDemand()
 		next_demand = this.forecastAgent.calculateDemand();
 		//5. order()

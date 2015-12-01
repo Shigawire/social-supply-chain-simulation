@@ -10,7 +10,7 @@
  * Set the package name.
  *
  */
-package social_Simulation_Project
+package social_simulation_project
 
 /**
  *
