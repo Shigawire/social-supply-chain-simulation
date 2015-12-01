@@ -1,5 +1,12 @@
-package social_Simulation_Project;
+package social_simulation_project;
 
-public class TrustAgent {
+/**
+* This class represents a trust agent. 
+*
+* @author  PS Development Team
+* @since   2015-11-30
+*/
+public class TrustAgent 
+{
 
 }

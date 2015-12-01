@@ -1,29 +1,45 @@
-package social_Simulation_Project;
+package social_simulation_project;
 
-public class InventoryAgent {
+/**
+* This class represents an inventory agent. They are 
+* responsible for inventory (all supply chain members).
+*
+* @author  PS Development Team
+* @since   2015-11-30
+*/
+public class InventoryAgent 
+{
 	private int inventory_level;
 
-	public InventoryAgent() {
+	public InventoryAgent() 
+	{
 		
 	}
 	
-	public void receiveShipment(Shipment shipment) {
+	/**
+	   * This method receives goods.
+	   * 
+	   * @param ?
+	   * @return Nothing.
+	   */
+	public void receiveShipment(Shipment shipment) 
+	{
 		this.inventory_level += shipment.getShipmentAmount();
-	}
-	
-	/*
-	 * SETTERS
-	 */
-	public void setInventoryLevel(int inventory_level) {
-		this.inventory_level = inventory_level;
 	}
 	
 	/*
 	 * GETTERS
 	 */
-	
-	public int getInventoryLevel() {
+	public int getInventoryLevel() 
+	{
 		return this.inventory_level;
 	}
 	
+	/*
+	 * SETTERS
+	 */
+	public void setInventoryLevel(int inventory_level) 
+	{
+		this.inventory_level = inventory_level;
+	}
 }
