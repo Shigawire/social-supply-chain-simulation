@@ -27,8 +27,10 @@ public class OrderAgent
 	//
 	public void order(TrustAgent trustAgent, Order order) 
 	{
-		//select Retailer. mit customer.trustAgent
-		//
+		// select Retailer. mit customer.trustAgent
+		// trustAgent must be implemented
+		
+		// chooseRetailer() muss das heißen
 		DeliveryAgent deliveryAgent = trustAgent.returnDeliveryAgent();
 		deliveryAgent.receiveOrder(order);
 	}
@@ -49,7 +51,7 @@ public class OrderAgent
 	}
 	*/
 	
-	public void processShipments(InventoryAgent inventoryAgent) 
+	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{
 		for (Order shipment : receivedShipments) 
 		{

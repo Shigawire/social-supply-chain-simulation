@@ -48,7 +48,7 @@ public class Retailer extends SupplyChainMember
 	   */
 	private void processShipments() 
 	{
-		this.orderAgent.processShipments(this.inventoryAgent);
+		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
 	
 	/**

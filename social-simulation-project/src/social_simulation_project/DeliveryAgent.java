@@ -40,7 +40,7 @@ public class DeliveryAgent
 		
 		for (Order order : receivedOrders) 
 		{
-			if (order.getAmount() > current_inventory_level) 
+			if (order.getQuantity() > current_inventory_level) 
 			{
 				//wenn Inventory nicht ausreicht, wird nicht geliefert;
 				//TODO was passiert wenn eine lieferung danach möglicherweise processed werden könnte?

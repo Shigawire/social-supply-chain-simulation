@@ -44,8 +44,9 @@ public class Customer extends SupplyChainMember
 	{
 		//TODO
 		//1. processShipments()
-		this.processShipments();
+		this.receiveShipments();
 		//2. updateTrust()
+		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
 		//4. calculateDemand()
@@ -88,12 +89,31 @@ public class Customer extends SupplyChainMember
 	   */
 	public void order() 
 	{
-		order_quantity = next_demand - inventoryAgent.getInventoryLevel();//
-		//TODO replenishment policy
-		if (order_quantity <= 0) return;
+		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
+		// 2. Was hab ich noch im Inventar?
+		// 3. Differenz bestellen. mit orderArgent
+		
+		// 1.
+		next_demand = this.forecastAgent.calculateDemand();
+		
+		// 2.
+		current_inventory_level = this.inventoryAgent.getInventoryLevel();
+		
+		// 3.
+		order_quantity = next_demand - current_inventory_level;
+		
+		// TODO replenishment policy
+		
+		// If the inventory level is sufficient for the next demand,
+		// do not order
+		if (order_quantity <= 0) 
+		{
+			return;
+		}
 		
 		Order order = new Order(order_quantity, this.orderAgent);
-		//Choose retailer
+		
+		// Choose retailer
 		orderAgent.order(this.trustAgent, order);
 	}
 	
@@ -102,9 +122,9 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
-	private void processShipments() 
+	private void receiveShipments() 
 	{
-		this.orderAgent.processShipments(this.inventoryAgent);
+		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
 
 	/*
