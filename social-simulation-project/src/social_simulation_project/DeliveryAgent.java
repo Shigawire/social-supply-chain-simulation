@@ -15,7 +15,14 @@ import java.util.ArrayList;
 */
 public class DeliveryAgent 
 {
+	private int price;
 	private ArrayList<Order> receivedOrders;
+	
+	public DeliveryAgent(int price) 
+	{
+		this.receivedOrders = new ArrayList<Order>();
+		this.price = price;
+	}
 	
 	/**
 	   * This method receives orders.
@@ -48,10 +55,18 @@ public class DeliveryAgent
 			} 
 			else 
 			{
+				
 				order.setProcessed(true);
 				order.getOrderAgent().receiveShipment(order);
+//				inventoryAgent.reduceInventoryLevel(order.getQuantity());
+				inventoryAgent.reduceInventoryLevel(7);
 			}
 		}
+	}
+
+	public int getPrice() 
+	{	
+		return this.price;
 	}
 	
 	/*

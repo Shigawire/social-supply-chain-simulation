@@ -17,10 +17,13 @@ public class OrderAgent
 {
 	private SupplyChainMember orderer;
 	private ArrayList<Order> receivedShipments;
+	private ArrayList<Order> receivedOrders;
 	
 	public OrderAgent(SupplyChainMember orderer) 
 	{
 		this.orderer = orderer;
+		this.receivedShipments = new ArrayList<Order>();
+		this.receivedOrders = new ArrayList<Order>();
 	}
 	
 	//TODO 
@@ -31,7 +34,7 @@ public class OrderAgent
 		// trustAgent must be implemented
 		
 		// chooseRetailer() muss das heißen
-		DeliveryAgent deliveryAgent = trustAgent.returnDeliveryAgent();
+		DeliveryAgent deliveryAgent = trustAgent.chooseSupplier();
 		deliveryAgent.receiveOrder(order);
 	}
 	/*
@@ -51,18 +54,39 @@ public class OrderAgent
 	}
 	*/
 	
+	/*
+	 * geht vom super agent aus
+	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
-	{
-		for (Order shipment : receivedShipments) 
+	{	
+		
+		if (!receivedShipments.isEmpty())
 		{
-			inventoryAgent.setInventoryLevel(inventoryAgent.getInventoryLevel() + shipment.getAmount());
-		}
-		receivedShipments = null;
+			for (Order shipment : receivedShipments) 
+			{
+				inventoryAgent.store(shipment);
+				
+			}
+			
+			// This can't go in the for loop
+			receivedShipments.clear();
+
+		}	
+		/*for(Order bla: receivedOrders)
+		{
+			receivedShipments.add(bla);
+		}*/
+		
 	}
 	
+	/*
+	 * geht vom delivery agent der nächsten Stufe aus
+	 * 
+	 */
 	public void receiveShipment(Order shipment) 
 	{
 		receivedShipments.add(shipment);
+//		receivedOrders.add(shipment);
 	}
 	
 	/*

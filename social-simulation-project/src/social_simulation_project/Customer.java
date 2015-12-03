@@ -1,5 +1,9 @@
 package social_simulation_project;
 
+import java.util.ArrayList;
+
+import repast.simphony.engine.schedule.ScheduledMethod;
+
 /**
 * This class represents the customer. We have one
 * customer in our supply chain. The customer is 
@@ -11,22 +15,41 @@ package social_simulation_project;
 */
 public class Customer extends SupplyChainMember 
 {
-	private int demand_amount;
+	// what the customer consumes every tick
+	private int consumption;
+	
+	// what the customer needs for the next tick (forecasted)
 	private int next_demand;
+	
 	private int current_inventory_level;
+	
+	// what the customer orders at the end, based 
+	// on next_demand and current_inventory_level
 	private int order_quantity;
 	
+	private ArrayList<DeliveryAgent> delivery_agents;
 	public OrderAgent orderAgent;
+	
+	private boolean finished = false;
+	
 	
 	/**
 	   * This constructor gives the customer its own inventory
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer() 
+	public Customer(ArrayList<Retailer> retailer_list, int inventory_level) 
 	{
-		inventoryAgent = new InventoryAgent();
+		super(inventory_level);
+		delivery_agents = new ArrayList();
+		
+		for (Retailer retailer : retailer_list)
+		{
+			delivery_agents.add(retailer.getDeliveryAgent());
+		}
+
 		orderAgent = new OrderAgent(this);
+		trustAgent = new TrustAgent(delivery_agents);
 	}
 	
 	/**
@@ -40,8 +63,10 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
+	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void run() 
 	{
+		
 		//TODO
 		//1. processShipments()
 		this.receiveShipments();
@@ -53,6 +78,8 @@ public class Customer extends SupplyChainMember
 		next_demand = this.forecastAgent.calculateDemand();
 		//5. order()
 		this.order();
+		
+		this.finished = true;
 	}
 	
 	/**
@@ -67,9 +94,9 @@ public class Customer extends SupplyChainMember
 	public void consume() 
 	{
 		//TODO temporär, muss noch implementiert werden
-		demand_amount = 10;//forecastAgent.getNextDemand();
+		consumption = 10;//forecastAgent.getNextDemand();
 		current_inventory_level = inventoryAgent.getInventoryLevel();
-		if (demand_amount > current_inventory_level) 
+		if (consumption > current_inventory_level) 
 		{
 			//TODO strafkosten/reaktion
 			//Inventory ist geringer als Nachfrage
@@ -77,7 +104,7 @@ public class Customer extends SupplyChainMember
 		} 
 		else 
 		{
-			inventoryAgent.setInventoryLevel(current_inventory_level - demand_amount);
+			inventoryAgent.setInventoryLevel(current_inventory_level - consumption);
 		}
 	}
 	
@@ -100,7 +127,9 @@ public class Customer extends SupplyChainMember
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
 		// 3.
+		
 		order_quantity = next_demand - current_inventory_level;
+		System.out.println(order_quantity);
 		
 		// TODO replenishment policy
 		
@@ -110,11 +139,15 @@ public class Customer extends SupplyChainMember
 		{
 			return;
 		}
+		else
+		{
+			Order order = new Order(order_quantity, this.orderAgent);
+			
+			// Choose retailer
+			orderAgent.order(this.trustAgent, order);
+		}
 		
-		Order order = new Order(order_quantity, this.orderAgent);
 		
-		// Choose retailer
-		orderAgent.order(this.trustAgent, order);
 	}
 	
 	/**
@@ -130,7 +163,10 @@ public class Customer extends SupplyChainMember
 	/*
 	 * GETTERS
 	 */
-	
+	public int getCurrent_inventory_level()
+	{
+		return this.inventoryAgent.getInventoryLevel();
+	}
 	
 	/* 
 	 * SETTERS

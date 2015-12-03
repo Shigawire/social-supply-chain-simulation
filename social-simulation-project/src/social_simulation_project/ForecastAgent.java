@@ -8,5 +8,8 @@ package social_simulation_project;
 */
 public class ForecastAgent 
 {
-
+	public int calculateDemand()
+	{
+		return 10;
+	}
 }
