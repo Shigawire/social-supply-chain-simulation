@@ -21,17 +21,12 @@ public class Customer extends SupplyChainMember
 	// what the customer needs for the next tick (forecasted)
 	private int next_demand;
 	
-	private int current_inventory_level;
-	
 	// what the customer orders at the end, based 
 	// on next_demand and current_inventory_level
 	private int order_quantity;
 	
 	private ArrayList<DeliveryAgent> delivery_agents;
-	public OrderAgent orderAgent;
-	
-	private boolean finished = false;
-	
+//	public OrderAgent orderAgent;
 	
 	/**
 	   * This constructor gives the customer its own inventory
@@ -41,7 +36,7 @@ public class Customer extends SupplyChainMember
 	public Customer(ArrayList<Retailer> retailer_list, int inventory_level) 
 	{
 		super(inventory_level);
-		delivery_agents = new ArrayList();
+		delivery_agents = new ArrayList<DeliveryAgent>();
 		
 		for (Retailer retailer : retailer_list)
 		{
@@ -63,11 +58,9 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
-	@ScheduledMethod(start = 1, interval = 1, priority = 2)
+	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	public void run() 
 	{
-		
-		//TODO
 		//1. processShipments()
 		this.receiveShipments();
 		//2. updateTrust()
@@ -78,8 +71,6 @@ public class Customer extends SupplyChainMember
 		next_demand = this.forecastAgent.calculateDemand();
 		//5. order()
 		this.order();
-		
-		this.finished = true;
 	}
 	
 	/**
@@ -91,11 +82,12 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
-	public void consume() 
+	public void consume()
 	{
 		//TODO temporär, muss noch implementiert werden
-		consumption = 10;//forecastAgent.getNextDemand();
+		consumption = 10; //forecastAgent.getNextDemand();
 		current_inventory_level = inventoryAgent.getInventoryLevel();
+		
 		if (consumption > current_inventory_level) 
 		{
 			//TODO strafkosten/reaktion
@@ -110,7 +102,7 @@ public class Customer extends SupplyChainMember
 	
 	/**
 	   * This method orders goods at the customer's
-	   * retailers.
+	   * supplier.
 	   * 
 	   * @return Nothing.
 	   */
@@ -126,16 +118,16 @@ public class Customer extends SupplyChainMember
 		// 2.
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
+		System.out.println(current_inventory_level);
+		
 		// 3.
-		
 		order_quantity = next_demand - current_inventory_level;
-		//System.out.println(order_quantity);
-		
+
 		// TODO replenishment policy
 		
 		// If the inventory level is sufficient for the next demand,
 		// do not order
-		if (order_quantity <= 0) 
+		if (order_quantity < 0) 
 		{
 			return;
 		}
@@ -146,8 +138,6 @@ public class Customer extends SupplyChainMember
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
 		}
-		
-		
 	}
 	
 	/**
@@ -155,7 +145,7 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
-	private void receiveShipments() 
+	public void receiveShipments() 
 	{
 		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
@@ -163,11 +153,7 @@ public class Customer extends SupplyChainMember
 	/*
 	 * GETTERS
 	 */
-	public int getCurrent_inventory_level()
-	{
-		return this.inventoryAgent.getInventoryLevel();
-	}
-	
+	 
 	/* 
 	 * SETTERS
 	 */

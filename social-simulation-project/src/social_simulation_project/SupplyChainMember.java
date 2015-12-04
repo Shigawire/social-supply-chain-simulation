@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public abstract class SupplyChainMember 
 {
 	protected String id;
+	protected int current_inventory_level;
+	protected OrderAgent orderAgent;
 	protected TrustAgent trustAgent;
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
@@ -30,9 +32,19 @@ public abstract class SupplyChainMember
 		this.forecastAgent = new ForecastAgent();
 	}
 	
+	// Methods every supply chain member must implement
+	public abstract void run();
+	public abstract void receiveShipments();
+	
+	
+	
 	/*
 	 * GETTERS
 	 */
+	public int getCurrent_inventory_level()
+	{
+		return this.inventoryAgent.getInventoryLevel();
+	}
 	
 	/*
 	 * SETTERS

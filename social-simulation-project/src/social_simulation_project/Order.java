@@ -63,6 +63,12 @@ public class Order
 		return this.quantity;
 	}
 	
+	public boolean getProcessed() 
+	{
+		// TODO Auto-generated method stub
+		return processed;
+	}
+	
 	/*
 	 * SETTERS
 	 */
@@ -76,9 +82,5 @@ public class Order
 		this.quantity = quantity;
 	}
 
-	public boolean getProcessed() {
-		// TODO Auto-generated method stub
-		return processed
-				;
-	}
+	
 }

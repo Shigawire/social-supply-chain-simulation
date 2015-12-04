@@ -27,6 +27,11 @@ public class InventoryAgent
 		this.inventory_level += shipment.getQuantity();
 	}
 	
+	public void reduceInventoryLevel(int reduction)
+	{
+		this.inventory_level -= reduction;
+	}
+	
 	/*
 	 * GETTERS
 	 */
@@ -43,8 +48,5 @@ public class InventoryAgent
 		this.inventory_level = inventory_level;
 	}
 	
-	public void reduceInventoryLevel(int reduction)
-	{
-		this.inventory_level -= reduction;
-	}
+	
 }

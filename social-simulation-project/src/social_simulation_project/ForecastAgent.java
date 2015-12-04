@@ -12,4 +12,12 @@ public class ForecastAgent
 	{
 		return 10;
 	}
+	
+	/*
+	 * GETTERS
+	 */
+	
+	/* 
+	 * SETTERS
+	 */
 }

@@ -16,9 +16,10 @@ import java.util.ArrayList;
 public class DeliveryAgent 
 {
 	private int price;
-	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu übertragen
+	private int current_inventory_level;
+	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu ï¿½bertragen
 	private ArrayList<Order> openOrders;
-	int current_inventory_level;
+
 	public DeliveryAgent(int price) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
@@ -71,14 +72,13 @@ public class DeliveryAgent
 		receivedOrders.addAll(openOrders);
 	}
 
+	/*
+	 * GETTERS
+	 */
 	public int getPrice() 
 	{	
 		return this.price;
 	}
-	
-	/*
-	 * GETTERS
-	 */
 	
 	/*
 	 * SETTERS

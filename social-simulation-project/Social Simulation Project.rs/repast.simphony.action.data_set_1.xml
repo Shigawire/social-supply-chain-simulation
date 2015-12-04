@@ -33,6 +33,24 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Wholesaler Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Wholesaler Inv</id>
+        <className>social_simulation_project.Wholesaler</className>
+        <methodName>getCurrent_inventory_level</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Distributor Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Distributor Inv</id>
+        <className>social_simulation_project.Distributor</className>
+        <methodName>getCurrent_inventory_level</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>
