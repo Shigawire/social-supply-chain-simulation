@@ -75,4 +75,10 @@ public class Order
 	{
 		this.quantity = quantity;
 	}
+
+	public boolean getProcessed() {
+		// TODO Auto-generated method stub
+		return processed
+				;
+	}
 }

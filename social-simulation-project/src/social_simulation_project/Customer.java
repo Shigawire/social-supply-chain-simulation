@@ -129,7 +129,7 @@ public class Customer extends SupplyChainMember
 		// 3.
 		
 		order_quantity = next_demand - current_inventory_level;
-		System.out.println(order_quantity);
+		//System.out.println(order_quantity);
 		
 		// TODO replenishment policy
 		

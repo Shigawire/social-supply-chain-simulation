@@ -16,11 +16,13 @@ import java.util.ArrayList;
 public class DeliveryAgent 
 {
 	private int price;
-	private ArrayList<Order> receivedOrders;
-	
+	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu �bertragen
+	private ArrayList<Order> openOrders;
+	int current_inventory_level;
 	public DeliveryAgent(int price) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
+		this.openOrders = new ArrayList<Order>();
 		this.price = price;
 	}
 	
@@ -43,25 +45,30 @@ public class DeliveryAgent
 	   */
 	public void deliver(InventoryAgent inventoryAgent)
 	{
-		int current_inventory_level = inventoryAgent.getInventoryLevel();
+		current_inventory_level = inventoryAgent.getInventoryLevel();
 		
 		for (Order order : receivedOrders) 
 		{
 			if (order.getQuantity() > current_inventory_level) 
 			{
 				//wenn Inventory nicht ausreicht, wird nicht geliefert;
-				//TODO was passiert wenn eine lieferung danach möglicherweise processed werden könnte?
-				return;
+				//TODO was passiert wenn eine lieferung danach moeglicherweise processed werden koennte? Loesung das return weg, 
+				//dann geht er alle restlichen Bestellungen auch noch durch
+				openOrders.add(order);
+				//return;
 			} 
 			else 
 			{
-				
 				order.setProcessed(true);
 				order.getOrderAgent().receiveShipment(order);
-//				inventoryAgent.reduceInventoryLevel(order.getQuantity());
-				inventoryAgent.reduceInventoryLevel(7);
+				//System.out.println(order.getQuantity());
+				inventoryAgent.reduceInventoryLevel(order.getQuantity());
 			}
 		}
+		//the received list must be deleted completly and filled with the openOrder list
+		//otherwise RePast has a problem
+		receivedOrders.clear();
+		receivedOrders.addAll(openOrders);
 	}
 
 	public int getPrice() 
