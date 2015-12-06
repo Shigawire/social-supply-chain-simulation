@@ -8,14 +8,14 @@ import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 
 /**
-* This class represents a retailer. Retailer do not
-* differ from wholesalers or distributors. The only 
+* This class represents a wholesaler. Wholesalers do not
+* differ from retailers or distributors. The only 
 * difference is their position in the supply chain.
 *
-* @author  PS Development Team
-* @since   2015-11-30
+* @author  Carlos
+* @since   2015-12-04
 */
-public class Retailer extends SupplyChainMember 
+public class Wholesaler extends SupplyChainMember 
 {
 	private int demand_amount;
 	private int next_demand;
@@ -25,7 +25,7 @@ public class Retailer extends SupplyChainMember
 //	private OrderAgent orderAgent;
 	private ArrayList<DeliveryAgent> delivery_agents;
 	
-//	public Retailer(int price, int current_inventory_level) 
+//	public Wholesaler(int price, int current_inventory_level) 
 //	{
 //		super(current_inventory_level);
 //		this.price = price;
@@ -33,14 +33,14 @@ public class Retailer extends SupplyChainMember
 //		deliveryAgent = new DeliveryAgent(price);
 //	}
 	
-	public Retailer(ArrayList<Wholesaler> wholesaler_list, int price, int current_inventory_level) 
+	public Wholesaler(ArrayList<Distributor> distributor_list, int price, int current_inventory_level) 
 	{
 		super(current_inventory_level);
 		delivery_agents = new ArrayList<DeliveryAgent>();
 		
-		for (Wholesaler wholesaler : wholesaler_list)
+		for (Distributor distributor : distributor_list)
 		{
-			delivery_agents.add(wholesaler.getDeliveryAgent());
+			delivery_agents.add(distributor.getDeliveryAgent());
 		}
 
 		this.price = price;
@@ -49,8 +49,7 @@ public class Retailer extends SupplyChainMember
 		trustAgent = new TrustAgent(delivery_agents);
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, priority = 3)
-	
+	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void run() 
 	{
 		// 1. processShipments() receive shipments
@@ -84,12 +83,6 @@ public class Retailer extends SupplyChainMember
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
 	
-	/**
-	   * This method orders goods at the retailer's
-	   * supplier.
-	   * 
-	   * @return Nothing.
-	   */
 	public void order() 
 	{
 		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
@@ -122,8 +115,6 @@ public class Retailer extends SupplyChainMember
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
 		}
-		
-		
 	}
 
 	/*

@@ -33,7 +33,6 @@ public class OrderAgent
 		// select Retailer. mit customer.trustAgent
 		// trustAgent must be implemented
 		
-		// chooseRetailer() muss das heißen
 		DeliveryAgent deliveryAgent = trustAgent.chooseSupplier();
 		deliveryAgent.receiveOrder(order);
 	}
@@ -65,18 +64,12 @@ public class OrderAgent
 			for (Order shipment : receivedShipments) 
 			{
 				inventoryAgent.store(shipment);
-				
 			}
 			
 			// This can't go in the for loop
 			receivedShipments.clear();
 
 		}	
-		/*for(Order bla: receivedOrders)
-		{
-			receivedShipments.add(bla);
-		}*/
-		
 	}
 	
 	/*

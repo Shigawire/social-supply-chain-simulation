@@ -12,7 +12,6 @@ public class TrustAgent
 {
 	private ArrayList<DeliveryAgent> delivery_agents;
 	
-	
 	public TrustAgent(ArrayList<DeliveryAgent> delivery_agents)
 	{
 		this.delivery_agents = delivery_agents;
@@ -34,9 +33,14 @@ public class TrustAgent
 				cheapestSupplier = delivery_agents.get(i+1);
 			}
 		}
-	
-		
-		
 		return cheapestSupplier;
 	}
+	
+	/*
+	 * GETTERS
+	 */
+	
+	/* 
+	 * SETTERS
+	 */
 }
