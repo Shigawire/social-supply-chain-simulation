@@ -21,9 +21,13 @@ public abstract class SupplyChainMember
 	   * id in a hexadecimal format.
 	   * 
 	   */
-	public SupplyChainMember() 
+	public SupplyChainMember(int inventory_level) 
 	{
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		
+		// Create inventory agent with inventoryLevel
+		this.inventoryAgent = new InventoryAgent(inventory_level);
+		this.forecastAgent = new ForecastAgent();
 	}
 	
 	/*

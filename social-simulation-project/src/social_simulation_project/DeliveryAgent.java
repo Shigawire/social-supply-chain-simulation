@@ -15,7 +15,14 @@ import java.util.ArrayList;
 */
 public class DeliveryAgent 
 {
+	private int price;
 	private ArrayList<Order> receivedOrders;
+	
+	public DeliveryAgent(int price) 
+	{
+		this.receivedOrders = new ArrayList<Order>();
+		this.price = price;
+	}
 	
 	/**
 	   * This method receives orders.
@@ -40,7 +47,7 @@ public class DeliveryAgent
 		
 		for (Order order : receivedOrders) 
 		{
-			if (order.getAmount() > current_inventory_level) 
+			if (order.getQuantity() > current_inventory_level) 
 			{
 				//wenn Inventory nicht ausreicht, wird nicht geliefert;
 				//TODO was passiert wenn eine lieferung danach möglicherweise processed werden könnte?
@@ -48,10 +55,18 @@ public class DeliveryAgent
 			} 
 			else 
 			{
+				
 				order.setProcessed(true);
 				order.getOrderAgent().receiveShipment(order);
+//				inventoryAgent.reduceInventoryLevel(order.getQuantity());
+				inventoryAgent.reduceInventoryLevel(7);
 			}
 		}
+	}
+
+	public int getPrice() 
+	{	
+		return this.price;
 	}
 	
 	/*

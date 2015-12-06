@@ -11,9 +11,9 @@ public class InventoryAgent
 {
 	private int inventory_level;
 
-	public InventoryAgent() 
+	public InventoryAgent(int inventory_level) 
 	{
-		
+		this.inventory_level = inventory_level;
 	}
 	
 	/**
@@ -22,9 +22,9 @@ public class InventoryAgent
 	   * @param ?
 	   * @return Nothing.
 	   */
-	public void receiveShipment(Shipment shipment) 
+	public void store(Order shipment) 
 	{
-		this.inventory_level += shipment.getShipmentAmount();
+		this.inventory_level += shipment.getQuantity();
 	}
 	
 	/*
@@ -41,5 +41,10 @@ public class InventoryAgent
 	public void setInventoryLevel(int inventory_level) 
 	{
 		this.inventory_level = inventory_level;
+	}
+	
+	public void reduceInventoryLevel(int reduction)
+	{
+		this.inventory_level -= reduction;
 	}
 }

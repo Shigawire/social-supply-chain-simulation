@@ -5,16 +5,19 @@ import repast.simphony.engine.environment.RunEnvironment;
 /**
 * This class represents an order. 
 *
-* @author  Fabian 
+* @author  PS Development Team
 * @since   ?
 */
 public class Order 
 {
 	private int quantity;
-	private int ordered_at;
-	private int backlog;
+	private int ordered_at; // tick
+//	private int backlog;
 	private String id;
+	// Who ordered?
 	private OrderAgent orderAgent;
+	
+	// Order received and sent
 	private boolean processed;
 	
 	public Order(int quantity, OrderAgent orderAgent) 
@@ -27,10 +30,10 @@ public class Order
 		this.processed = false;
 	}
 	
-	public boolean finished() 
-	{
-		return (this.backlog > 0);
-	}
+//	public boolean finished() 
+//	{
+//		return (this.backlog > 0);
+//	}
 	
 	/*
 	 * GETTERS
@@ -40,17 +43,12 @@ public class Order
 		return this.orderAgent;	
 	}
 	
-	public int getAmount() 
-	{
-		return this.quantity;
-	}
-	
 	public String getId() 
 	{
 		return this.id;
 	}
 	
-	public int getOrderDate() 
+	public int getOrdered_at() 
 	{
 		return this.ordered_at;
 	}
@@ -68,7 +66,7 @@ public class Order
 	/*
 	 * SETTERS
 	 */
-	public void setProcessed(boolean pr) 
+	public void setProcessed(boolean processed) 
 	{
 		this.processed = true;
 	}
