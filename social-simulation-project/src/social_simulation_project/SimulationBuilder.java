@@ -1,7 +1,7 @@
 package social_simulation_project;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -20,6 +20,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 	public Context<Object> build(Context<Object> context) 
 	{	
 		context.setId("Social Simulation Project");
+		RunEnvironment.getInstance().setScheduleTickDelay(20);
 		
 		/*
 		 * 

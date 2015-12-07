@@ -58,14 +58,13 @@ public class OrderAgent
 	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
-		
+		System.out.println("[Order Agent] receiving shipment list");
 		if (!receivedShipments.isEmpty())
 		{
 			for (Order shipment : receivedShipments) 
 			{
 				inventoryAgent.store(shipment);
 			}
-			
 			// This can't go in the for loop
 			receivedShipments.clear();
 
@@ -78,6 +77,7 @@ public class OrderAgent
 	 */
 	public void receiveShipment(Order shipment) 
 	{
+		System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);
 	}

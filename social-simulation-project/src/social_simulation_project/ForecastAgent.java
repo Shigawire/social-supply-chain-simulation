@@ -1,5 +1,7 @@
 package social_simulation_project;
 
+import repast.simphony.random.RandomHelper;
+
 /**
 * This class represents the forecast agent. 
 *
@@ -10,7 +12,7 @@ public class ForecastAgent
 {
 	public int calculateDemand()
 	{
-		return 10;
+		return RandomHelper.nextIntFromTo(2, 25);
 	}
 	
 	/*

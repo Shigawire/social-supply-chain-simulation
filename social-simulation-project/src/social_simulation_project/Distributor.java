@@ -22,14 +22,14 @@ public class Distributor extends SupplyChainMember
 	private int price;
 	private int order_quantity;
 	private DeliveryAgent deliveryAgent;
-//	private OrderAgent orderAgent;
+	private OrderAgent orderAgent;
 	
 	public Distributor(int price, int current_inventory_level) 
 	{
 		super(current_inventory_level);
 		this.price = price;
-		orderAgent = new OrderAgent(this);	
-		deliveryAgent = new DeliveryAgent(price);
+		this.orderAgent = new OrderAgent(this);	
+		this.deliveryAgent = new DeliveryAgent(price);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 1)
@@ -41,7 +41,7 @@ public class Distributor extends SupplyChainMember
 		// 3. deliver()
 		this.deliver();
 		// 4. calculateDemand()
-		next_demand = this.forecastAgent.calculateDemand();
+		this.next_demand = this.forecastAgent.calculateDemand();
 		// 5. order()
 //		this.order();
 	}
