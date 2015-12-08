@@ -2,7 +2,9 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.essentials.RepastEssentials;
 
 /**
 * This class represents the customer. We have one
@@ -57,9 +59,14 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
-	@ScheduledMethod(start = 1, interval = 1, priority = 4)
+	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{
+		if ((int)RepastEssentials.GetTickCount()==1)
+		{
+			RunEnvironment.getInstance().setScheduleTickDelay(30);
+		}
+		
 		System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();

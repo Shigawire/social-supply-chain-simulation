@@ -23,16 +23,25 @@ public class Distributor extends SupplyChainMember
 	private int order_quantity;
 	private DeliveryAgent deliveryAgent;
 	private OrderAgent orderAgent;
+	private ArrayList<DeliveryAgent> delivery_agents;
 	
-	public Distributor(int price, int current_inventory_level) 
+	public Distributor(ArrayList<Manufacturer> manufacturer_list, int price, int current_inventory_level) 
 	{
 		super(current_inventory_level);
+		delivery_agents = new ArrayList<DeliveryAgent>();
+		
+		for (Manufacturer manufacturer : manufacturer_list)
+		{
+			delivery_agents.add(manufacturer.getDeliveryAgent());
+		}
+		
 		this.price = price;
 		this.orderAgent = new OrderAgent(this);	
 		this.deliveryAgent = new DeliveryAgent(price);
+		trustAgent = new TrustAgent(delivery_agents);
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, priority = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void run() 
 	{
 		// 1. processShipments() receive shipments
@@ -43,7 +52,7 @@ public class Distributor extends SupplyChainMember
 		// 4. calculateDemand()
 		this.next_demand = this.forecastAgent.calculateDemand();
 		// 5. order()
-//		this.order();
+		this.order();
 	}
 	
 	/**
@@ -66,6 +75,40 @@ public class Distributor extends SupplyChainMember
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
 
+	public void order() 
+	{
+		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
+		// 2. Was hab ich noch im Inventar?
+		// 3. Differenz bestellen. mit orderArgent
+		
+		// 1.
+		next_demand = this.forecastAgent.calculateDemand();
+		
+		// 2.
+		current_inventory_level = this.inventoryAgent.getInventoryLevel();
+		
+		// 3.
+		order_quantity = next_demand - current_inventory_level;
+		
+		//System.out.println(order_quantity);
+		
+		// TODO replenishment policy
+		
+		// If the inventory level is sufficient for the next demand,
+		// do not order
+		if (order_quantity < 0) 
+		{
+			return;
+		}
+		else
+		{
+			Order order = new Order(order_quantity, this.orderAgent);
+			
+			// Choose retailer
+			orderAgent.order(this.trustAgent, order);
+		}
+	}
+	
 	/*
 	 * GETTERS
 	 */

@@ -70,6 +70,7 @@ public class DeliveryAgent
 		//otherwise RePast has a problem
 		receivedOrders.clear();
 		receivedOrders.addAll(openOrders);
+		openOrders.clear();
 	}
 
 	/*

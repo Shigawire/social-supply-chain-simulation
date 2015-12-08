@@ -49,7 +49,7 @@ public class Retailer extends SupplyChainMember
 		trustAgent = new TrustAgent(delivery_agents);
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, priority = 3)
+	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	
 	public void run() 
 	{

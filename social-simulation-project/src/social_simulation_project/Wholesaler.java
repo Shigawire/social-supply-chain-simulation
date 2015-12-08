@@ -49,7 +49,7 @@ public class Wholesaler extends SupplyChainMember
 		trustAgent = new TrustAgent(delivery_agents);
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, priority = 2)
+	@ScheduledMethod(start = 1, interval = 1, priority = 3)
 	public void run() 
 	{
 		// 1. processShipments() receive shipments
