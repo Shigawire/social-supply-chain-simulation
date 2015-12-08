@@ -51,6 +51,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Manufacturer Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Manufacturer Inv</id>
+        <className>social_simulation_project.Manufacturer</className>
+        <methodName>getCurrent_inventory_level</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

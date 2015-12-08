@@ -12,7 +12,11 @@ public class ForecastAgent
 {
 	public int calculateDemand()
 	{
-		return RandomHelper.nextIntFromTo(2, 25);
+		int dem = RandomHelper.nextIntFromTo(2, 25);
+		//System.out.println(dem);
+		return dem;
+		
+		//return 10;
 	}
 	
 	/*
