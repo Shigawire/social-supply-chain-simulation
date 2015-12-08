@@ -2,7 +2,9 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.essentials.RepastEssentials;
 
 /**
 * This class represents the customer. We have one
@@ -26,7 +28,6 @@ public class Customer extends SupplyChainMember
 	private int order_quantity;
 	
 	private ArrayList<DeliveryAgent> delivery_agents;
-//	public OrderAgent orderAgent;
 	
 	/**
 	   * This constructor gives the customer its own inventory
@@ -58,11 +59,18 @@ public class Customer extends SupplyChainMember
 	   * 
 	   * @return Nothing.
 	   */
-	@ScheduledMethod(start = 1, interval = 1, priority = 4)
+	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{
+		if ((int)RepastEssentials.GetTickCount()==1)
+		{
+			RunEnvironment.getInstance().setScheduleTickDelay(30);
+		}
+		
+		System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();
+		System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//2. updateTrust()
 		// this.trustAgent.update();
 		//3. consume()
@@ -114,20 +122,24 @@ public class Customer extends SupplyChainMember
 		
 		// 1.
 		next_demand = this.forecastAgent.calculateDemand();
+		System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
-		System.out.println(current_inventory_level);
+		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getInventoryLevel());
+		
 		
 		// 3.
 		order_quantity = next_demand - current_inventory_level;
+		
+		System.out.println("[Customer] order_quantity is  " + order_quantity);
 
 		// TODO replenishment policy
 		
 		// If the inventory level is sufficient for the next demand,
 		// do not order
-		if (order_quantity < 0) 
+		if (order_quantity <= 0) 
 		{
 			return;
 		}
@@ -136,6 +148,7 @@ public class Customer extends SupplyChainMember
 			Order order = new Order(order_quantity, this.orderAgent);
 			
 			// Choose retailer
+			
 			orderAgent.order(this.trustAgent, order);
 		}
 	}

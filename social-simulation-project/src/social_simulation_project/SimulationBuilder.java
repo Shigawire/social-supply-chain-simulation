@@ -1,7 +1,7 @@
 package social_simulation_project;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -20,6 +20,11 @@ public class SimulationBuilder implements ContextBuilder<Object>
 	public Context<Object> build(Context<Object> context) 
 	{	
 		context.setId("Social Simulation Project");
+		RunEnvironment.getInstance().setScheduleTickDelay(20);
+		
+		Manufacturer manufacturer1 = new Manufacturer(10, 1000);
+		ArrayList<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
+		manufacturerList.add(manufacturer1);
 		
 		/*
 		 * 
@@ -30,8 +35,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 distributors
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Distributor distributor1 = new Distributor(50, 500);
-		Distributor distributor2 = new Distributor(60, 1700);
+		Distributor distributor1 = new Distributor(manufacturerList, 50, 500);
+		Distributor distributor2 = new Distributor(manufacturerList, 60, 1700);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
@@ -95,6 +100,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// --------------------------------------------------------------------------------
 		
 		// Add everything to the simulation's context
+		
+		context.add(manufacturer1);
 		
 		context.add(distributor1);
 //		context.add(distributor2);
