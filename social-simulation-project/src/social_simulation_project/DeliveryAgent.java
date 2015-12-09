@@ -64,6 +64,7 @@ public class DeliveryAgent
 				order.getOrderAgent().receiveShipment(order);
 				//System.out.println(order.getQuantity());
 				inventoryAgent.reduceInventoryLevel(order.getQuantity());
+				current_inventory_level = inventoryAgent.getInventoryLevel();
 			}
 		}
 		//the received list must be deleted completly and filled with the openOrder list
