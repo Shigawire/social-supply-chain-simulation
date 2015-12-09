@@ -12,7 +12,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 * simulation.
 *
 * @author  PS Development Team
-* @since   03-12-2015
+* @since   2015-12-03
 */
 public class SimulationBuilder implements ContextBuilder<Object> 
 {	
