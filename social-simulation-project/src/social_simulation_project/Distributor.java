@@ -48,8 +48,8 @@ public class Distributor extends SupplyChainMember
 		// 2. updateTrust()	
 		// 3. deliver()
 		this.deliver();
-		// 4. calculateDemand()
-		this.next_demand = this.forecastAgent.calculateDemand();
+		// 4. calculateDemand() wird in order gemacht
+		//next_demand = this.forecastAgent.calculateDemand();
 		// 5. order()
 		this.order();
 	}
@@ -93,7 +93,7 @@ public class Distributor extends SupplyChainMember
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level;
+		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		
 		//System.out.println(order_quantity);
 		

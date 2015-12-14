@@ -92,8 +92,9 @@ public class Manufacturer extends SupplyChainMember
 	private void produce() 
 	{		
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
-		
-		amount_to_produce = next_demand - current_inventory_level;
+		//shortage at the current orders will be produced to
+		//TODO in which far did he already include this by FABIAN, because he wrote the class
+		amount_to_produce = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		amount_to_produce = (amount_to_produce > 0) ? amount_to_produce : 0;
 		
 		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
