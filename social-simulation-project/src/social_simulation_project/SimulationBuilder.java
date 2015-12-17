@@ -112,7 +112,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.add(retailer1);
 //		context.add(retailer2);
 		context.add(customer1);
-		
+		// the observer for openOrders
+		context.add(OrderObserver.giveObserver());
 		return context;
 	}
 }

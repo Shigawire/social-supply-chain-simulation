@@ -34,6 +34,8 @@ public class OrderAgent
 		// trustAgent must be implemented
 		
 		DeliveryAgent deliveryAgent = trustAgent.chooseSupplier();
+		//add the open order
+		OrderObserver.giveObserver().addAmount(order.getQuantity());
 		deliveryAgent.receiveOrder(order);
 	}
 	
