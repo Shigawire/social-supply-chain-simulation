@@ -17,21 +17,11 @@ import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 */
 public class Retailer extends SupplyChainMember 
 {
-	private int demand_amount;
 	private int next_demand;
 	private int price;
 	private int order_quantity;
 	private DeliveryAgent deliveryAgent;
-//	private OrderAgent orderAgent;
 	private ArrayList<DeliveryAgent> delivery_agents;
-	
-//	public Retailer(int price, int current_inventory_level) 
-//	{
-//		super(current_inventory_level);
-//		this.price = price;
-//		orderAgent = new OrderAgent(this);	
-//		deliveryAgent = new DeliveryAgent(price);
-//	}
 	
 	public Retailer(ArrayList<Wholesaler> wholesaler_list, int price, int current_inventory_level) 
 	{
@@ -50,7 +40,6 @@ public class Retailer extends SupplyChainMember
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
-	
 	public void run() 
 	{
 		// 1. processShipments() receive shipments
@@ -58,8 +47,8 @@ public class Retailer extends SupplyChainMember
 		// 2. updateTrust()	
 		// 3. deliver()
 		this.deliver();
-		// 4. calculateDemand()
-		next_demand = this.forecastAgent.calculateDemand();
+		// 4. calculateDemand() wird in order gemacht
+		//next_demand = this.forecastAgent.calculateDemand();
 		// 5. order()
 		this.order();
 	}
@@ -103,7 +92,7 @@ public class Retailer extends SupplyChainMember
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level;
+		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		
 		//System.out.println(order_quantity);
 		

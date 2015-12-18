@@ -12,7 +12,6 @@ public class Order
 {
 	private int quantity;
 	private int ordered_at; // tick
-//	private int backlog;
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;
@@ -81,6 +80,4 @@ public class Order
 	{
 		this.quantity = quantity;
 	}
-
-	
 }
