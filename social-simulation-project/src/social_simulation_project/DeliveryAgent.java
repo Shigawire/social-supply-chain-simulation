@@ -19,7 +19,7 @@ public class DeliveryAgent
 	private int current_inventory_level;
 	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu �bertragen
 	private ArrayList<Order> openOrders;
-
+	private int shortage=0;
 	public DeliveryAgent(int price) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
@@ -47,7 +47,7 @@ public class DeliveryAgent
 	public void deliver(InventoryAgent inventoryAgent)
 	{
 		current_inventory_level = inventoryAgent.getInventoryLevel();
-		
+		shortage=0;
 		for (Order order : receivedOrders) 
 		{
 			if (order.getQuantity() > current_inventory_level) 
@@ -56,11 +56,15 @@ public class DeliveryAgent
 				//TODO was passiert wenn eine lieferung danach moeglicherweise processed werden koennte? Loesung das return weg, 
 				//dann geht er alle restlichen Bestellungen auch noch durch
 				openOrders.add(order);
+				shortage=+order.getQuantity();
+				
 				//return;
 			} 
 			else 
 			{
 				order.setProcessed(true);
+				//sub the amount because the order is not open anymore
+				OrderObserver.giveObserver().subAmount(order.getQuantity());
 				order.getOrderAgent().receiveShipment(order);
 				//System.out.println(order.getQuantity());
 				inventoryAgent.reduceInventoryLevel(order.getQuantity());
@@ -80,6 +84,11 @@ public class DeliveryAgent
 	public int getPrice() 
 	{	
 		return this.price;
+	}
+
+	public int getShortage() {
+		// TODO Auto-generated method stub
+		return shortage;
 	}
 	
 	/*

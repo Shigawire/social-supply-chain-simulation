@@ -12,7 +12,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 * simulation.
 *
 * @author  PS Development Team
-* @since   03-12-2015
+* @since   2015-12-03
 */
 public class SimulationBuilder implements ContextBuilder<Object> 
 {	
@@ -22,7 +22,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.setId("Social Simulation Project");
 		RunEnvironment.getInstance().setScheduleTickDelay(20);
 		
-		Manufacturer manufacturer1 = new Manufacturer(10, 1000);
+		Manufacturer manufacturer1 = new Manufacturer(10, 100);
 		ArrayList<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
 		manufacturerList.add(manufacturer1);
 		
@@ -35,8 +35,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 distributors
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Distributor distributor1 = new Distributor(manufacturerList, 50, 500);
-		Distributor distributor2 = new Distributor(manufacturerList, 60, 1700);
+		Distributor distributor1 = new Distributor(manufacturerList, 50, 50);
+		Distributor distributor2 = new Distributor(manufacturerList, 60, 170);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
@@ -55,8 +55,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 wholesalers
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Wholesaler wholesaler1 = new Wholesaler(distributorList, 20, 400);
-		Wholesaler wholesaler2 = new Wholesaler(distributorList, 15, 300);
+		Wholesaler wholesaler1 = new Wholesaler(distributorList, 20, 40);
+		Wholesaler wholesaler2 = new Wholesaler(distributorList, 15, 30);
 		
 		// Create a list of wholesalers and add every 
 		// wholesaler to that list (for now only 1)
@@ -75,8 +75,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 retailers
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Retailer retailer1 = new Retailer(wholesalerList, 10, 100);
-		Retailer retailer2 = new Retailer(wholesalerList, 5, 100);
+		Retailer retailer1 = new Retailer(wholesalerList, 10, 10);
+		Retailer retailer2 = new Retailer(wholesalerList, 5, 10);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
@@ -95,7 +95,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// We have only one customer in our supply chain
 		// Maybe the customer class could be designed as 
 		// a singleton class
-		Customer customer1 = new Customer(retailerList, 50);
+		Customer customer1 = new Customer(retailerList, 5);
 		
 		// --------------------------------------------------------------------------------
 		
@@ -112,7 +112,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.add(retailer1);
 //		context.add(retailer2);
 		context.add(customer1);
-		
+		// the observer for openOrders
+		context.add(OrderObserver.giveObserver());
 		return context;
 	}
 }

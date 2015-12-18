@@ -34,24 +34,11 @@ public class OrderAgent
 		// trustAgent must be implemented
 		
 		DeliveryAgent deliveryAgent = trustAgent.chooseSupplier();
+		//add the open order
+		OrderObserver.giveObserver().addAmount(order.getQuantity());
 		deliveryAgent.receiveOrder(order);
 	}
-	/*
-	public void order(Retailer retailer, Order order) 
-	{
-		
-	}
 	
-	public void order(Distributor distributor, Order order) 
-	{
-		
-	}
-
-	public void order(Wholesaler wholesaler, Order order) 
-	{
-	
-	}
-	*/
 	
 	/*
 	 * geht vom super agent aus
@@ -67,7 +54,6 @@ public class OrderAgent
 			}
 			// This can't go in the for loop
 			receivedShipments.clear();
-
 		}	
 	}
 	

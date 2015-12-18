@@ -60,6 +60,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Open Orders</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Open Orders</id>
+        <className>social_simulation_project.OrderObserver</className>
+        <methodName>getAmount</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

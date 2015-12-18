@@ -12,12 +12,11 @@ import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 * differ from retailers or wholesalers. The only 
 * difference is their position in the supply chain.
 *
-* @author  Carlos
+* @author  PS Development Team
 * @since   2015-12-04
 */
 public class Distributor extends SupplyChainMember 
 {
-	private int demand_amount;
 	private int next_demand;
 	private int price;
 	private int order_quantity;
@@ -49,8 +48,8 @@ public class Distributor extends SupplyChainMember
 		// 2. updateTrust()	
 		// 3. deliver()
 		this.deliver();
-		// 4. calculateDemand()
-		this.next_demand = this.forecastAgent.calculateDemand();
+		// 4. calculateDemand() wird in order gemacht
+		//next_demand = this.forecastAgent.calculateDemand();
 		// 5. order()
 		this.order();
 	}
@@ -75,6 +74,12 @@ public class Distributor extends SupplyChainMember
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
 
+	/**
+	   * This method orders goods at the distributor's
+	   * supplier.
+	   * 
+	   * @return Nothing.
+	   */
 	public void order() 
 	{
 		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
@@ -88,7 +93,7 @@ public class Distributor extends SupplyChainMember
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level;
+		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		
 		//System.out.println(order_quantity);
 		

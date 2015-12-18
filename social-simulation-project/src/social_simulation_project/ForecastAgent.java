@@ -10,6 +10,13 @@ import repast.simphony.random.RandomHelper;
 */
 public class ForecastAgent 
 {
+	
+	/**
+	   * This method calculates demand for a supply
+	   * chain member
+	   * 
+	   * @return dem random forecast.
+	   */
 	public int calculateDemand()
 	{
 		int dem = RandomHelper.nextIntFromTo(2, 25);

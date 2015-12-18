@@ -28,6 +28,12 @@ public class InventoryAgent
 		this.inventory_level += shipment.getQuantity();
 	}
 	
+	/**
+	   * This method reduces the inventory
+	   * of a supply chain member
+	   * 
+	   * @return Nothing.
+	   */
 	public void reduceInventoryLevel(int reduction)
 	{
 		this.inventory_level -= reduction;
@@ -48,6 +54,4 @@ public class InventoryAgent
 	{
 		this.inventory_level = inventory_level;
 	}
-	
-	
 }
