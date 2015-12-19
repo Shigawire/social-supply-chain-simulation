@@ -17,13 +17,13 @@ public class OrderAgent
 {
 	private SupplyChainMember orderer;
 	private ArrayList<Order> receivedShipments;
-	private ArrayList<Order> receivedOrders;
+
 	
 	public OrderAgent(SupplyChainMember orderer) 
 	{
 		this.orderer = orderer;
 		this.receivedShipments = new ArrayList<Order>();
-		this.receivedOrders = new ArrayList<Order>();
+
 	}
 	
 	//TODO 
