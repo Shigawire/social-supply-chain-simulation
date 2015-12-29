@@ -57,11 +57,14 @@ public class DeliveryAgent
 				//dann geht er alle restlichen Bestellungen auch noch durch
 				openOrders.add(order);
 				shortage=+order.getQuantity();
+				
 				//return;
 			} 
 			else 
 			{
 				order.setProcessed(true);
+				//sub the amount because the order is not open anymore
+				OrderObserver.giveObserver().subAmount(order.getQuantity());
 				order.getOrderAgent().receiveShipment(order);
 				//System.out.println(order.getQuantity());
 				inventoryAgent.reduceInventoryLevel(order.getQuantity());
