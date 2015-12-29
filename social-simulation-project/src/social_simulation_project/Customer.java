@@ -75,8 +75,11 @@ public class Customer extends SupplyChainMember
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand()
-		next_demand = this.forecastAgent.calculateDemand();
+		//4. calculateDemand() ist glaube ich unnötig sieher Methode order!!!
+		//!
+		//!
+		// 4. calculateDemand() wird in order gemacht
+		//next_demand = this.forecastAgent.calculateDemand();
 		//5. order()
 		this.order();
 	}
@@ -116,7 +119,7 @@ public class Customer extends SupplyChainMember
 	   */
 	public void order() 
 	{
-		// 1. Was brauch ich im nÃ¤chsten tick?  (forecastagent befragen)
+		// 1. Was brauch ich im naechsten tick?  (forecastagent befragen)
 		// 2. Was hab ich noch im Inventar?
 		// 3. Differenz bestellen. mit orderArgent
 		
