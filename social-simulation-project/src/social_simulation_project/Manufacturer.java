@@ -14,7 +14,6 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Manufacturer extends SupplyChainMember
 {	
-	private int demand_amount;
 	private int next_demand;
 	private int price;
 	private int order_quantity;
@@ -36,7 +35,8 @@ public class Manufacturer extends SupplyChainMember
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 1)
-	public void run() {
+	public void run() 
+	{
 		// 1. harvest() = collect the produced goods that are ready now
 		this.harvest();
 		// 2. deliver()
@@ -47,11 +47,18 @@ public class Manufacturer extends SupplyChainMember
 		produce();
 	}
 
-	public void receiveShipments() {
+	/**
+	   * This method receives goods at the beginning of each tick
+	   * 
+	   * @return Nothing.
+	   */
+	public void receiveShipments() 
+	{
 		harvest();
 	}
 	
-	private void calculateDemand() {
+	private void calculateDemand() 
+	{
 		this.next_demand = this.forecastAgent.calculateDemand();
 	}
 	
@@ -60,15 +67,18 @@ public class Manufacturer extends SupplyChainMember
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
 	
-	private void harvest() {
-
-		for (ProductionBatch current_batch : Production) {
+	private void harvest() 
+	{
+		for (ProductionBatch current_batch : Production) 
+		{
 			current_batch.incrementTimeInProduction();
-			if (current_batch.getTimeInProduction() >= this.lead_time) {
+			if (current_batch.getTimeInProduction() >= this.lead_time) 
+			{
 				//This batch is ready to be added to inventory
 				this.inventoryAgent.setInventoryLevel(this.inventoryAgent.getInventoryLevel() + current_batch.getQuantity());
 				//Production.remove(current_batch);
-			} else
+			} 
+			else
 			{
 				toProduce.add(current_batch);
 			}
@@ -77,10 +87,10 @@ public class Manufacturer extends SupplyChainMember
 		Production.clear();
 		Production.addAll(toProduce);
 		toProduce.clear();
-		
-		
 	}
-	private void produce() {		
+	
+	private void produce() 
+	{		
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
 		amount_to_produce = next_demand - current_inventory_level;
@@ -94,5 +104,4 @@ public class Manufacturer extends SupplyChainMember
 	{	
 		return this.deliveryAgent;
 	}
-	
 }

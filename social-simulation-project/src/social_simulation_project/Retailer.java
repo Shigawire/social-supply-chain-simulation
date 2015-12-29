@@ -17,21 +17,11 @@ import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 */
 public class Retailer extends SupplyChainMember 
 {
-	private int demand_amount;
 	private int next_demand;
 	private int price;
 	private int order_quantity;
 	private DeliveryAgent deliveryAgent;
-//	private OrderAgent orderAgent;
 	private ArrayList<DeliveryAgent> delivery_agents;
-	
-//	public Retailer(int price, int current_inventory_level) 
-//	{
-//		super(current_inventory_level);
-//		this.price = price;
-//		orderAgent = new OrderAgent(this);	
-//		deliveryAgent = new DeliveryAgent(price);
-//	}
 	
 	public Retailer(ArrayList<Wholesaler> wholesaler_list, int price, int current_inventory_level) 
 	{
@@ -50,7 +40,6 @@ public class Retailer extends SupplyChainMember
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
-	
 	public void run() 
 	{
 		// 1. processShipments() receive shipments

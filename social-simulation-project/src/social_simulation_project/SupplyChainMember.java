@@ -36,8 +36,6 @@ public abstract class SupplyChainMember
 	public abstract void run();
 	public abstract void receiveShipments();
 	
-	
-	
 	/*
 	 * GETTERS
 	 */
