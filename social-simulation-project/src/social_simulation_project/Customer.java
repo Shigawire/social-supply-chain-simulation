@@ -15,7 +15,7 @@ import repast.simphony.essentials.RepastEssentials;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Customer extends SupplyChainMember 
+public class Customer extends Buy 
 {
 	// what the customer consumes every tick
 	private int consumption;
