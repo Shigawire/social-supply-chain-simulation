@@ -2,6 +2,8 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
+import repast.simphony.random.RandomHelper;
+
 /**
 * This class represents a trust agent. 
 *
@@ -34,6 +36,11 @@ public class TrustAgent
 			}
 		}
 		return cheapestSupplier;
+	}
+
+	public double getTrust(int place) {
+		//hier muss der trust wert zurüclgegeben werden!!!
+		return RandomHelper.nextIntFromTo(0, 1);
 	}
 	
 	/*

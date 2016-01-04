@@ -2,6 +2,8 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
+import repast.simphony.engine.environment.RunEnvironment;
+
 /**
 * This class represents a delivery agent. They are 
 * responsible for delivery (only retailers, wholesalers,
@@ -17,13 +19,13 @@ public class OrderAgent
 {
 	private SupplyChainMember orderer;
 	private ArrayList<Order> receivedShipments;
-
+	private ProcurementAgent procurementAgent;
 	
-	public OrderAgent(SupplyChainMember orderer) 
+	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent) 
 	{
 		this.orderer = orderer;
 		this.receivedShipments = new ArrayList<Order>();
-
+		this.procurementAgent=procurementAgent;
 	}
 	
 	//TODO 
@@ -61,9 +63,10 @@ public class OrderAgent
 	 * geht vom delivery agent der nächsten Stufe aus
 	 * 
 	 */
-	public void receiveShipment(Order shipment) 
+	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
 		System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
+		procurementAgent.updateTime(shipment.getOrdered_at()-(int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount(),deliverer);
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);
 	}

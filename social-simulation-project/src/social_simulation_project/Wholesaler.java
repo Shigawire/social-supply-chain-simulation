@@ -28,7 +28,8 @@ public class Wholesaler extends Buy_Sale
 		}
 
 		this.price = price;
-		orderAgent = new OrderAgent(this);
+		orderAgent = new OrderAgent(this, procurementAgent);
+		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		deliveryAgent = new DeliveryAgent(price);
 		trustAgent = new TrustAgent(delivery_agents);
 	}
