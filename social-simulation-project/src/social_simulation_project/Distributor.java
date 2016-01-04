@@ -31,8 +31,9 @@ public class Distributor extends Buy_Sale
 		this.price = price;
 		this.orderAgent = new OrderAgent(this, procurementAgent);	
 		this.deliveryAgent = new DeliveryAgent(price);
+		this.trustAgent = new TrustAgent(delivery_agents);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
-		trustAgent = new TrustAgent(delivery_agents);
+		
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 2)
@@ -41,12 +42,16 @@ public class Distributor extends Buy_Sale
 		// 1. processShipments() receive shipments
 		this.receiveShipments();
 		// 2. updateTrust()	
+		this.updateTrust();
+		//clear receivedShipments;
+		orderAgent.clearReceivedShipments();
 		// 3. deliver()
 		this.deliver();
 		// 4. calculateDemand() wird in order gemacht
 		//next_demand = this.forecastAgent.calculateDemand();
 		// 5. order()
 		this.order();
+		
 	}
 	
 

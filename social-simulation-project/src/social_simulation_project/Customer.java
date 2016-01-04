@@ -43,9 +43,9 @@ public class Customer extends Buy
 		{
 			delivery_agents.add(retailer.getDeliveryAgent());
 		}
-		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
-		orderAgent = new OrderAgent(this,procurementAgent);
-		trustAgent = new TrustAgent(delivery_agents);
+		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
+		this.trustAgent = new TrustAgent(delivery_agents);
+		this.orderAgent = new OrderAgent(this, this.procurementAgent);
 	}
 	
 	/**
@@ -71,11 +71,13 @@ public class Customer extends Buy
 		//1. processShipments()
 		this.receiveShipments();
 		System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
+		
+		orderAgent.clearReceivedShipments();
 		//2. updateTrust()
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand() ist glaube ich unnötig sieher Methode order!!!
+		//4. calculateDemand() ist glaube ich unnï¿½tig sieher Methode order!!!
 		//!
 		//!
 		// 4. calculateDemand() wird in order gemacht

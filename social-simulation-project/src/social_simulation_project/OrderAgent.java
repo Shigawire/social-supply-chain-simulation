@@ -35,7 +35,7 @@ public class OrderAgent
 		// select Retailer. mit customer.trustAgent
 		// trustAgent must be implemented
 		
-		DeliveryAgent deliveryAgent = trustAgent.chooseSupplier();
+		DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
 		//add the open order
 		OrderObserver.giveObserver().addAmount(order.getQuantity());
 		deliveryAgent.receiveOrder(order);
@@ -54,8 +54,8 @@ public class OrderAgent
 			{
 				inventoryAgent.store(shipment);
 			}
+			
 			// This can't go in the for loop
-			receivedShipments.clear();
 		}	
 	}
 	
@@ -66,7 +66,8 @@ public class OrderAgent
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
 		System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
-		procurementAgent.updateTime(shipment.getOrdered_at()-(int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount(),deliverer);
+		shipment.received();
+		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);
 	}
@@ -77,6 +78,14 @@ public class OrderAgent
 	public SupplyChainMember getOrderer() 
 	{	
 		return orderer;
+	}
+	
+	public void clearReceivedShipments() {
+		receivedShipments.clear();
+	}
+	
+	public ArrayList<Order> getReceivedShipments() {
+		return this.receivedShipments;
 	}
 	
 	/*

@@ -40,6 +40,7 @@ public class Wholesaler extends Buy_Sale
 		// 1. processShipments() receive shipments
 		this.receiveShipments();
 		// 2. updateTrust()	
+		orderAgent.clearReceivedShipments();
 		// 3. deliver()
 		this.deliver();
 		// 4. calculateDemand() wird in order gemacht
