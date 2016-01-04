@@ -6,26 +6,26 @@ enum DimensionType {
 
 abstract public class TrustDimension {
 	
-	private double dimension_rating; //how important is this trust dimension to the specific agent?
-	private double trust_value;
+	private double dimensionRating; //how important is this trust dimension to the specific agent?
+	private double trustValue;
 	
 	//private DimensionType dimension_type;
 	
 	public TrustDimension(double dimension_rating, double starting_value) {
-		this.trust_value = starting_value;
-		this.dimension_rating = dimension_rating;
+		this.trustValue = starting_value;
+		this.dimensionRating = dimension_rating;
 	}
 	
 	public double getDimensionRating() {
-		return this.dimension_rating;
+		return this.dimensionRating;
 	}
 	
 	public double getTrustValue() {
-		return this.trust_value;
+		return this.trustValue;
 	}
 	
 	public void updateDimension(double trust_value) {
-		this.trust_value+= trust_value;
+		this.trustValue+= trust_value;
 	}
 
 }
