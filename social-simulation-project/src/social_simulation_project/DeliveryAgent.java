@@ -18,11 +18,13 @@ public class DeliveryAgent
 	private int price;
 	private int current_inventory_level;
 	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu �bertragen
+	private ArrayList<Order> everReceivedOrders;
 	private ArrayList<Order> openOrders;
 	private int shortage=0;
 	public DeliveryAgent(int price) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
+		this.everReceivedOrders = new ArrayList<Order>();
 		this.openOrders = new ArrayList<Order>();
 		this.price = price;
 	}
@@ -36,6 +38,7 @@ public class DeliveryAgent
 	public void receiveOrder(Order order) 
 	{
 		receivedOrders.add(order);
+		everReceivedOrders.add(order);
 	}
 	
 	/**
@@ -89,6 +92,9 @@ public class DeliveryAgent
 	public int getShortage() {
 		// TODO Auto-generated method stub
 		return shortage;
+	}
+	public ArrayList<Order> getAllOrders(){
+		return this.everReceivedOrders;
 	}
 	
 	/*

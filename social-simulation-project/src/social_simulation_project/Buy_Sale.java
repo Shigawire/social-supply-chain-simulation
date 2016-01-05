@@ -44,7 +44,7 @@ public abstract class Buy_Sale extends Buy{
 		// 3. Differenz bestellen. mit orderArgent
 		
 		// 1.
-		next_demand = this.forecastAgent.calculateDemand();
+		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 		
 		// 2.
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();

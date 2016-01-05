@@ -58,7 +58,7 @@ public class Manufacturer extends SupplyChainMember
 	
 	private void calculateDemand() 
 	{
-		this.next_demand = this.forecastAgent.calculateDemand();
+		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 	}
 	
 	private void deliver() 

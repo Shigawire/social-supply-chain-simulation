@@ -127,7 +127,7 @@ public class Customer extends Buy
 		// 3. Differenz bestellen. mit orderArgent
 		
 		// 1.
-		next_demand = this.forecastAgent.calculateDemand();
+		next_demand = this.forecastAgent.customerDemand();
 		System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
