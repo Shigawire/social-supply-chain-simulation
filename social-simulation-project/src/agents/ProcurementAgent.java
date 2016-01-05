@@ -1,4 +1,4 @@
-package social_simulation_project;
+package agents;
 
 import java.util.ArrayList;
 import repast.simphony.engine.environment.RunEnvironment;

@@ -2,6 +2,8 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
+import agents.DeliveryAgent;
+
 public abstract class Buy_Sale extends Buy{
 	protected int next_demand;
 	protected int price;

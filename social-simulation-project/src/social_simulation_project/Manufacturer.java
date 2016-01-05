@@ -3,6 +3,7 @@ package social_simulation_project;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import agents.DeliveryAgent;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 /**

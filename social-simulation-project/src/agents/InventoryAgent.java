@@ -1,4 +1,6 @@
-package social_simulation_project;
+package agents;
+
+import social_simulation_project.Order;
 
 /**
 * This class represents an inventory agent. They are 

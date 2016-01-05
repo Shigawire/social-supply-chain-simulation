@@ -1,7 +1,8 @@
-package social_simulation_project;
+package agents;
 
 import repast.simphony.essentials.RepastEssentials;
 import repast.simphony.random.RandomHelper;
+import social_simulation_project.Order;
 
 import java.util.ArrayList;
 import java.util.Iterator;

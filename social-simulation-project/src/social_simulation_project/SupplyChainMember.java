@@ -2,6 +2,10 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
+import agents.ForecastAgent;
+import agents.InventoryAgent;
+import agents.TrustAgent;
+
 /**
 * This class is the generalization for all
 * supply chain members. 

@@ -1,6 +1,9 @@
-package social_simulation_project;
+package agents;
 
 import java.util.ArrayList;
+
+import social_simulation_project.Order;
+import social_simulation_project.OrderObserver;
 
 /**
 * This class represents a delivery agent. They are 

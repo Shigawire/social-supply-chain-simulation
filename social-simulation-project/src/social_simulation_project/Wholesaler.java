@@ -3,6 +3,10 @@ package social_simulation_project;
 import java.util.ArrayList;
 import java.util.List;
 
+import agents.DeliveryAgent;
+import agents.OrderAgent;
+import agents.ProcurementAgent;
+import agents.TrustAgent;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;

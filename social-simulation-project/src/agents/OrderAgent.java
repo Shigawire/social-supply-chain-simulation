@@ -1,8 +1,11 @@
-package social_simulation_project;
+package agents;
 
 import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
+import social_simulation_project.Order;
+import social_simulation_project.OrderObserver;
+import social_simulation_project.SupplyChainMember;
 
 /**
 * This class represents a delivery agent. They are 

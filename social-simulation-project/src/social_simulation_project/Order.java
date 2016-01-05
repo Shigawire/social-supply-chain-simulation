@@ -1,5 +1,6 @@
 package social_simulation_project;
 
+import agents.OrderAgent;
 import repast.simphony.engine.environment.RunEnvironment;
 
 /**
@@ -16,6 +17,7 @@ public class Order
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;
+	
 	
 	// Order received and sent
 	private boolean processed;
