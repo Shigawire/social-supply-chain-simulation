@@ -57,18 +57,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Open Orders</string>
-      <SeriesData>
-        <label>Open Orders</label>
-        <color>
-          <red>0</red>
-          <green>255</green>
-          <blue>255</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Manufacturer Inv</string>
       <SeriesData>
         <label>Manufacturer Inv</label>

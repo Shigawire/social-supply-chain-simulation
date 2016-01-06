@@ -15,7 +15,7 @@ import repast.simphony.essentials.RepastEssentials;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Customer extends Buy 
+public class Customer extends SupplyChainMember 
 {
 	// what the customer consumes every tick
 	private int consumption;
@@ -43,10 +43,9 @@ public class Customer extends Buy
 		{
 			delivery_agents.add(retailer.getDeliveryAgent());
 		}
+
+		orderAgent = new OrderAgent(this);
 		trustAgent = new TrustAgent(delivery_agents);
-		orderAgent = new OrderAgent(this, this.procurementAgent);
-		
-		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
 	}
 	
 	/**
@@ -72,13 +71,11 @@ public class Customer extends Buy
 		//1. processShipments()
 		this.receiveShipments();
 		System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
-		
-		orderAgent.clearReceivedShipments();
 		//2. updateTrust()
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand() ist glaube ich unnï¿½tig sieher Methode order!!!
+		//4. calculateDemand() ist glaube ich unnötig sieher Methode order!!!
 		//!
 		//!
 		// 4. calculateDemand() wird in order gemacht

@@ -13,7 +13,7 @@ public abstract class SupplyChainMember
 {
 	protected String id;
 	protected int current_inventory_level;
-	
+	protected OrderAgent orderAgent;
 	protected TrustAgent trustAgent;
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;

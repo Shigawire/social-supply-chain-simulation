@@ -12,7 +12,6 @@ public class Order
 {
 	private int quantity;
 	private int ordered_at; // tick
-	private int received_at;
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;
@@ -48,7 +47,7 @@ public class Order
 		return this.id;
 	}
 	
-	public int getOrderedAt() 
+	public int getOrdered_at() 
 	{
 		return this.ordered_at;
 	}
@@ -75,15 +74,6 @@ public class Order
 	public void setProcessed(boolean processed) 
 	{
 		this.processed = true;
-		
-	}
-	
-	public void received() {
-		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-	}
-	
-	public int getReceivedAt() {
-		return this.received_at;
 	}
 	
 	public void setQuantity(int quantity) 

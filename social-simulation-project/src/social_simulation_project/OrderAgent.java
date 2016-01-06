@@ -2,8 +2,6 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
-import repast.simphony.engine.environment.RunEnvironment;
-
 /**
 * This class represents a delivery agent. They are 
 * responsible for delivery (only retailers, wholesalers,
@@ -19,13 +17,13 @@ public class OrderAgent
 {
 	private SupplyChainMember orderer;
 	private ArrayList<Order> receivedShipments;
-	private ProcurementAgent procurementAgent;
+	private ArrayList<Order> receivedOrders;
 	
-	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent) 
+	public OrderAgent(SupplyChainMember orderer) 
 	{
 		this.orderer = orderer;
 		this.receivedShipments = new ArrayList<Order>();
-		this.procurementAgent=procurementAgent;
+		this.receivedOrders = new ArrayList<Order>();
 	}
 	
 	//TODO 
@@ -35,9 +33,7 @@ public class OrderAgent
 		// select Retailer. mit customer.trustAgent
 		// trustAgent must be implemented
 		
-		DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
-		//add the open order
-		OrderObserver.giveObserver().addAmount(order.getQuantity());
+		DeliveryAgent deliveryAgent = trustAgent.chooseSupplier();
 		deliveryAgent.receiveOrder(order);
 	}
 	
@@ -54,8 +50,8 @@ public class OrderAgent
 			{
 				inventoryAgent.store(shipment);
 			}
-			
 			// This can't go in the for loop
+			receivedShipments.clear();
 		}	
 	}
 	
@@ -63,11 +59,9 @@ public class OrderAgent
 	 * geht vom delivery agent der nächsten Stufe aus
 	 * 
 	 */
-	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
+	public void receiveShipment(Order shipment) 
 	{
 		System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
-		shipment.received();
-		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);
 	}
@@ -78,14 +72,6 @@ public class OrderAgent
 	public SupplyChainMember getOrderer() 
 	{	
 		return orderer;
-	}
-	
-	public void clearReceivedShipments() {
-		receivedShipments.clear();
-	}
-	
-	public ArrayList<Order> getReceivedShipments() {
-		return this.receivedShipments;
 	}
 	
 	/*
