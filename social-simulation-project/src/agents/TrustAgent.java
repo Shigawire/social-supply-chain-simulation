@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import social_simulation_project.CompetenceDimension;
+import social_simulation_project.DimensionType;
 import social_simulation_project.Order;
 import social_simulation_project.QualityDimension;
 import social_simulation_project.ReliabilityDimension;
 import social_simulation_project.SharedValuesDimension;
 import social_simulation_project.Trust;
-
 
 
 /**

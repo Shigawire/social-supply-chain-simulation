@@ -33,10 +33,12 @@ public class Distributor extends Buy_Sale
 		}
 		
 		this.price = price;
-		this.orderAgent = new OrderAgent(this, procurementAgent);	
-		this.deliveryAgent = new DeliveryAgent(price);
 		this.trustAgent = new TrustAgent(delivery_agents);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
+		this.orderAgent = new OrderAgent(this, procurementAgent);	
+		this.deliveryAgent = new DeliveryAgent(price);
+		
+		
 		
 	}
 	

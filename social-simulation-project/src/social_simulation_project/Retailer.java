@@ -34,11 +34,13 @@ public class Retailer extends Buy_Sale
 		}
 
 		this.price = price;
+		trustAgent = new TrustAgent(delivery_agents);
+		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		orderAgent = new OrderAgent(this, procurementAgent);
 		deliveryAgent = new DeliveryAgent(price);
 		
-		trustAgent = new TrustAgent(delivery_agents);
-		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
+		
+		
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)

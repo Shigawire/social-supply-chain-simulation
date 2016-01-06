@@ -1,10 +1,11 @@
 package social_simulation_project;
 
-enum DimensionType {
+/*enum DimensionType {
 	RELIABILITY, COMPETENCE, QUALITY, SHARED_VALUES
-};
+};*/
 
 abstract public class TrustDimension {
+	
 	
 	private double dimensionRating; //how important is this trust dimension to the specific agent?
 	private double trustValue;

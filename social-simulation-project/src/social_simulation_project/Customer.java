@@ -48,9 +48,8 @@ public class Customer extends Buy
 			delivery_agents.add(retailer.getDeliveryAgent());
 		}
 		trustAgent = new TrustAgent(delivery_agents);
-		orderAgent = new OrderAgent(this, this.procurementAgent);
-		
 		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
+		orderAgent = new OrderAgent(this, this.procurementAgent);
 	}
 	
 	/**
