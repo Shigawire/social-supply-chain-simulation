@@ -65,7 +65,7 @@ public class DeliveryAgent
 				order.setProcessed(true);
 				//sub the amount because the order is not open anymore
 				OrderObserver.giveObserver().subAmount(order.getQuantity());
-				order.getOrderAgent().receiveShipment(order);
+				order.getOrderAgent().receiveShipment(order,this);
 				//System.out.println(order.getQuantity());
 				inventoryAgent.reduceInventoryLevel(order.getQuantity());
 				current_inventory_level = inventoryAgent.getInventoryLevel();

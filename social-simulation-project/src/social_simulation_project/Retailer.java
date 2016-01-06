@@ -30,9 +30,11 @@ public class Retailer extends Buy_Sale
 		}
 
 		this.price = price;
-		orderAgent = new OrderAgent(this);
+		orderAgent = new OrderAgent(this, procurementAgent);
 		deliveryAgent = new DeliveryAgent(price);
+		
 		trustAgent = new TrustAgent(delivery_agents);
+		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
@@ -40,7 +42,8 @@ public class Retailer extends Buy_Sale
 	{
 		// 1. processShipments() receive shipments
 		this.receiveShipments();
-		// 2. updateTrust()	
+		// 2. updateTrust()
+		orderAgent.clearReceivedShipments();
 		// 3. deliver()
 		this.deliver();
 		// 4. calculateDemand() wird in order gemacht
