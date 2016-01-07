@@ -79,7 +79,6 @@ public class ProcurementAgent
 				highest = moment;
 			}
 		}
-		System.out.println(delivery_agents.get(highestPoint).getId());
 		return delivery_agents.get(highestPoint);
 	}
 	
