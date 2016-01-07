@@ -73,10 +73,10 @@ public class Customer extends Buy
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
 		}
 		
-		System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
+		//System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();
-		System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
+		//System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
 		
 		orderAgent.clearReceivedShipments();
 		//2. updateTrust()
@@ -133,18 +133,18 @@ public class Customer extends Buy
 		
 		// 1.
 		next_demand = this.forecastAgent.customerDemand();
-		System.out.println("[Customer] Next demand is  " + next_demand);
+		//System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
 		current_inventory_level = this.inventoryAgent.getInventoryLevel();
 		
-		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getInventoryLevel());
+		//System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getInventoryLevel());
 		
 		
 		// 3.
 		order_quantity = next_demand - current_inventory_level;
 		
-		System.out.println("[Customer] order_quantity is  " + order_quantity);
+		//System.out.println("[Customer] order_quantity is  " + order_quantity);
 
 		// TODO replenishment policy
 		

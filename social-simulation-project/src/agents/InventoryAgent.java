@@ -26,7 +26,7 @@ public class InventoryAgent
 	   */
 	public void store(Order shipment) 
 	{
-		System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.inventory_level + " to level+" +shipment.getQuantity());
+		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.inventory_level + " to level+" +shipment.getQuantity());
 		this.inventory_level += shipment.getQuantity();
 	}
 	

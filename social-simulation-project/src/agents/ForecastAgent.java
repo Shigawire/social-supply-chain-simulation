@@ -56,7 +56,7 @@ public class ForecastAgent
 			orderHistory.add(everReceivedOrders.get(i));
 		}
 		
-		System.out.println(orderHistory.size());
+		//System.out.println(orderHistory.size());
 		this.observedData = new DataSet();
 		createDataset();
 		int output = getForecast();
@@ -106,7 +106,7 @@ public class ForecastAgent
     // forecasts amount for next period:
     public int getForecast()
     {  
-    	System.out.println(observedData.toString());
+    	//System.out.println(observedData.toString());
     	if (observedData.size() == 0) return lastForecast;
     	double b = 0; // variable for output	
 
@@ -127,7 +127,7 @@ public class ForecastAgent
 			DataPoint dp = (DataPoint)it.next();
 			b = dp.getDependentValue(); //write forecast into output variable
 		}
-		System.out.println(b);
+		//System.out.println(b);
 		return (int)b;
     }
     
