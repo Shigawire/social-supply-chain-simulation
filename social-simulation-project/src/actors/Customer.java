@@ -1,4 +1,4 @@
-package social_simulation_project;
+package actors;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,8 @@ import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
+import artefacts.Order;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.essentials.RepastEssentials;

@@ -1,51 +1,46 @@
-package social_simulation_project;
+package actors;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.engine.watcher.Watch;
-import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 
 /**
-* This class represents a wholesaler. Wholesalers do not
-* differ from retailers or distributors. The only 
+* This class represents a retailer. Retailer do not
+* differ from wholesalers or distributors. The only 
 * difference is their position in the supply chain.
 *
 * @author  PS Development Team
-* @since   2015-12-04
+* @since   2015-11-30
 */
-public class Wholesaler extends Buy_Sale
+public class Retailer extends Buy_Sale
 {
-	public Wholesaler(ArrayList<Distributor> distributor_list, int price, int current_inventory_level) 
+	public Retailer(ArrayList<Wholesaler> wholesaler_list, int price, int current_inventory_level) 
 	{
 		super(current_inventory_level);
 		delivery_agents = new ArrayList<DeliveryAgent>();
 		
-		for (Distributor distributor : distributor_list)
+		for (Wholesaler wholesaler : wholesaler_list)
 		{
-			delivery_agents.add(distributor.getDeliveryAgent());
+			delivery_agents.add(wholesaler.getDeliveryAgent());
 		}
 
 		this.price = price;
 		trustAgent = new TrustAgent(delivery_agents);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		orderAgent = new OrderAgent(this, procurementAgent);
-		
 		deliveryAgent = new DeliveryAgent(price);
-		
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, priority = 3)
+	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	public void run() 
 	{
 		// 1. processShipments() receive shipments
 		this.receiveShipments();
-		// 2. updateTrust()	
+		// 2. updateTrust()
 		orderAgent.clearReceivedShipments();
 		// 3. deliver()
 		this.deliver();
@@ -55,5 +50,14 @@ public class Wholesaler extends Buy_Sale
 		this.order();
 	}
 	
+	/**
+	   * This method receives goods at the beginning of each tick
+	   * 
+	   * @return Nothing.
+	   */
 	
+	
+	/* 
+	 * SETTERS
+	 */
 }

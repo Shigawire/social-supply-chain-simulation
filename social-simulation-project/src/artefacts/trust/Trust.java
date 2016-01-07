@@ -1,12 +1,11 @@
-package social_simulation_project;
+package artefacts.trust;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class Trust {
-
+public class Trust 
+{
 	private ArrayList<TrustDimension> trustDimensions; 
 	
 	private ReliabilityDimension reliability;
@@ -16,7 +15,11 @@ public class Trust {
 	
 	private Map<DimensionType, TrustDimension> dimensionMapping = new HashMap<DimensionType, TrustDimension>();
 	
-	public Trust(ReliabilityDimension reliability, CompetenceDimension competence, QualityDimension quality, SharedValuesDimension shared_values) {
+	public Trust(ReliabilityDimension reliability, 
+			     CompetenceDimension competence, 
+			     QualityDimension quality, 
+			     SharedValuesDimension shared_values)
+	{
 		this.reliability = reliability;
 		this.competence = competence;
 		this.quality = quality;
@@ -28,11 +31,13 @@ public class Trust {
 		dimensionMapping.put(DimensionType.SHARED_VALUES, shared_values);
 	}
 	
-	public double getUnifiedTrustValue() {
+	public double getUnifiedTrustValue() 
+	{
 		return 0.95;
 	}
 	
-	public TrustDimension getDimension(DimensionType type) {
+	public TrustDimension getDimension(DimensionType type) 
+	{
 		return dimensionMapping.get(type);
 	}
 }

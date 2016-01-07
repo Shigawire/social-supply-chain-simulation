@@ -2,10 +2,9 @@ package agents;
 
 import java.util.ArrayList;
 
-import repast.simphony.engine.environment.RunEnvironment;
-import social_simulation_project.Order;
+import actors.SupplyChainMember;
+import artefacts.Order;
 import social_simulation_project.OrderObserver;
-import social_simulation_project.SupplyChainMember;
 
 /**
 * This class represents a delivery agent. They are 
@@ -31,8 +30,6 @@ public class OrderAgent
 		this.procurementAgent=procurementAgent;
 	}
 	
-	//TODO 
-	//
 	public void order(TrustAgent trustAgent, Order order) 
 	{
 		// select Retailer. mit customer.trustAgent
@@ -57,8 +54,6 @@ public class OrderAgent
 			{
 				inventoryAgent.store(shipment);
 			}
-			
-			// This can't go in the for loop
 		}	
 	}
 	
@@ -83,11 +78,13 @@ public class OrderAgent
 		return orderer;
 	}
 	
-	public void clearReceivedShipments() {
+	public void clearReceivedShipments() 
+	{
 		receivedShipments.clear();
 	}
 	
-	public ArrayList<Order> getReceivedShipments() {
+	public ArrayList<Order> getReceivedShipments() 
+	{
 		return this.receivedShipments;
 	}
 	

@@ -2,7 +2,7 @@ package agents;
 
 import java.util.ArrayList;
 
-import social_simulation_project.Order;
+import artefacts.Order;
 import social_simulation_project.OrderObserver;
 
 /**
@@ -23,7 +23,8 @@ public class DeliveryAgent
 	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu �bertragen
 	private ArrayList<Order> everReceivedOrders;
 	private ArrayList<Order> openOrders;
-	private int shortage=0;
+	private int shortage = 0;
+	
 	public DeliveryAgent(int price) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
@@ -92,11 +93,13 @@ public class DeliveryAgent
 		return this.price;
 	}
 
-	public int getShortage() {
-		// TODO Auto-generated method stub
+	public int getShortage() 
+	{
 		return shortage;
 	}
-	public ArrayList<Order> getAllOrders(){
+	
+	public ArrayList<Order> getAllOrders()
+	{	
 		return this.everReceivedOrders;
 	}
 	

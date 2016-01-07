@@ -2,7 +2,11 @@ package social_simulation_project;
 
 import java.util.ArrayList;
 
-
+import actors.Customer;
+import actors.Distributor;
+import actors.Manufacturer;
+import actors.Retailer;
+import actors.Wholesaler;
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;

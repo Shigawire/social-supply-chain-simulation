@@ -1,4 +1,4 @@
-package social_simulation_project;
+package artefacts;
 
 /**
 * This class represents a production batch.

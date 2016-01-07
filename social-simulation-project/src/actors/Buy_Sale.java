@@ -1,25 +1,30 @@
-package social_simulation_project;
+package actors;
 
 import java.util.ArrayList;
 
 import agents.DeliveryAgent;
+import artefacts.Order;
 
-public abstract class Buy_Sale extends Buy{
+public abstract class Buy_Sale extends Buy
+{
 	protected int next_demand;
 	protected int price;
 	protected int order_quantity;
 	protected DeliveryAgent deliveryAgent;
 	protected ArrayList<DeliveryAgent> delivery_agents;
-	public Buy_Sale(int inventory_level) {
+	
+	public Buy_Sale(int inventory_level) 
+	{
 		super(inventory_level);
-		// TODO Auto-generated constructor stub
 	}
+	
 	public void receiveShipments() 
 	{
 		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
 	
-	public void updateTrust() {
+	public void updateTrust() 
+	{
 		this.trustAgent.inspectNewArrivals(orderAgent.getReceivedShipments());
 	}
 	
@@ -54,10 +59,6 @@ public abstract class Buy_Sale extends Buy{
 		// 3.
 		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		
-		//System.out.println(order_quantity);
-		
-		// TODO replenishment policy
-		
 		// If the inventory level is sufficient for the next demand,
 		// do not order
 		if (order_quantity < 0) 
@@ -71,8 +72,6 @@ public abstract class Buy_Sale extends Buy{
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
 		}
-		
-		
 	}
 
 	/*
@@ -86,7 +85,5 @@ public abstract class Buy_Sale extends Buy{
 	public int getPrice()
 	{
 		return this.price;
-	}
-	
-	
+	}	
 }

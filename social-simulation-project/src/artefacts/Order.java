@@ -1,5 +1,6 @@
-package social_simulation_project;
+package artefacts;
 
+import actors.SupplyChainMember;
 import agents.OrderAgent;
 import repast.simphony.engine.environment.RunEnvironment;
 
@@ -37,6 +38,11 @@ public class Order
 //		return (this.backlog > 0);
 //	}
 	
+	public void received() 
+	{
+		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+	}
+	
 	/*
 	 * GETTERS
 	 */
@@ -71,6 +77,11 @@ public class Order
 		return processed;
 	}
 	
+	public int getReceivedAt() 
+	{
+		return this.received_at;
+	}
+	
 	/*
 	 * SETTERS
 	 */
@@ -78,14 +89,6 @@ public class Order
 	{
 		this.processed = true;
 		
-	}
-	
-	public void received() {
-		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-	}
-	
-	public int getReceivedAt() {
-		return this.received_at;
 	}
 	
 	public void setQuantity(int quantity) 

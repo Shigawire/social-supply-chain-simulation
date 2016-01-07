@@ -1,6 +1,4 @@
-package social_simulation_project;
-
-import java.util.ArrayList;
+package actors;
 
 import agents.ForecastAgent;
 import agents.InventoryAgent;

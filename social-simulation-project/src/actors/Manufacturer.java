@@ -1,9 +1,9 @@
-package social_simulation_project;
+package actors;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 import agents.DeliveryAgent;
+import artefacts.ProductionBatch;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 /**
