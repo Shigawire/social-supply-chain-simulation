@@ -26,7 +26,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.setId("Social Simulation Project");
 		RunEnvironment.getInstance().setScheduleTickDelay(20);
 		
-		Manufacturer manufacturer1 = new Manufacturer(10, 100);
+		Manufacturer manufacturer1 = new Manufacturer(10 ,0, 100);
 		ArrayList<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
 		manufacturerList.add(manufacturer1);
 		
@@ -39,8 +39,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 distributors
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Distributor distributor1 = new Distributor(manufacturerList, 50, 50);
-		Distributor distributor2 = new Distributor(manufacturerList, 60, 170);
+		Distributor distributor1 = new Distributor(manufacturerList, 50, 0, 50);
+		Distributor distributor2 = new Distributor(manufacturerList, 60, 0, 170);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
@@ -59,8 +59,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 wholesalers
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Wholesaler wholesaler1 = new Wholesaler(distributorList, 20, 40);
-		Wholesaler wholesaler2 = new Wholesaler(distributorList, 15, 30);
+		Wholesaler wholesaler1 = new Wholesaler(distributorList, 20, 0, 40);
+		Wholesaler wholesaler2 = new Wholesaler(distributorList, 15, 0, 30);
 		
 		// Create a list of wholesalers and add every 
 		// wholesaler to that list (for now only 1)
@@ -79,8 +79,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// For the beginning create 2 retailers
 		// First parameter is price
 		// Second parameter is initial inventory level
-		Retailer retailer1 = new Retailer(wholesalerList, 10, 10);
-		Retailer retailer2 = new Retailer(wholesalerList, 5, 10);
+		Retailer retailer1 = new Retailer(wholesalerList, 10, 0, 10);
+		Retailer retailer2 = new Retailer(wholesalerList, 5, 0, 10);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)

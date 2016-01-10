@@ -18,9 +18,11 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Wholesaler extends Buy_Sale
 {
-	public Wholesaler(ArrayList<Distributor> distributor_list, int price, int current_inventory_level) 
+	protected int almostFinished;
+	
+	public Wholesaler(ArrayList<Distributor> distributor_list, int price, int current_incoming_inventory_level,int current_outgoing_inventory_level) 
 	{
-		super(current_inventory_level);
+		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		delivery_agents = new ArrayList<DeliveryAgent>();
 		
 		for (Distributor distributor : distributor_list)
@@ -34,6 +36,8 @@ public class Wholesaler extends Buy_Sale
 		orderAgent = new OrderAgent(this, procurementAgent);
 		
 		deliveryAgent = new DeliveryAgent(price);
+		this.productionQueue=0;
+		this.almostFinished=0;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 3)
@@ -43,11 +47,19 @@ public class Wholesaler extends Buy_Sale
 		this.receiveShipments();
 		// 2. updateTrust()	
 		orderAgent.clearReceivedShipments();
-		// 3. deliver()
+		// 3. produce
+		this.produce();
+		// 4. deliver()
 		this.deliver();
-		// 4. calculateDemand() wird in order gemacht
+		// 5. calculateDemand() wird in order gemacht
 		//next_demand = this.forecastAgent.calculateDemand();
-		// 5. order()
+		// 6. order()
 		this.order();
+	}
+	private void produce(){
+		this.inventoryAgent.increaseOutgoingInventoryLevel(almostFinished);
+		almostFinished = productionQueue;
+		productionQueue = this.inventoryAgent.getIncomingInventoryLevel();
+		this.inventoryAgent.setIncomingInventoryLevel(0);
 	}
 }

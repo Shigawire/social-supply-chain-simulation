@@ -14,8 +14,8 @@ import agents.TrustAgent;
 public abstract class SupplyChainMember 
 {
 	protected String id;
-	protected int current_inventory_level;
-	
+	protected int current_incoming_inventory_level;
+	protected int current_outgoing_inventory_level;
 	protected TrustAgent trustAgent;
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
@@ -25,12 +25,12 @@ public abstract class SupplyChainMember
 	   * id in a hexadecimal format.
 	   * 
 	   */
-	public SupplyChainMember(int inventory_level) 
+	public SupplyChainMember(int incoming_inventory_level, int outgoing_inventory_level) 
 	{
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		
-		// Create inventory agent with inventoryLevel
-		this.inventoryAgent = new InventoryAgent(inventory_level);
+		// Create inventory agent with inventoryLevels
+		this.inventoryAgent = new InventoryAgent(incoming_inventory_level,outgoing_inventory_level);
 		this.forecastAgent = new ForecastAgent();
 	}
 	
@@ -41,9 +41,13 @@ public abstract class SupplyChainMember
 	/*
 	 * GETTERS
 	 */
-	public int getCurrent_inventory_level()
+	public int getCurrent_incoming_inventory_level()
 	{
-		return this.inventoryAgent.getInventoryLevel();
+		return this.inventoryAgent.getIncomingInventoryLevel();
+	}
+	public int getCurrent_outgoing_inventory_level()
+	{
+		return this.inventoryAgent.getOutgoingInventoryLevel();
 	}
 	
 	/*
