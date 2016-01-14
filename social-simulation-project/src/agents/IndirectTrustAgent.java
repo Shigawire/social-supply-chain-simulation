@@ -14,7 +14,7 @@ import artefacts.trust.Trust;
 public class IndirectTrustAgent {
 	//designpattern: Singleton
 	//Lists with actors
-	//muss noch in den Kontext!
+	//have to be in context
 	private ArrayList<Manufacturer> manufacturerList;
 	private ArrayList<Distributor> distributorList;
 	private ArrayList<Wholesaler> wholesalerList;
