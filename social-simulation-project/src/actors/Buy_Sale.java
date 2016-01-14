@@ -25,7 +25,7 @@ public abstract class Buy_Sale extends Buy
 	
 	public void updateTrust() 
 	{
-		this.trustAgent.inspectNewArrivals(orderAgent.getReceivedShipments());
+		this.trustAgent.inspectNewArrivals(orderAgent);
 	}
 	
 	/**

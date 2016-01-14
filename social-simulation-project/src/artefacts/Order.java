@@ -1,8 +1,9 @@
 package artefacts;
 
-import actors.SupplyChainMember;
-import agents.OrderAgent;
 import repast.simphony.engine.environment.RunEnvironment;
+import actors.SupplyChainMember;
+import agents.DeliveryAgent;
+import agents.OrderAgent;
 
 /**
 * This class represents an order. 
@@ -18,7 +19,9 @@ public class Order
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;
+	private DeliveryAgent deliveryAgent;
 	
+	private double expectedDelivery;
 	
 	// Order received and sent
 	private boolean processed;
@@ -82,6 +85,14 @@ public class Order
 		return this.received_at;
 	}
 	
+	public DeliveryAgent getDeliveryAgent() {
+		return this.deliveryAgent;
+	}
+	
+	public double getExpectedDeliveryDate(){
+		return this.expectedDelivery;
+	}
+	
 	/*
 	 * SETTERS
 	 */
@@ -91,8 +102,16 @@ public class Order
 		
 	}
 	
+	public void setExpectedDeliveryDuration(double duration) {
+		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
+	}
+	
 	public void setQuantity(int quantity) 
 	{
 		this.quantity = quantity;
+	}
+	
+	public void setDeliveryAgent(DeliveryAgent deliveryAgent) {
+		this.deliveryAgent = deliveryAgent;
 	}
 }

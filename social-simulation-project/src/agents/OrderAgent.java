@@ -36,6 +36,8 @@ public class OrderAgent
 		// trustAgent must be implemented
 		
 		DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
+		double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
+		order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 		//add the open order
 		OrderObserver.giveObserver().addAmount(order.getQuantity());
 		deliveryAgent.receiveOrder(order);

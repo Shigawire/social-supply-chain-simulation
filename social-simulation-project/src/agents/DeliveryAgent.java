@@ -41,6 +41,7 @@ public class DeliveryAgent
 	   */
 	public void receiveOrder(Order order) 
 	{
+		order.setDeliveryAgent(this);
 		receivedOrders.add(order);
 		everReceivedOrders.add(order);
 	}
@@ -101,6 +102,12 @@ public class DeliveryAgent
 	public ArrayList<Order> getAllOrders()
 	{	
 		return this.everReceivedOrders;
+	
+	}
+	
+	public double getExpectedDeliveryTime() {
+		//TODO implement
+		return 2;
 	}
 	
 	/*
