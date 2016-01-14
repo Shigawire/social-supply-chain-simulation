@@ -1,6 +1,8 @@
-package social_simulation_project;
+package actors;
 
-import java.util.ArrayList;
+import agents.ForecastAgent;
+import agents.InventoryAgent;
+import agents.TrustAgent;
 
 /**
 * This class is the generalization for all

@@ -19,16 +19,16 @@
       <string>Customer Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Customer Inv</id>
-        <className>social_simulation_project.Customer</className>
+        <className>actors.Customer</className>
         <methodName>getCurrent_inventory_level</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Retainer Inv</string>
+      <string>Retailer Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Retainer Inv</id>
-        <className>social_simulation_project.Retailer</className>
+        <id>Retailer Inv</id>
+        <className>actors.Retailer</className>
         <methodName>getCurrent_inventory_level</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -37,7 +37,7 @@
       <string>Wholesaler Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Wholesaler Inv</id>
-        <className>social_simulation_project.Wholesaler</className>
+        <className>actors.Wholesaler</className>
         <methodName>getCurrent_inventory_level</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -46,7 +46,7 @@
       <string>Distributor Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Distributor Inv</id>
-        <className>social_simulation_project.Distributor</className>
+        <className>actors.Distributor</className>
         <methodName>getCurrent_inventory_level</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -55,7 +55,7 @@
       <string>Manufacturer Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Manufacturer Inv</id>
-        <className>social_simulation_project.Manufacturer</className>
+        <className>actors.Manufacturer</className>
         <methodName>getCurrent_inventory_level</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>

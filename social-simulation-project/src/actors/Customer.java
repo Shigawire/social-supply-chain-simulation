@@ -1,6 +1,12 @@
-package social_simulation_project;
+package actors;
 
 import java.util.ArrayList;
+
+import agents.DeliveryAgent;
+import agents.OrderAgent;
+import agents.ProcurementAgent;
+import agents.TrustAgent;
+import artefacts.Order;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -15,7 +21,7 @@ import repast.simphony.essentials.RepastEssentials;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Customer extends SupplyChainMember 
+public class Customer extends Buy 
 {
 	// what the customer consumes every tick
 	private int consumption;
@@ -34,9 +40,9 @@ public class Customer extends SupplyChainMember
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer(ArrayList<Retailer> retailer_list, int inventory_level) 
+	public Customer(ArrayList<Sale> sailor_list, int inventory_level) 
 	{
-		super(inventory_level);
+		super(sailor_list, inventory_level);
 		delivery_agents = new ArrayList<DeliveryAgent>();
 		
 		for (Retailer retailer : retailer_list)
@@ -46,6 +52,8 @@ public class Customer extends SupplyChainMember
 
 		orderAgent = new OrderAgent(this);
 		trustAgent = new TrustAgent(delivery_agents);
+		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
+		orderAgent = new OrderAgent(this, this.procurementAgent);
 	}
 	
 	/**
@@ -61,7 +69,7 @@ public class Customer extends SupplyChainMember
 	   */
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
-	{
+	{	
 		if ((int)RepastEssentials.GetTickCount()==1)
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
@@ -70,12 +78,14 @@ public class Customer extends SupplyChainMember
 		System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();
-		System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
+		//System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
+		
+		orderAgent.clearReceivedShipments();
 		//2. updateTrust()
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand() ist glaube ich unn�tig sieher Methode order!!!
+		//4. calculateDemand() ist glaube ich unnˆtig sieher Methode order!!!
 		//!
 		//!
 		// 4. calculateDemand() wird in order gemacht
@@ -95,7 +105,7 @@ public class Customer extends SupplyChainMember
 	   */
 	public void consume()
 	{
-		//TODO temporär, muss noch implementiert werden
+		//TODO tempor√§r, muss noch implementiert werden
 		consumption = 10; //forecastAgent.getNextDemand();
 		current_inventory_level = inventoryAgent.getInventoryLevel();
 		

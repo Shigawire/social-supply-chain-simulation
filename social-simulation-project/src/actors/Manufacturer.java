@@ -1,8 +1,9 @@
-package social_simulation_project;
+package actors;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
+import agents.DeliveryAgent;
+import artefacts.ProductionBatch;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 /**
@@ -12,7 +13,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Manufacturer extends SupplyChainMember
+public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int next_demand;
 	private int price;
@@ -59,7 +60,7 @@ public class Manufacturer extends SupplyChainMember
 	
 	private void calculateDemand() 
 	{
-		this.next_demand = this.forecastAgent.calculateDemand();
+		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 	}
 	
 	private void deliver() 
