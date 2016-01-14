@@ -18,18 +18,12 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Retailer extends Buy_Sale
 {
-	public Retailer(ArrayList<Wholesaler> wholesaler_list, int price, int current_inventory_level) 
+	public Retailer(ArrayList<Sale> sailor_list, int price, int current_inventory_level) 
 	{
-		super(current_inventory_level);
+		super(sailor_list, current_inventory_level);
 		delivery_agents = new ArrayList<DeliveryAgent>();
 		
-		for (Wholesaler wholesaler : wholesaler_list)
-		{
-			delivery_agents.add(wholesaler.getDeliveryAgent());
-		}
-
-		this.price = price;
-		trustAgent = new TrustAgent(delivery_agents);
+		this.price=price;
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		orderAgent = new OrderAgent(this, procurementAgent);
 		deliveryAgent = new DeliveryAgent(price);

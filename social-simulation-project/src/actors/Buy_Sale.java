@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import agents.DeliveryAgent;
 import artefacts.Order;
 
-public abstract class Buy_Sale extends Buy
+public abstract class Buy_Sale extends Buy implements Sale
 {
 	protected int next_demand;
 	protected int price;
@@ -13,9 +13,9 @@ public abstract class Buy_Sale extends Buy
 	protected DeliveryAgent deliveryAgent;
 	protected ArrayList<DeliveryAgent> delivery_agents;
 	
-	public Buy_Sale(int inventory_level) 
+	public Buy_Sale(ArrayList<Sale> sailor_list,int inventory_level) 
 	{
-		super(inventory_level);
+		super(sailor_list, inventory_level);
 	}
 	
 	public void receiveShipments() 

@@ -13,7 +13,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Manufacturer extends SupplyChainMember
+public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int next_demand;
 	private int price;

@@ -40,16 +40,10 @@ public class Customer extends Buy
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer(ArrayList<Retailer> retailer_list, int inventory_level) 
+	public Customer(ArrayList<Sale> sailor_list, int inventory_level) 
 	{
-		super(inventory_level);
+		super(sailor_list, inventory_level);
 		delivery_agents = new ArrayList<DeliveryAgent>();
-		
-		for (Retailer retailer : retailer_list)
-		{
-			delivery_agents.add(retailer.getDeliveryAgent());
-		}
-		trustAgent = new TrustAgent(delivery_agents);
 		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
 		orderAgent = new OrderAgent(this, this.procurementAgent);
 	}
@@ -67,7 +61,7 @@ public class Customer extends Buy
 	   */
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
-	{
+	{	
 		if ((int)RepastEssentials.GetTickCount()==1)
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);

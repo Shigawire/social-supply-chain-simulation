@@ -6,6 +6,7 @@ import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
+import actors.Sale;
 import actors.Wholesaler;
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -27,7 +28,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		RunEnvironment.getInstance().setScheduleTickDelay(20);
 		
 		Manufacturer manufacturer1 = new Manufacturer(10, 100);
-		ArrayList<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
+		ArrayList<Sale> manufacturerList = new ArrayList<Sale>();
 		manufacturerList.add(manufacturer1);
 		
 		/*
@@ -44,7 +45,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
-		ArrayList<Distributor> distributorList = new ArrayList<Distributor>();
+		ArrayList<Sale> distributorList = new ArrayList<Sale>();
 		distributorList.add(distributor1);
 		distributorList.add(distributor2);
 		
@@ -64,7 +65,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		
 		// Create a list of wholesalers and add every 
 		// wholesaler to that list (for now only 1)
-		ArrayList<Wholesaler> wholesalerList = new ArrayList<Wholesaler>();
+		ArrayList<Sale> wholesalerList = new ArrayList<Sale>();
 		wholesalerList.add(wholesaler1);	
 		wholesalerList.add(wholesaler2);	
 		
@@ -84,7 +85,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
-		ArrayList<Retailer> retailerList = new ArrayList<Retailer>();
+		ArrayList<Sale> retailerList = new ArrayList<Sale>();
 		retailerList.add(retailer1);
 		retailerList.add(retailer2);
 		
@@ -100,7 +101,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// Maybe the customer class could be designed as 
 		// a singleton class
 		Customer customer1 = new Customer(retailerList, 5);
-		
+		ArrayList<Customer> customerList = new ArrayList<Customer>();
+		customerList.add(customer1);
 		// --------------------------------------------------------------------------------
 		
 		// Add everything to the simulation's context
