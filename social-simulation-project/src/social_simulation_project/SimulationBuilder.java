@@ -46,7 +46,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// distributor to that list (for now only 1)
 		ArrayList<Distributor> distributorList = new ArrayList<Distributor>();
 		distributorList.add(distributor1);
-//		distributorList.add(distributor2);
+		distributorList.add(distributor2);
 		
 		// --------------------------------------------------------------------------------
 		
@@ -66,7 +66,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// wholesaler to that list (for now only 1)
 		ArrayList<Wholesaler> wholesalerList = new ArrayList<Wholesaler>();
 		wholesalerList.add(wholesaler1);	
-//		wholesalerList.add(wholesaler2);	
+		wholesalerList.add(wholesaler2);	
 		
 		// --------------------------------------------------------------------------------
 		
@@ -86,7 +86,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// distributor to that list (for now only 1)
 		ArrayList<Retailer> retailerList = new ArrayList<Retailer>();
 		retailerList.add(retailer1);
-//		retailerList.add(retailer2);
+		retailerList.add(retailer2);
 		
 		// --------------------------------------------------------------------------------
 		
@@ -108,13 +108,13 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.add(manufacturer1);
 		
 		context.add(distributor1);
-//		context.add(distributor2);
+		context.add(distributor2);
 		
 		context.add(wholesaler1);
-//		context.add(wholesaler2);
+		context.add(wholesaler2);
 		
 		context.add(retailer1);
-//		context.add(retailer2);
+		context.add(retailer2);
 		context.add(customer1);
 		// the observer for openOrders
 		context.add(OrderObserver.giveObserver());

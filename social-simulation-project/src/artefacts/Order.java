@@ -33,6 +33,17 @@ public class Order
 		this.processed = false;
 	}
 	
+	//create dummy
+	public Order() 
+	{
+		this.quantity = 0;
+		//generate an ID, so it is easier to track the Order through the system :)
+		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		this.ordered_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		this.orderAgent = null;
+		this.processed = false;
+	}
+	
 //	public boolean finished() 
 //	{
 //		return (this.backlog > 0);
