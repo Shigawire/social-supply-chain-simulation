@@ -36,6 +36,7 @@ public class ProcurementAgent
 	private void valueFill() 
 	{
 		// to fill the array values with initial values
+		
 		for (int i = 0; i < delivery_agents.size(); i++)
 		{
 			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));

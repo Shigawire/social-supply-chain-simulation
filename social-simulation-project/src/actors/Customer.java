@@ -7,7 +7,6 @@ import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
 import artefacts.Order;
-
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.essentials.RepastEssentials;
@@ -33,19 +32,17 @@ public class Customer extends Buy
 	// on next_demand and current_inventory_level
 	private int order_quantity;
 	
-	private ArrayList<DeliveryAgent> delivery_agents;
+
 	
 	/**
 	   * This constructor gives the customer its own inventory
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer(ArrayList<Sale> sailor_list, int inventory_level) 
+	public Customer(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
-		super(sailor_list, inventory_level);
-		delivery_agents = new ArrayList<DeliveryAgent>();
-		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
-		orderAgent = new OrderAgent(this, this.procurementAgent);
+		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
+		
 	}
 	
 	/**
@@ -97,19 +94,19 @@ public class Customer extends Buy
 	   */
 	public void consume()
 	{
-		//TODO temporÃ¤r, muss noch implementiert werden
+		//TODO temporär, muss noch implementiert werden
 		consumption = 10; //forecastAgent.getNextDemand();
-		current_inventory_level = inventoryAgent.getInventoryLevel();
+		current_incoming_inventory_level = inventoryAgent.getIncomingInventoryLevel();
 		
-		if (consumption > current_inventory_level) 
+		if (consumption > current_incoming_inventory_level) 
 		{
 			//TODO strafkosten/reaktion
 			//Inventory ist geringer als Nachfrage
-			inventoryAgent.setInventoryLevel(0);
+			inventoryAgent.setIncomingInventoryLevel(0);
 		} 
 		else 
 		{
-			inventoryAgent.setInventoryLevel(current_inventory_level - consumption);
+			inventoryAgent.setIncomingInventoryLevel(current_incoming_inventory_level - consumption);
 		}
 	}
 	
@@ -127,18 +124,18 @@ public class Customer extends Buy
 		
 		// 1.
 		next_demand = this.forecastAgent.customerDemand();
-		//System.out.println("[Customer] Next demand is  " + next_demand);
+		System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
-		current_inventory_level = this.inventoryAgent.getInventoryLevel();
+		current_incoming_inventory_level = this.inventoryAgent.getIncomingInventoryLevel();
 		
-		//System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getInventoryLevel());
+		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getIncomingInventoryLevel());
 		
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level;
+		order_quantity = next_demand - current_incoming_inventory_level;
 		
-		//System.out.println("[Customer] order_quantity is  " + order_quantity);
+		System.out.println("[Customer] order_quantity is  " + order_quantity);
 
 		// TODO replenishment policy
 		
@@ -157,6 +154,7 @@ public class Customer extends Buy
 			orderAgent.order(this.trustAgent, order);
 		}
 	}
+	
 	
 	/**
 	   * This method receives goods at the beginning of each tick

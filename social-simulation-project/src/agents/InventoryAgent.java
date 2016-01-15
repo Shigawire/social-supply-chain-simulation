@@ -11,11 +11,13 @@ import artefacts.Order;
 */
 public class InventoryAgent 
 {
-	private int inventory_level;
+	private int incoming_inventory_level;
+	private int outgoing_inventory_level;
 
-	public InventoryAgent(int inventory_level) 
+	public InventoryAgent(int incoming_inventory_level, int outgoing_inventory_level) 
 	{
-		this.inventory_level = inventory_level;
+		this.outgoing_inventory_level = outgoing_inventory_level;
+		this.incoming_inventory_level = incoming_inventory_level;
 	}
 	
 	/**
@@ -26,34 +28,52 @@ public class InventoryAgent
 	   */
 	public void store(Order shipment) 
 	{
-		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.inventory_level + " to level+" +shipment.getQuantity());
-		this.inventory_level += shipment.getQuantity();
+		System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.incoming_inventory_level + " to level+" +shipment.getQuantity());
+		this.incoming_inventory_level += shipment.getQuantity();
 	}
 	
 	/**
-	   * This method reduces the inventory
+	   * This method reduces the incoming inventory
 	   * of a supply chain member
 	   * 
 	   * @return Nothing.
 	   */
-	public void reduceInventoryLevel(int reduction)
+	public void reduceIncomingInventoryLevel(int reduction)
 	{
-		this.inventory_level -= reduction;
+		this.incoming_inventory_level -= reduction;
+	}
+	public void reduceOutgoingInventoryLevel(int reduction)
+	{
+		this.outgoing_inventory_level -= reduction;
+	}
+	public void increaseIncomingInventoryLevel (int addition){
+		this.incoming_inventory_level += addition;
+	}
+	public void increaseOutgoingInventoryLevel (int addition){
+		this.outgoing_inventory_level += addition;
 	}
 	
 	/*
 	 * GETTERS
 	 */
-	public int getInventoryLevel() 
+	public int getIncomingInventoryLevel() 
 	{
-		return this.inventory_level;
+		return this.incoming_inventory_level;
+	}
+	public int getOutgoingInventoryLevel() 
+	{
+		return this.outgoing_inventory_level;
 	}
 	
 	/*
 	 * SETTERS
 	 */
-	public void setInventoryLevel(int inventory_level) 
+	public void setIncomingInventoryLevel(int inventory_level) 
 	{
-		this.inventory_level = inventory_level;
+		this.incoming_inventory_level = inventory_level;
+	}
+	public void setOutgoingInventoryLevel(int inventory_level) 
+	{
+		this.outgoing_inventory_level = inventory_level;
 	}
 }
