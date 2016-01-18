@@ -24,10 +24,9 @@ public abstract class Buy extends SupplyChainMember
 			delivery_agents.add(sailor1.getDeliveryAgent());
 		}
 		delivery_agents.get(0);
-		trustAgent = new TrustAgent(delivery_agents,this);
+		trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings, this);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		this.orderAgent = new OrderAgent(this, procurementAgent);	
-		
 		
 	}
 	public TrustAgent getTrustAgent(){

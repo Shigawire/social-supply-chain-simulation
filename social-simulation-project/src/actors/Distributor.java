@@ -23,9 +23,8 @@ public class Distributor extends Buy_Sale
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
 		
 		this.price = price;
-
 		
-		this.deliveryAgent = new DeliveryAgent(price);
+		this.deliveryAgent = new DeliveryAgent(price, this);
 		this.productionQueue=0;
 	}
 	

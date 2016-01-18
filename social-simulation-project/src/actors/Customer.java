@@ -42,7 +42,6 @@ public class Customer extends Buy
 	public Customer(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
-		
 	}
 	
 	/**
@@ -94,7 +93,7 @@ public class Customer extends Buy
 	   */
 	public void consume()
 	{
-		//TODO temporär, muss noch implementiert werden
+		//TODO temporï¿½r, muss noch implementiert werden
 		consumption = 10; //forecastAgent.getNextDemand();
 		current_incoming_inventory_level = inventoryAgent.getIncomingInventoryLevel();
 		

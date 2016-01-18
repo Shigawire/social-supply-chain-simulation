@@ -21,11 +21,11 @@ public class Retailer extends Buy_Sale
 	public Retailer(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level,int price) 
 	{
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
-
 		
 		this.price=price;
-		deliveryAgent = new DeliveryAgent(price);
+		deliveryAgent = new DeliveryAgent(price, this);
 		this.productionQueue=0;
+
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)

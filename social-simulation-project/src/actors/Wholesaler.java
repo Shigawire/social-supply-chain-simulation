@@ -2,11 +2,8 @@ package actors;
 
 import java.util.ArrayList;
 
-import agents.DeliveryAgent;
-import agents.OrderAgent;
-import agents.ProcurementAgent;
-import agents.TrustAgent;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import agents.DeliveryAgent;
 
 /**
 * This class represents a wholesaler. Wholesalers do not
@@ -25,9 +22,8 @@ public class Wholesaler extends Buy_Sale
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
 		
 		this.price=price;
-		
-		
-		deliveryAgent = new DeliveryAgent(price);
+	
+		deliveryAgent = new DeliveryAgent(price, this);
 		this.productionQueue=0;
 		this.almostFinished=0;
 	}

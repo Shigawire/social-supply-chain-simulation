@@ -19,13 +19,13 @@ import social_simulation_project.OrderObserver;
 */
 public class OrderAgent 
 {
-	private SupplyChainMember orderer;
+	private SupplyChainMember parent;
 	private ArrayList<Order> receivedShipments;
 	private ProcurementAgent procurementAgent;
 	
 	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent) 
 	{
-		this.orderer = orderer;
+		this.parent = orderer;
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent=procurementAgent;
 	}
@@ -35,8 +35,13 @@ public class OrderAgent
 		// select Retailer. mit customer.trustAgent
 		// trustAgent must be implemented
 		
-		//DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
 		DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
+		
+		double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
+		order.setExpectedDeliveryDuration(expectedDeliveryDuration);
+		//DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
+		
+
 		//add the open order
 		OrderObserver.giveObserver().addAmount(order.getQuantity());
 		deliveryAgent.receiveOrder(order);
@@ -76,7 +81,11 @@ public class OrderAgent
 	 */
 	public SupplyChainMember getOrderer() 
 	{	
-		return orderer;
+		return parent;
+	}
+	
+	public SupplyChainMember getParent() {
+		return parent;
 	}
 	
 	public void clearReceivedShipments() 
