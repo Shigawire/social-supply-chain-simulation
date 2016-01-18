@@ -25,6 +25,8 @@ public class SimulationBuilder implements ContextBuilder<Object>
 	public Context<Object> build(Context<Object> context) 
 	{	
 		context.setId("Social Simulation Project");
+		context.add(OrderObserver.giveObserver());
+		OrderObserver.giveObserver().setAmount(0);
 		RunEnvironment.getInstance().setScheduleTickDelay(20);
 		
 		Manufacturer manufacturer1 = new Manufacturer(10, 0,100);
@@ -99,7 +101,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// We have only one customer in our supply chain
 		// Maybe the customer class could be designed as 
 		// a singleton class
-		Customer customer1 = new Customer(retailerList, 0,5);
+		Customer customer1 = new Customer(retailerList, 10,5);
 		ArrayList<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(customer1);
 		// --------------------------------------------------------------------------------
@@ -117,7 +119,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.add(retailer2);
 		context.add(customer1);
 		// the observer for openOrders
-		context.add(OrderObserver.giveObserver());
+
 		return context;
 	}
 }

@@ -42,14 +42,14 @@ public class TrustAgent
 		{
 			// Alle TrustDimensions starten mit 25% Wichtigkeit und 50% Initialwert
 			
-			ReliabilityDimension reliability = new ReliabilityDimension(dimensionRatings.get(DimensionType.RELIABILITY), 0.5);
-			CompetenceDimension competence = new CompetenceDimension(dimensionRatings.get(DimensionType.COMPETENCE), 0.5);
-			QualityDimension quality = new QualityDimension(dimensionRatings.get(DimensionType.QUALITY), 0.5);
-			SharedValuesDimension shared_values = new SharedValuesDimension(dimensionRatings.get(DimensionType.SHARED_VALUES), 0.5);
+//			ReliabilityDimension reliability = new ReliabilityDimension(dimensionRatings.get(DimensionType.RELIABILITY), 0.5);
+//			CompetenceDimension competence = new CompetenceDimension(dimensionRatings.get(DimensionType.COMPETENCE), 0.5);
+//			QualityDimension quality = new QualityDimension(dimensionRatings.get(DimensionType.QUALITY), 0.5);
+//			SharedValuesDimension shared_values = new SharedValuesDimension(dimensionRatings.get(DimensionType.SHARED_VALUES), 0.5);
+//			
+//			Trust trust = new Trust(reliability, competence, quality, shared_values);
 			
-			Trust trust = new Trust(reliability, competence, quality, shared_values);
-			
-			trustStorage.put(delivery_agent, trust);
+//			trustStorage.put(delivery_agent, trust);
 		}
 	}
 
@@ -106,6 +106,11 @@ public class TrustAgent
 	{
 		//hier muss der trust wert zurueclgegeben werden.
 		return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
+	} 
+	public double getTrustValue(DeliveryAgent delivery_agent,int i) 
+	{
+		//hier muss der trust wert zurueclgegeben werden.
+		return(1);
 	} 
 	public Trust getTrustObject(DeliveryAgent delivery_agent){
 		return this.trustStorage.get(delivery_agent);

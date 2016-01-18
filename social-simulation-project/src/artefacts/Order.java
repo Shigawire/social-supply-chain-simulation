@@ -2,6 +2,7 @@ package artefacts;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
+import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
@@ -29,6 +30,7 @@ public class Order
 	
 	public Order(int quantity, OrderAgent orderAgent) 
 	{
+		OrderObserver.giveObserver().addAmount(quantity);
 		this.quantity = quantity;
 		//generate an ID, so it is easier to track the Order through the system :)
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
@@ -99,6 +101,7 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
+		OrderObserver.giveObserver().subAmount(quantity);
 		this.processed = true;
 		
 	}

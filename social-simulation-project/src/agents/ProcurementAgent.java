@@ -39,7 +39,8 @@ public class ProcurementAgent
 		
 		for (int i = 0; i < delivery_agents.size(); i++)
 		{
-			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));
+			//procurement fragt beim trust nur dummy
+			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i),1);
 			values[1][i] = 1;
 			values[2][i] = delivery_agents.get(i).getPrice();
 		}

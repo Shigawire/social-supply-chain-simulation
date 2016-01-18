@@ -26,7 +26,8 @@ public abstract class Buy_Sale extends Buy implements Sale
 	
 	public void updateTrust() 
 	{
-		this.trustAgent.inspectNewArrivals(orderAgent);
+		//erstmal auskommentiert solange es noch nicht laeuft
+		//this.trustAgent.inspectNewArrivals(orderAgent);
 	}
 	
 	/**
@@ -60,10 +61,12 @@ public abstract class Buy_Sale extends Buy implements Sale
 		// 3.
 		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		
+		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		// If the inventory level is sufficient for the next demand,
 		// do not order
 		if (order_quantity < 0) 
 		{
+			order_quantity=0;
 			return;
 		}
 		else

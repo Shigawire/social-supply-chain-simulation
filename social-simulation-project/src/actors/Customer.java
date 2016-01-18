@@ -129,7 +129,7 @@ public class Customer extends Buy
 		current_incoming_inventory_level = this.inventoryAgent.getIncomingInventoryLevel();
 		
 		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getIncomingInventoryLevel());
-		
+		//Update Trust missing?
 		
 		// 3.
 		order_quantity = next_demand - current_incoming_inventory_level;
@@ -142,6 +142,7 @@ public class Customer extends Buy
 		// do not order
 		if (order_quantity <= 0) 
 		{
+			order_quantity=0;
 			return;
 		}
 		else
