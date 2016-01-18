@@ -51,6 +51,38 @@ public class ForecastAgent
 	   */
 	public int calculateDemand(ArrayList<Order> everReceivedOrders)
 	{
+//		Iterator it = orderHistory.iterator();
+//		int lastTick = 0;
+//		Order rememberer = new Order();
+//		for (int i = 0; i < everReceivedOrders.size(); i++)
+//		{
+//			if (everReceivedOrders.get(i).getOrderedAt()!= lastTick)
+//			{
+//				orderHistory.add(everReceivedOrders.get(i));
+//				rememberer =(Order)it.next();
+//			}
+//			else{
+//				rememberer.setQuantity(rememberer.getQuantity()+everReceivedOrders.get(i).getQuantity());
+//				it.remove();
+//				orderHistory.add(rememberer);
+//				while(it.hasNext()) it.next();
+//			}
+//		}
+		int lastTick=0;
+		int firstOfTick=0;
+		for (int i = 0; i < everReceivedOrders.size(); i++)
+		{
+			if (lastTick!=everReceivedOrders.get(i).getOrderedAt())
+			{
+				lastTick=everReceivedOrders.get(i).getOrderedAt();
+				firstOfTick = i;
+			}
+			else{
+				everReceivedOrders.get(firstOfTick).setQuantity(everReceivedOrders.get(firstOfTick).getQuantity()+everReceivedOrders.get(i).getQuantity());
+				everReceivedOrders.remove(i);
+				i--;
+			}
+		}
 		for (int i = 0; i < everReceivedOrders.size(); i++)
 		{
 			orderHistory.add(everReceivedOrders.get(i));

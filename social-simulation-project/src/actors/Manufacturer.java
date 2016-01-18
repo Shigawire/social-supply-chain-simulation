@@ -13,7 +13,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Manufacturer extends SupplyChainMember
+public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int next_demand;
 	private int price;
@@ -25,15 +25,14 @@ public class Manufacturer extends SupplyChainMember
 	private ArrayList<ProductionBatch> toProduce;
 	private int lead_time = 2;
 	
-	public Manufacturer(int price, int current_inventory_level)
+	public Manufacturer(int price, int current_incoming_inventory_level,int current_outgoing_inventory_level)
 	{
-		super(current_inventory_level);
+		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	
 		deliveryAgent = new DeliveryAgent(price, this);
 		Production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
 	}
-	
 	@ScheduledMethod(start = 1, interval = 1, priority = 1)
 	public void run() 
 	{
@@ -75,7 +74,7 @@ public class Manufacturer extends SupplyChainMember
 			if (current_batch.getTimeInProduction() >= this.lead_time) 
 			{
 				//This batch is ready to be added to inventory
-				this.inventoryAgent.setInventoryLevel(this.inventoryAgent.getInventoryLevel() + current_batch.getQuantity());
+				this.inventoryAgent.setOutgoingInventoryLevel(this.inventoryAgent.getOutgoingInventoryLevel() + current_batch.getQuantity());
 				//Production.remove(current_batch);
 			} 
 			else
@@ -91,10 +90,10 @@ public class Manufacturer extends SupplyChainMember
 	
 	private void produce() 
 	{		
-		current_inventory_level = this.inventoryAgent.getInventoryLevel();
+		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
-		amount_to_produce = next_demand - current_inventory_level+ deliveryAgent.getShortage();
+		amount_to_produce = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
 		amount_to_produce = (amount_to_produce > 0) ? amount_to_produce : 0;
 		
 		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);

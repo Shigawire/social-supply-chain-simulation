@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 import agents.DeliveryAgent;
 import artefacts.Order;
-
-public abstract class Buy_Sale extends Buy
+//Combination of Interface Sale and class buy
+public abstract class Buy_Sale extends Buy implements Sale
 {
 	protected int next_demand;
 	protected int price;
 	protected int order_quantity;
 	protected DeliveryAgent deliveryAgent;
+	protected int productionQueue;
 	protected ArrayList<DeliveryAgent> delivery_agents;
 	
-	public Buy_Sale(int inventory_level) 
+	public Buy_Sale(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
-		super(inventory_level);
+		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
 	}
 	
 	public void receiveShipments() 
@@ -54,7 +55,7 @@ public abstract class Buy_Sale extends Buy
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 		
 		// 2.
-		current_inventory_level = this.inventoryAgent.getInventoryLevel();
+		current_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
 		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();

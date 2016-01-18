@@ -18,21 +18,14 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Retailer extends Buy_Sale
 {
-	public Retailer(ArrayList<Wholesaler> wholesaler_list, int price, int current_inventory_level) 
+	public Retailer(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level,int price) 
 	{
-		super(current_inventory_level);
-		delivery_agents = new ArrayList<DeliveryAgent>();
+		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
 		
-		for (Wholesaler wholesaler : wholesaler_list)
-		{
-			delivery_agents.add(wholesaler.getDeliveryAgent());
-		}
-
-		this.price = price;
-		trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings);
-		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
-		orderAgent = new OrderAgent(this, procurementAgent);
+		this.price=price;
 		deliveryAgent = new DeliveryAgent(price, this);
+		this.productionQueue=0;
+
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
@@ -42,14 +35,20 @@ public class Retailer extends Buy_Sale
 		this.receiveShipments();
 		// 2. updateTrust()
 		orderAgent.clearReceivedShipments();
-		// 3. deliver()
+		// 3. produce
+		this.produce();
+		// 4. deliver()
 		this.deliver();
-		// 4. calculateDemand() wird in order gemacht
+		// 5. calculateDemand() wird in order gemacht
 		//next_demand = this.forecastAgent.calculateDemand();
-		// 5. order()
+		// 6. order()
 		this.order();
 	}
-	
+	private void produce(){
+		this.inventoryAgent.increaseOutgoingInventoryLevel(productionQueue);
+		productionQueue = this.inventoryAgent.getIncomingInventoryLevel();
+		this.inventoryAgent.setIncomingInventoryLevel(0);
+	}
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 

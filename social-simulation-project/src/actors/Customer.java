@@ -7,7 +7,6 @@ import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
 import artefacts.Order;
-
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.essentials.RepastEssentials;
@@ -33,25 +32,16 @@ public class Customer extends Buy
 	// on next_demand and current_inventory_level
 	private int order_quantity;
 	
-	private ArrayList<DeliveryAgent> delivery_agents;
+
 	
 	/**
 	   * This constructor gives the customer its own inventory
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer(ArrayList<Retailer> retailer_list, int inventory_level) 
+	public Customer(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
-		super(inventory_level);
-		delivery_agents = new ArrayList<DeliveryAgent>();
-		
-		for (Retailer retailer : retailer_list)
-		{
-			delivery_agents.add(retailer.getDeliveryAgent());
-		}
-		trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings);
-		this.procurementAgent = new ProcurementAgent(delivery_agents, trustAgent);
-		orderAgent = new OrderAgent(this, this.procurementAgent);
+		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
 	}
 	
 	/**
@@ -67,16 +57,16 @@ public class Customer extends Buy
 	   */
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
-	{
+	{	
 		if ((int)RepastEssentials.GetTickCount()==1)
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
 		}
 		
-		System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
+		//System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();
-		System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
+		//System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
 		
 		orderAgent.clearReceivedShipments();
 		//2. updateTrust()
@@ -103,19 +93,19 @@ public class Customer extends Buy
 	   */
 	public void consume()
 	{
-		//TODO temporär, muss noch implementiert werden
+		//TODO tempor�r, muss noch implementiert werden
 		consumption = 10; //forecastAgent.getNextDemand();
-		current_inventory_level = inventoryAgent.getInventoryLevel();
+		current_incoming_inventory_level = inventoryAgent.getIncomingInventoryLevel();
 		
-		if (consumption > current_inventory_level) 
+		if (consumption > current_incoming_inventory_level) 
 		{
 			//TODO strafkosten/reaktion
 			//Inventory ist geringer als Nachfrage
-			inventoryAgent.setInventoryLevel(0);
+			inventoryAgent.setIncomingInventoryLevel(0);
 		} 
 		else 
 		{
-			inventoryAgent.setInventoryLevel(current_inventory_level - consumption);
+			inventoryAgent.setIncomingInventoryLevel(current_incoming_inventory_level - consumption);
 		}
 	}
 	
@@ -136,13 +126,13 @@ public class Customer extends Buy
 		System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
-		current_inventory_level = this.inventoryAgent.getInventoryLevel();
+		current_incoming_inventory_level = this.inventoryAgent.getIncomingInventoryLevel();
 		
-		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getInventoryLevel());
+		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getIncomingInventoryLevel());
 		
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level;
+		order_quantity = next_demand - current_incoming_inventory_level;
 		
 		System.out.println("[Customer] order_quantity is  " + order_quantity);
 
@@ -163,6 +153,7 @@ public class Customer extends Buy
 			orderAgent.order(this.trustAgent, order);
 		}
 	}
+	
 	
 	/**
 	   * This method receives goods at the beginning of each tick

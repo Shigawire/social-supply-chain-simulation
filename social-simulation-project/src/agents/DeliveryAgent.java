@@ -20,7 +20,7 @@ import artefacts.Order;
 public class DeliveryAgent 
 {
 	private int price;
-	private int current_inventory_level;
+	private int current_outgoing_inventory_level;
 	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu �bertragen
 	private ArrayList<Order> everReceivedOrders;
 	private ArrayList<Order> openOrders;
@@ -57,11 +57,11 @@ public class DeliveryAgent
 	   */
 	public void deliver(InventoryAgent inventoryAgent)
 	{
-		current_inventory_level = inventoryAgent.getInventoryLevel();
+		current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
 		shortage=0;
 		for (Order order : receivedOrders) 
 		{
-			if (order.getQuantity() > current_inventory_level) 
+			if (order.getQuantity() > current_outgoing_inventory_level) 
 			{
 				//wenn Inventory nicht ausreicht, wird nicht geliefert;
 				//TODO was passiert wenn eine lieferung danach moeglicherweise processed werden koennte? Loesung das return weg, 
@@ -78,8 +78,8 @@ public class DeliveryAgent
 				OrderObserver.giveObserver().subAmount(order.getQuantity());
 				order.getOrderAgent().receiveShipment(order,this);
 				//System.out.println(order.getQuantity());
-				inventoryAgent.reduceInventoryLevel(order.getQuantity());
-				current_inventory_level = inventoryAgent.getInventoryLevel();
+				inventoryAgent.reduceOutgoingInventoryLevel(order.getQuantity());
+				current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
 			}
 		}
 		//the received list must be deleted completly and filled with the openOrder list
@@ -88,6 +88,7 @@ public class DeliveryAgent
 		receivedOrders.addAll(openOrders);
 		openOrders.clear();
 	}
+
 
 	/*
 	 * GETTERS

@@ -35,9 +35,13 @@ public class OrderAgent
 		// select Retailer. mit customer.trustAgent
 		// trustAgent must be implemented
 		
-		DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
+		DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
+		
 		double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 		order.setExpectedDeliveryDuration(expectedDeliveryDuration);
+		//DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
+		
+
 		//add the open order
 		OrderObserver.giveObserver().addAmount(order.getQuantity());
 		deliveryAgent.receiveOrder(order);
@@ -49,7 +53,7 @@ public class OrderAgent
 	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
-		System.out.println("[Order Agent] receiving shipment list");
+		//System.out.println("[Order Agent] receiving shipment list");
 		if (!receivedShipments.isEmpty())
 		{
 			for (Order shipment : receivedShipments) 
@@ -65,7 +69,7 @@ public class OrderAgent
 	 */
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
-		System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
+		//System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
 		shipment.received();
 		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
 		receivedShipments.add(shipment);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import actors.SupplyChainMember;
 import artefacts.Order;
 import artefacts.trust.CompetenceDimension;
 import artefacts.trust.DimensionType;
@@ -23,6 +24,7 @@ import artefacts.trust.TrustDimension;
 */
 public class TrustAgent 
 {
+	private SupplyChainMember supplyChainMember;
 	private ArrayList<DeliveryAgent> delivery_agents;
 	
 	private Map<DeliveryAgent, Trust> trustStorage = new HashMap<DeliveryAgent, Trust>();
@@ -30,9 +32,12 @@ public class TrustAgent
 	// When do we classify a shipment as overdue?
 	private double ShipmentRuntimeOverdueThreshold = 2;
 	
-	public TrustAgent(ArrayList<DeliveryAgent> delivery_agents, Map<DimensionType, Double> dimensionRatings)
+
+	public TrustAgent(ArrayList<DeliveryAgent> delivery_agents, Map<DimensionType, Double> dimensionRatings, SupplyChainMember supplyChainMember)
+
 	{
 		this.delivery_agents = delivery_agents;
+		this.supplyChainMember = supplyChainMember;
 		for (DeliveryAgent delivery_agent : this.delivery_agents) 
 		{
 			// Alle TrustDimensions starten mit 25% Wichtigkeit und 50% Initialwert
@@ -102,7 +107,9 @@ public class TrustAgent
 		//hier muss der trust wert zurueclgegeben werden.
 		return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
 	} 
-	
+	public Trust getTrustObject(DeliveryAgent delivery_agent){
+		return this.trustStorage.get(delivery_agent);
+	}
 	public DeliveryAgent getCheapestSupplier() 
 	{
 		DeliveryAgent cheapestSupplier = delivery_agents.get(0);
@@ -115,6 +122,11 @@ public class TrustAgent
 			}
 		}
 		return cheapestSupplier;
+	}
+
+	public SupplyChainMember getSupplyChainMember() {
+		// TODO Auto-generated method stub
+		return supplyChainMember;
 	}
 	
 	public Trust getTrustAbout(DeliveryAgent deliveryAgent) {
