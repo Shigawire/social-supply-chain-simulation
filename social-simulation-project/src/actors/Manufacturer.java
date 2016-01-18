@@ -29,7 +29,7 @@ public class Manufacturer extends SupplyChainMember
 	{
 		super(current_inventory_level);
 		this.price = price;	
-		deliveryAgent = new DeliveryAgent(price);
+		deliveryAgent = new DeliveryAgent(price, this);
 		Production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
 	}

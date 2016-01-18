@@ -30,17 +30,17 @@ public class TrustAgent
 	// When do we classify a shipment as overdue?
 	private double ShipmentRuntimeOverdueThreshold = 2;
 	
-	public TrustAgent(ArrayList<DeliveryAgent> delivery_agents)
+	public TrustAgent(ArrayList<DeliveryAgent> delivery_agents, Map<DimensionType, Double> dimensionRatings)
 	{
 		this.delivery_agents = delivery_agents;
 		for (DeliveryAgent delivery_agent : this.delivery_agents) 
 		{
-			// Alle TrustDimensions starten mit 90% Wichtigkeit und 50% Initialwert
+			// Alle TrustDimensions starten mit 25% Wichtigkeit und 50% Initialwert
 			
-			ReliabilityDimension reliability = new ReliabilityDimension(0.25, 0.5);
-			CompetenceDimension competence = new CompetenceDimension(0.25, 0.5);
-			QualityDimension quality = new QualityDimension(0.25, 0.5);
-			SharedValuesDimension shared_values = new SharedValuesDimension(0.25, 0.5);
+			ReliabilityDimension reliability = new ReliabilityDimension(dimensionRatings.get(DimensionType.RELIABILITY), 0.5);
+			CompetenceDimension competence = new CompetenceDimension(dimensionRatings.get(DimensionType.COMPETENCE), 0.5);
+			QualityDimension quality = new QualityDimension(dimensionRatings.get(DimensionType.QUALITY), 0.5);
+			SharedValuesDimension shared_values = new SharedValuesDimension(dimensionRatings.get(DimensionType.SHARED_VALUES), 0.5);
 			
 			Trust trust = new Trust(reliability, competence, quality, shared_values);
 			
@@ -115,6 +115,10 @@ public class TrustAgent
 			}
 		}
 		return cheapestSupplier;
+	}
+	
+	public Trust getTrustAbout(DeliveryAgent deliveryAgent) {
+		return trustStorage.get(deliveryAgent);
 	}
 	
 	/* 

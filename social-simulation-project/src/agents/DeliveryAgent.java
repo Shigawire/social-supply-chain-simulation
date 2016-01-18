@@ -2,8 +2,9 @@ package agents;
 
 import java.util.ArrayList;
 
-import artefacts.Order;
 import social_simulation_project.OrderObserver;
+import actors.SupplyChainMember;
+import artefacts.Order;
 
 /**
 * This class represents a delivery agent. They are 
@@ -24,13 +25,15 @@ public class DeliveryAgent
 	private ArrayList<Order> everReceivedOrders;
 	private ArrayList<Order> openOrders;
 	private int shortage = 0;
+	private SupplyChainMember parent;
 	
-	public DeliveryAgent(int price) 
+	public DeliveryAgent(int price, SupplyChainMember parent) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
 		this.everReceivedOrders = new ArrayList<Order>();
 		this.openOrders = new ArrayList<Order>();
 		this.price = price;
+		this.parent = parent;
 	}
 	
 	/**
@@ -108,6 +111,10 @@ public class DeliveryAgent
 	public double getExpectedDeliveryTime() {
 		//TODO implement
 		return 2;
+	}
+	
+	public SupplyChainMember getParent() {
+		return this.parent;
 	}
 	
 	/*

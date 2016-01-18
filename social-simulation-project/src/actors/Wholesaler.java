@@ -29,11 +29,11 @@ public class Wholesaler extends Buy_Sale
 		}
 
 		this.price = price;
-		trustAgent = new TrustAgent(delivery_agents);
+		trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		orderAgent = new OrderAgent(this, procurementAgent);
 		
-		deliveryAgent = new DeliveryAgent(price);
+		deliveryAgent = new DeliveryAgent(price, this);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 3)

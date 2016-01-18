@@ -1,6 +1,7 @@
 package artefacts;
 
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.random.RandomHelper;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
@@ -113,5 +114,9 @@ public class Order
 	
 	public void setDeliveryAgent(DeliveryAgent deliveryAgent) {
 		this.deliveryAgent = deliveryAgent;
+	}
+	
+	public double getShipmentQuality() {
+		return RandomHelper.nextDoubleFromTo(0.95, 1);
 	}
 }

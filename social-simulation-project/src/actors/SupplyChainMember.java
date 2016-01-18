@@ -1,8 +1,12 @@
 package actors;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import agents.ForecastAgent;
 import agents.InventoryAgent;
 import agents.TrustAgent;
+import artefacts.trust.DimensionType;
 
 /**
 * This class is the generalization for all
@@ -19,6 +23,7 @@ public abstract class SupplyChainMember
 	protected TrustAgent trustAgent;
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
+	protected Map<DimensionType, Double> dimensionRatings;
 	
 	/**
 	   * This constructor gives every supply chain member a unique
@@ -32,6 +37,13 @@ public abstract class SupplyChainMember
 		// Create inventory agent with inventoryLevel
 		this.inventoryAgent = new InventoryAgent(inventory_level);
 		this.forecastAgent = new ForecastAgent();
+		
+		Map<DimensionType, Double> dimensionRatings = new HashMap<DimensionType, Double>();
+		
+		dimensionRatings.put(DimensionType.RELIABILITY, 0.25);
+		dimensionRatings.put(DimensionType.COMPETENCE, 0.25);
+		dimensionRatings.put(DimensionType.SHARED_VALUES, 0.25);
+		dimensionRatings.put(DimensionType.QUALITY, 0.25);
 	}
 	
 	// Methods every supply chain member must implement
@@ -44,6 +56,10 @@ public abstract class SupplyChainMember
 	public int getCurrent_inventory_level()
 	{
 		return this.inventoryAgent.getInventoryLevel();
+	}
+	
+	public Map<DimensionType, Double> getTrustDimensionRatings() {
+		return this.dimensionRatings;
 	}
 	
 	/*

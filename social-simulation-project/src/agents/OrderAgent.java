@@ -19,13 +19,13 @@ import social_simulation_project.OrderObserver;
 */
 public class OrderAgent 
 {
-	private SupplyChainMember orderer;
+	private SupplyChainMember parent;
 	private ArrayList<Order> receivedShipments;
 	private ProcurementAgent procurementAgent;
 	
 	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent) 
 	{
-		this.orderer = orderer;
+		this.parent = orderer;
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent=procurementAgent;
 	}
@@ -77,7 +77,11 @@ public class OrderAgent
 	 */
 	public SupplyChainMember getOrderer() 
 	{	
-		return orderer;
+		return parent;
+	}
+	
+	public SupplyChainMember getParent() {
+		return parent;
 	}
 	
 	public void clearReceivedShipments() 
