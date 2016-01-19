@@ -39,7 +39,7 @@ public abstract class SupplyChainMember
 		this.inventoryAgent = new InventoryAgent(incoming_inventory_level,outgoing_inventory_level);
 		this.forecastAgent = new ForecastAgent();
 		
-		Map<DimensionType, Double> dimensionRatings = new HashMap<DimensionType, Double>();
+		this.dimensionRatings = new HashMap<DimensionType, Double>();
 		
 		dimensionRatings.put(DimensionType.RELIABILITY, 0.25);
 		dimensionRatings.put(DimensionType.COMPETENCE, 0.25);
