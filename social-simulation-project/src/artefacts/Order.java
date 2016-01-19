@@ -15,9 +15,10 @@ import agents.OrderAgent;
 */
 public class Order 
 {
-	private int quantity;
+	private final int quantity;
 	private int ordered_at; // tick
 	private int received_at;
+	int oftenProcessed=0;
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;
@@ -27,9 +28,11 @@ public class Order
 	
 	// Order received and sent
 	private boolean processed;
+	private int sum;
 	
 	public Order(int quantity, OrderAgent orderAgent) 
 	{
+		
 		OrderObserver.giveObserver().addAmount(quantity);
 		this.quantity = quantity;
 		//generate an ID, so it is easier to track the Order through the system :)
@@ -37,6 +40,8 @@ public class Order
 		this.ordered_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 		this.orderAgent = orderAgent;
 		this.processed = false;
+		System.out.println(id+" " +quantity+" "+oftenProcessed);
+		sum=quantity;
 	}
 	
 //	public boolean finished() 
@@ -101,6 +106,8 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
+		oftenProcessed++;
+		System.out.println(id+" " +quantity+" "+oftenProcessed);
 		OrderObserver.giveObserver().subAmount(quantity);
 		this.processed = true;
 		
@@ -110,9 +117,15 @@ public class Order
 		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
 	}
 	
-	public void setQuantity(int quantity) 
-	{
-		this.quantity = quantity;
+//	public void setQuantity(int quantity) 
+//	{
+//		this.quantity = quantity;
+//	}
+	public void setSum(int quantity){
+		this.sum = quantity;
+	}
+	public int getSum(){
+		return sum;
 	}
 	
 	public void setDeliveryAgent(DeliveryAgent deliveryAgent) {

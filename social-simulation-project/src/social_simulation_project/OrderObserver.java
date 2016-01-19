@@ -1,9 +1,14 @@
 package social_simulation_project;
 
+import java.util.ArrayList;
+
+import artefacts.Order;
+
 public class OrderObserver 
 {
 	private static OrderObserver observer = new OrderObserver();
 	private int amount = 0;
+	private ArrayList<Integer> orderHistory= new ArrayList<Integer>();	
 
 	private OrderObserver()
 	{
@@ -12,11 +17,21 @@ public class OrderObserver
 	
 	public void addAmount(int adding)
 	{
+		orderHistory.add(adding);
 		amount+= adding;
+		
 	}
 	
 	public void subAmount(int sub)
 	{
+		Integer weg=sub;
+		if(orderHistory.contains(weg)){
+			orderHistory.remove(weg);
+		}
+		else{
+			System.out.println("Fick Dich");
+		}
+
 		amount-= sub;
 	}
 	

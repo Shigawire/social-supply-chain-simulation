@@ -72,12 +72,13 @@ public class Distributor extends Buy_Sale
 		// do not order
 		if (order_quantity < 0) 
 		{
-			System.out.println("ja ich bin im if");
+			//System.out.println("ja ich bin im if");
 			order_quantity=0;
 			return;
 		}
 		else
 		{
+			//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 			Order order = new Order(order_quantity, this.orderAgent);
 			
 			// Choose retailer

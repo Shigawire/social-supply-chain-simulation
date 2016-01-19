@@ -62,7 +62,7 @@ public class ForecastAgent
 //				rememberer =(Order)it.next();
 //			}
 //			else{
-//				rememberer.setQuantity(rememberer.getQuantity()+everReceivedOrders.get(i).getQuantity());
+//				rememberer.setQuantity(rememberer.setSum()+everReceivedOrders.get(i).getQuantity());
 //				it.remove();
 //				orderHistory.add(rememberer);
 //				while(it.hasNext()) it.next();
@@ -78,7 +78,7 @@ public class ForecastAgent
 				firstOfTick = i;
 			}
 			else{
-				everReceivedOrders.get(firstOfTick).setQuantity(everReceivedOrders.get(firstOfTick).getQuantity()+everReceivedOrders.get(i).getQuantity());
+				everReceivedOrders.get(firstOfTick).setSum(everReceivedOrders.get(firstOfTick).getSum()+everReceivedOrders.get(i).getSum());
 				everReceivedOrders.remove(i);
 				i--;
 			}
@@ -88,7 +88,7 @@ public class ForecastAgent
 			orderHistory.add(everReceivedOrders.get(i));
 		}
 		
-		System.out.println(orderHistory.size());
+		//System.out.println(orderHistory.size());
 		this.observedData = new DataSet();
 		createDataset();
 		int output = getForecast();
@@ -108,7 +108,7 @@ public class ForecastAgent
     		for (int i = 0; i < orderHistory.size(); i++)
     		{
     			Order order = orderHistory.get(i);
-    			double b = order.getQuantity();
+    			double b = order.getSum();
     			if (orderHistory.size() == 1){
     				dp = new Observation(b);
     				dp.setIndependentValue("ordered at", 0);
@@ -126,7 +126,7 @@ public class ForecastAgent
     		for (int i = orderHistory.size()-reviewPeriod; i < orderHistory.size(); i++)
     		{
     			Order order = orderHistory.get(i);
-    			double b = order.getQuantity();
+    			double b = order.getSum();
 
     			dp = new Observation(b);
     			dp.setIndependentValue("ordered at", i);
@@ -138,7 +138,7 @@ public class ForecastAgent
     // forecasts amount for next period:
     public int getForecast()
     {  
-    	System.out.println(observedData.toString());
+    	//System.out.println(observedData.toString());
     	if (observedData.size() == 0) return lastForecast;
     	double b = 0; // variable for output	
 
@@ -159,7 +159,7 @@ public class ForecastAgent
 			DataPoint dp = (DataPoint)it.next();
 			b = dp.getDependentValue(); //write forecast into output variable
 		}
-		System.out.println(b);
+		//System.out.println(b);
 		return (int)b;
     }
     

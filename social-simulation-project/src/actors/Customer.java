@@ -67,7 +67,7 @@ public class Customer extends Buy
 		//1. processShipments()
 		this.receiveShipments();
 		//System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
-		
+		//
 		orderAgent.clearReceivedShipments();
 		//2. updateTrust()
 		// this.trustAgent.update();
@@ -123,18 +123,18 @@ public class Customer extends Buy
 		
 		// 1.
 		next_demand = this.forecastAgent.customerDemand();
-		System.out.println("[Customer] Next demand is  " + next_demand);
+		//System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
 		current_incoming_inventory_level = this.inventoryAgent.getIncomingInventoryLevel();
 		
-		System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getIncomingInventoryLevel());
+		//System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getIncomingInventoryLevel());
 		//Update Trust missing?
 		
 		// 3.
 		order_quantity = next_demand - current_incoming_inventory_level;
 		
-		System.out.println("[Customer] order_quantity is  " + order_quantity);
+		
 
 		// TODO replenishment policy
 		
@@ -143,10 +143,10 @@ public class Customer extends Buy
 		if (order_quantity <= 0) 
 		{
 			order_quantity=0;
-			return;
 		}
 		else
 		{
+			//System.out.println("[Customer] order_quantity is  " + order_quantity);
 			Order order = new Order(order_quantity, this.orderAgent);
 			
 			// Choose retailer

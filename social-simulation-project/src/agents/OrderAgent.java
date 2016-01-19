@@ -69,7 +69,7 @@ public class OrderAgent
 	 */
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
-		System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
+		//System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
 		shipment.received();
 		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
 		receivedShipments.add(shipment);
