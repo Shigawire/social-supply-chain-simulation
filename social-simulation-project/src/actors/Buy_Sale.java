@@ -62,12 +62,15 @@ public abstract class Buy_Sale extends Buy implements Sale
 		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
 		
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
+		
 		// If the inventory level is sufficient for the next demand,
 		// do not order
 		if (order_quantity < 0) 
 		{
-			
+			//a order with quantity null has to be made for the process in the orderAgent
+			// (realize the order of the last tick
 			order_quantity=0;
+			orderAgent.order(this.trustAgent, null);
 		}
 		else
 		{

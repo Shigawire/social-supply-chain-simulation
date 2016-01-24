@@ -19,13 +19,14 @@ import artefacts.Order;
 */
 public class DeliveryAgent 
 {
+	//price for the goods
 	private int price;
 	private int current_outgoing_inventory_level;
-	private ArrayList<Order> receivedOrders; // Liste um noch offene Orders zu �bertragen
-	private ArrayList<Order> everReceivedOrders;
-	private ArrayList<Order> openOrders;
-	private int shortage = 0;
-	private SupplyChainMember parent;
+	private ArrayList<Order> receivedOrders; // list for all received orders
+	private ArrayList<Order> everReceivedOrders;//all orders ever received
+	private ArrayList<Order> openOrders;//list to transfer open orders
+	private int shortage = 0;//gives the shortage of the last tick, will be used for the forecast
+	private SupplyChainMember parent;//to which SupplyChainMember it belongs
 	
 	public DeliveryAgent(int price, SupplyChainMember parent) 
 	{
@@ -61,23 +62,33 @@ public class DeliveryAgent
 		shortage=0;
 		for (Order order : receivedOrders) 
 		{
-			if (order.getQuantity() > current_outgoing_inventory_level) 
+			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8
+			if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level&& order.getUnfullfilledQuantity()>8) 
 			{
-				//wenn Inventory nicht ausreicht, wird nicht geliefert;
-				//TODO was passiert wenn eine lieferung danach moeglicherweise processed werden koennte? Loesung das return weg, 
-				//dann geht er alle restlichen Bestellungen auch noch durch
+				//if the needed rest quantity of the order is higher then the inventory
+				//part of the order will be delivered
+				order.partDelivery(current_outgoing_inventory_level);
 				openOrders.add(order);
-				shortage=+order.getQuantity();
-				
-				//return;
-			} 
+				shortage=+order.getUnfullfilledQuantity();
+				inventoryAgent.reduceOutgoingInventoryLevel(current_outgoing_inventory_level);
+				order.getOrderAgent().receiveShipment(order,this);
+				current_outgoing_inventory_level=0;
+			}
+			//if <=8 no delivery will be made
+			else if(order.getUnfullfilledQuantity() > current_outgoing_inventory_level){
+				shortage=+order.getUnfullfilledQuantity();
+				openOrders.add(order);
+			}
+			//if the order can be completly fullfilled, it will be
 			else 
 			{
+				int buffer=order.getUnfullfilledQuantity();
 				order.setProcessed(true);
+				order.partDelivery(buffer);
 				//sub the amount because the order is not open anymore
 				order.getOrderAgent().receiveShipment(order,this);
 				//System.out.println(order.getQuantity());
-				inventoryAgent.reduceOutgoingInventoryLevel(order.getQuantity());
+				inventoryAgent.reduceOutgoingInventoryLevel(buffer);
 				current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
 			}
 		}

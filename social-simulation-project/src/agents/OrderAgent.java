@@ -20,7 +20,10 @@ import social_simulation_project.OrderObserver;
 public class OrderAgent 
 {
 	private SupplyChainMember parent;
+	//list of received Orders
 	private ArrayList<Order> receivedShipments;
+	//List which orders have to be made amd which this tick
+	private Order nextTickOrder;
 	private ProcurementAgent procurementAgent;
 	
 	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent) 
@@ -29,27 +32,32 @@ public class OrderAgent
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent=procurementAgent;
 	}
-	
+	// order at the by the procuremnt agent choosen deliverer
+	//order will be recieved one tick later
+	//Because of the structure an order (even one that is empty) has to be made every tick
 	public void order(TrustAgent trustAgent, Order order) 
 	{
-		// select Retailer. mit customer.trustAgent
-		// trustAgent must be implemented
-		
-		DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
-		
-		double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
-		order.setExpectedDeliveryDuration(expectedDeliveryDuration);
-		//DeliveryAgent deliveryAgent = trustAgent.getCheapestSupplier();
-		
-
+		// e.g. select Retailer. with customer.procurementAgent
+		if(order!=null){
+			DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
+			
+			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
+			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
+			order.setDeliveryAgent(deliveryAgent);		
+			
+		}
+		if(nextTickOrder!=null){
+			nextTickOrder.getDeliveryAgent().receiveOrder(nextTickOrder);
+		}
+		nextTickOrder=order;
 		//add the open order
 		
-		deliveryAgent.receiveOrder(order);
+		
 	}
 	
 	
 	/*
-	 * geht vom super agent aus
+	 * from the Superagent like customer
 	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
@@ -60,17 +68,20 @@ public class OrderAgent
 			{
 				inventoryAgent.store(shipment);
 			}
-		}	
+		}
+		receivedShipments.clear();
 	}
 	
 	/*
-	 * geht vom delivery agent der nächsten Stufe aus
-	 * 
+	 * from delivery agent of the next tier
+	 * this structure for one tick delay between receive by the order and actual receiving by the super agent
 	 */
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
 		//System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
+		//set time of the first received
 		shipment.received();
+		//information for the procurement agent 
 		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);

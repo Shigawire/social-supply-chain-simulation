@@ -17,20 +17,20 @@ public class OrderObserver
 	
 	public void addAmount(int adding)
 	{
-		orderHistory.add(adding);
+		//orderHistory.add(adding);
 		amount+= adding;
 		
 	}
 	
 	public void subAmount(int sub)
 	{
-		Integer weg=sub;
-		if(orderHistory.contains(weg)){
-			orderHistory.remove(weg);
-		}
-		else{
-			System.out.println("Fick Dich");
-		}
+//		Integer weg=sub;
+//		if(orderHistory.contains(weg)){
+//			orderHistory.remove(weg);
+//		}
+//		else{
+//			System.out.println("Fick Dich");
+//		}
 
 		amount-= sub;
 	}

@@ -142,7 +142,10 @@ public class Customer extends Buy
 		// do not order
 		if (order_quantity <= 0) 
 		{
+			//a order with quantity null has to be made for the process in the orderAgent
+			// (realize the order of the last tick
 			order_quantity=0;
+			orderAgent.order(this.trustAgent, null);
 		}
 		else
 		{
