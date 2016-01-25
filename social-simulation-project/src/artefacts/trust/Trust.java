@@ -13,6 +13,8 @@ public class Trust
 	private QualityDimension quality;
 	private SharedValuesDimension shared_values;
 	
+	private double tValue = 0.5;
+	
 	private Map<DimensionType, TrustDimension> dimensionMapping = new HashMap<DimensionType, TrustDimension>();
 	
 	public Trust(ReliabilityDimension reliability, 
@@ -33,7 +35,12 @@ public class Trust
 	
 	public double getUnifiedTrustValue() 
 	{
-		return 0.95;
+		return this.tValue;
+	}
+	
+	public void setUnifiedTrustValue(double tValue) 
+	{
+		this.tValue = tValue;
 	}
 	
 	public TrustDimension getDimension(DimensionType type) 

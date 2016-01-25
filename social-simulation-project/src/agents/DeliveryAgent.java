@@ -63,7 +63,7 @@ public class DeliveryAgent
 		for (Order order : receivedOrders) 
 		{
 			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8
-			if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level&& order.getUnfullfilledQuantity()>8) 
+			if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
 			{
 				//if the needed rest quantity of the order is higher then the inventory
 				//part of the order will be delivered

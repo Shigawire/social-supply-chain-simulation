@@ -40,7 +40,8 @@ public class ProcurementAgent
 		for (int i = 0; i < delivery_agents.size(); i++)
 		{
 			//procurement fragt beim trust nur dummy
-			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i),1);
+			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));
+			System.out.println("Current Trust Value: " + values[0][i]);
 			values[1][i] = 1;
 			values[2][i] = delivery_agents.get(i).getPrice();
 		}
@@ -67,6 +68,7 @@ public class ProcurementAgent
 	
 	public DeliveryAgent chooseSupplier() 
 	{
+		updateTrust();
 		fillBest();
 		double highest = 0;
 		double moment;
@@ -84,6 +86,17 @@ public class ProcurementAgent
 		return delivery_agents.get(highestPoint);
 	}
 	
+	private void updateTrust() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < delivery_agents.size(); i++)
+		{
+			//procurement fragt beim trust nur dummy
+			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));
+			System.out.println("Current Trust Value: " + values[0][i]);
+			values[2][i] = delivery_agents.get(i).getPrice();
+		}
+	}
+
 	public void updateTime(int ticksTillDelivery, DeliveryAgent deliverer) 
 	{
 		int updaten = delivery_agents.indexOf(deliverer);

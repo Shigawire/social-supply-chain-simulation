@@ -1,11 +1,15 @@
 package artefacts;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
+import artefacts.trust.Trust;
 
 /**
 * This class represents an order. 
@@ -37,6 +41,8 @@ public class Order
 	
 	private double shipmentQuality;
 	
+	private Map<Integer, Integer> partialDeliveryHistory = new HashMap<Integer, Integer>();
+	
 	public Order(int quantity, OrderAgent orderAgent) 
 	{
 		
@@ -57,7 +63,7 @@ public class Order
 //		return (this.backlog > 0);
 //	}
 	
-	public void received() 
+	private void received() 
 	{
 		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
@@ -71,7 +77,12 @@ public class Order
 		this.partDelivery=delivery;
 		OrderObserver.giveObserver().subAmount(delivery);
 		fullfilledQuantity+=delivery;
-
+		
+		if (this.fullfilledQuantity == this.quantity) {
+			this.received();
+		}
+		
+		this.partialDeliveryHistory.put((int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount(), fullfilledQuantity);
 	}
 	/*
 	 * GETTERS
@@ -162,5 +173,9 @@ public class Order
 	
 	public void setShipmentQuality(double shipmentQuality) {
 		this.shipmentQuality = shipmentQuality;
+	}
+	
+	public Map<Integer, Integer> getPartialDeliveryHistory() {
+		return this.partialDeliveryHistory;
 	}
 }

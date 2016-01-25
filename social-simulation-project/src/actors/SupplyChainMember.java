@@ -67,6 +67,10 @@ public abstract class SupplyChainMember
 		return this.dimensionRatings;
 	}
 	
+	public TrustAgent getTrustAgent() {
+		return this.trustAgent;
+	}
+	
 	/*
 	 * SETTERS
 	 */

@@ -61,7 +61,7 @@ public class TrustAgent
 		this.trustStorage.get(delivery_agent).getDimension(type).updateDimension(value);
 	}
 	
-	public void inspectNewArrivals(OrderAgent orderAgent) 
+	/*public void inspectNewArrivals(OrderAgent orderAgent) 
 	{
 		ArrayList<Order> shipments = orderAgent.getReceivedShipments();
 
@@ -70,11 +70,11 @@ public class TrustAgent
 			inspectShipment(orderAgent, shipment);
 		}
 	}
+	*/
 	
 	//Jedes Shipment wird einzeln untersucht, daraufhin wird der Trust-Wert der spezifischen Dimension eines bestimmten orderAgent geändert
-	private void inspectShipment(OrderAgent orderAgent, Order shipment) 
-	{
-		
+	public void inspectShipment(OrderAgent orderAgent, Order shipment) 
+	{		
 		DimensionType[] dimensions = {DimensionType.RELIABILITY, DimensionType.COMPETENCE, DimensionType.QUALITY, DimensionType.SHARED_VALUES};
 		
 		//reliability
@@ -82,7 +82,7 @@ public class TrustAgent
 		int runtime = (shipment.getReceivedAt() - shipment.getOrderedAt());
 		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3
 		
-		shipment.setShipmentQuality(RandomHelper.nextDoubleFromTo(0.95, 1));
+		shipment.setShipmentQuality(RandomHelper.nextDoubleFromTo(0.45, 1));
 		
 		//Map<TrustDimension, Double> orderFulfillments = new HashMap<TrustDimension, Double>();
 		
@@ -93,24 +93,40 @@ public class TrustAgent
 		double summedDimensionValues = 0;
 		
 		for (DimensionType dimensionType : dimensions) {
-	
+			//System.out.println("---------Dimension " + dimensionType + " ---------");
 			
 			Map<DimensionType, Double> dimensionRating = supplyChainMember.getTrustDimensionRatings();
 			
 			double rating = dimensionRating.get(dimensionType);
 			
+			//System.out.println("Dimension rating: " + rating);
+			
 			double kpiValue = Kpi.getKPIForDimension(dimensionType);
 			
+			//System.out.println("Dimension kpiValue: " + kpiValue);
+			
 			double updatedDimensionValue = (kpiValue - rating) * rating;
+			
+			//System.out.println("updatedDimensionValue: " + updatedDimensionValue);
 			
 			summedDimensionValues+=updatedDimensionValue;
 			//orderFulfillments.put(trust.getDimension(DimensionType.RELIABILITY), kpiValue);
 			
+			
 		}
 		
-		double _tValue = this.tValue * (1 + summedDimensionValues);
-		this.tValue = this.tValue + this.learningRate * (_tValue - this.tValue);
-				
+//		System.out.println("Summed up values: " + summedDimensionValues);
+		
+//		System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
+		double _tValue = 0.5 * (1 + summedDimensionValues);
+		double tValue = ((1- this.learningRate) * trust.getUnifiedTrustValue()) + (this.learningRate * _tValue);
+		
+//		System.out.println("_tValue: " + _tValue);
+		
+		//System.out.println("tValue: " + tValue);
+
+		trust.setUnifiedTrustValue(tValue);
+		
 		// recalculate reliability:
 		
 		
@@ -125,14 +141,17 @@ public class TrustAgent
 		//hier muss der trust wert zurueclgegeben werden.
 		return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
 	} 
+	
 	public double getTrustValue(DeliveryAgent delivery_agent,int i) 
 	{
 		//hier muss der trust wert zurueclgegeben werden.
 		return(1);
 	} 
+	
 	public Trust getTrustObject(DeliveryAgent delivery_agent){
 		return this.trustStorage.get(delivery_agent);
 	}
+	
 	public DeliveryAgent getCheapestSupplier() 
 	{
 		DeliveryAgent cheapestSupplier = delivery_agents.get(0);

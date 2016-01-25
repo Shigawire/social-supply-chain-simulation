@@ -62,10 +62,12 @@ public class OrderAgent
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
 		//System.out.println("[Order Agent] receiving shipment list");
+		
 		if (!receivedShipments.isEmpty())
 		{
 			for (Order shipment : receivedShipments) 
 			{
+				parent.getTrustAgent().inspectShipment(this, shipment);
 				inventoryAgent.store(shipment);
 			}
 		}
@@ -80,7 +82,7 @@ public class OrderAgent
 	{
 		//System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
 		//set time of the first received
-		shipment.received();
+		//shipment.received();
 		//information for the procurement agent 
 		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
 		receivedShipments.add(shipment);
