@@ -3,6 +3,8 @@ package actors;
 import java.util.ArrayList;
 
 import agents.DeliveryAgent;
+import agents.OrderAgent;
+import agents.ProductionAgent;
 import artefacts.ProductionBatch;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
@@ -17,9 +19,11 @@ public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int next_demand;
 	private int price;
-	private int order_quantity;
+	private int machine_quantity;
 	private int amount_to_produce;
 	private DeliveryAgent deliveryAgent;
+	private OrderAgent orderAgent;
+	private ProductionAgent productionAgent;
 	private ArrayList<ProductionBatch> Production;
 	
 	private ArrayList<ProductionBatch> toProduce;
@@ -30,6 +34,8 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	
 		deliveryAgent = new DeliveryAgent(price, this);
+		this.machine_quantity = 3;
+		productionAgent = new ProductionAgent(lead_time,machine_quantity, this.inventoryAgent);
 		Production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
 	}
@@ -68,36 +74,12 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	
 	private void harvest() 
 	{
-		for (ProductionBatch current_batch : Production) 
-		{
-			current_batch.incrementTimeInProduction();
-			if (current_batch.getTimeInProduction() >= this.lead_time) 
-			{
-				//This batch is ready to be added to inventory
-				this.inventoryAgent.setOutgoingInventoryLevel(this.inventoryAgent.getOutgoingInventoryLevel() + current_batch.getQuantity());
-				//Production.remove(current_batch);
-			} 
-			else
-			{
-				toProduce.add(current_batch);
-			}
-		}
-		
-		Production.clear();
-		Production.addAll(toProduce);
-		toProduce.clear();
+		this.productionAgent.harvest();
 	}
 	
 	private void produce() 
 	{		
-		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
-		//shortage at the current orders will be produced to
-		//TODO in which far did he already include this by FABIAN, because he wrote the class
-		amount_to_produce = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
-		amount_to_produce = (amount_to_produce > 0) ? amount_to_produce : 0;
-		
-		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
-		Production.add(new_production_order);
+		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
 	}
 	
 	public DeliveryAgent getDeliveryAgent() 

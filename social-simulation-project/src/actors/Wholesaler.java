@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
 import agents.DeliveryAgent;
+import agents.ProductionAgent;
 
 /**
 * This class represents a wholesaler. Wholesalers do not
@@ -24,30 +25,31 @@ public class Wholesaler extends Buy_Sale
 		this.price=price;
 	
 		deliveryAgent = new DeliveryAgent(price, this);
-		this.productionQueue=0;
-		this.almostFinished=0;
+		this.productionAgent = new ProductionAgent(2, 1,this.inventoryAgent);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 3)
 	public void run() 
 	{
-		// 1. processShipments() receive shipments
+		// 1. harvest
+		this.harvest();
+		// 2. processShipments() receive shipments
 		this.receiveShipments();
-		// 2. updateTrust()	
+		// 3. updateTrust()	
 		orderAgent.clearReceivedShipments();
-		// 3. produce
+		// 4. produce
 		this.produce();
-		// 4. deliver()
+		// 5. deliver()
 		this.deliver();
-		// 5. calculateDemand() wird in order gemacht
-		//next_demand = this.forecastAgent.calculateDemand();
 		// 6. order()
 		this.order();
 	}
+	
+	private void harvest(){
+		this.productionAgent.harvest();
+	}
 	private void produce(){
-		this.inventoryAgent.increaseOutgoingInventoryLevel(almostFinished);
-		almostFinished = productionQueue;
-		productionQueue = this.inventoryAgent.getIncomingInventoryLevel();
-		this.inventoryAgent.setIncomingInventoryLevel(0);
+
+		this.productionAgent.process();
 	}
 }

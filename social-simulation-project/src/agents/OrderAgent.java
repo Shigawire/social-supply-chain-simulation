@@ -55,6 +55,11 @@ public class OrderAgent
 		
 	}
 	
+	public void deliverRawMaterialA(int neededAmount)
+	{
+		
+	}
+	
 	
 	/*
 	 * from the Superagent like customer
