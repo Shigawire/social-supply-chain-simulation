@@ -15,20 +15,25 @@ import agents.OrderAgent;
 */
 public class Order 
 {
+	//quantity that has to be completly fullfilled
 	private final int quantity;
-	private int ordered_at; // tick
-	private int received_at;
-	int oftenProcessed=0;
+	private int ordered_at; // tick it is orderd
+	private int received_at;//tick it is received
+	private int oftenProcessed=0;//how often has parts of the order been processed
+	private int firstDelivery; //how much was fullfilled in the first fullfillment
+	private int firstTick;
 	private String id;
 	// Who ordered?
-	private OrderAgent orderAgent;
-	private DeliveryAgent deliveryAgent;
+	private OrderAgent orderAgent;//who ordered
+	private DeliveryAgent deliveryAgent;//who delivered
 	
-	private double expectedDelivery;
+	private double expectedDelivery;//expected time the delivery will need
 	
 	// Order received and sent
-	private boolean processed;
+	private boolean processed;//is completly processed --> done
 	private int sum;
+	private int fullfilledQuantity;//till now fullfilled quantity
+	private int partDelivery=0;//partdelivery at the moment
 	
 	private double shipmentQuality;
 	
@@ -41,8 +46,9 @@ public class Order
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		this.ordered_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 		this.orderAgent = orderAgent;
+		fullfilledQuantity=0;
 		this.processed = false;
-		System.out.println(id+" " +quantity+" "+oftenProcessed);
+		//System.out.println(id+" " +quantity+" "+oftenProcessed);
 		sum=quantity;
 	}
 	
@@ -55,10 +61,24 @@ public class Order
 	{
 		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
-	
+	//a part or the whole delivery
+	public void partDelivery(int delivery){
+		if(oftenProcessed==0){
+			firstDelivery=delivery;
+			firstTick=(int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		}
+		oftenProcessed++;
+		this.partDelivery=delivery;
+		OrderObserver.giveObserver().subAmount(delivery);
+		fullfilledQuantity+=delivery;
+
+	}
 	/*
 	 * GETTERS
 	 */
+	public int getPartDelivery(){
+		return partDelivery;
+	}
 	public OrderAgent getOrderAgent() 
 	{
 		return this.orderAgent;	
@@ -83,7 +103,12 @@ public class Order
 	{
 		return this.quantity;
 	}
-	
+	public int getUnfullfilledQuantity(){
+		return this.quantity-this.fullfilledQuantity;
+	}
+	public int getFullfilledQuantity(){
+		return this.fullfilledQuantity;
+	}
 	public boolean getProcessed() 
 	{
 		// TODO Auto-generated method stub
@@ -102,17 +127,14 @@ public class Order
 	public double getExpectedDeliveryDate(){
 		return this.expectedDelivery;
 	}
-	
+
 	/*
 	 * SETTERS
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		oftenProcessed++;
 		System.out.println(id+" " +quantity+" "+oftenProcessed);
-		OrderObserver.giveObserver().subAmount(quantity);
-		this.processed = true;
-		
+		this.processed = true;	
 	}
 	
 	public void setExpectedDeliveryDuration(double duration) {

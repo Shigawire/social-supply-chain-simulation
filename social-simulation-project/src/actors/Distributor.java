@@ -72,9 +72,10 @@ public class Distributor extends Buy_Sale
 		// do not order
 		if (order_quantity < 0) 
 		{
-			//System.out.println("ja ich bin im if");
+			//a order with quantity null has to be made for the process in the orderAgent
+			// (realize the order of the last tick
 			order_quantity=0;
-			return;
+			orderAgent.order(this.trustAgent, null);
 		}
 		else
 		{
