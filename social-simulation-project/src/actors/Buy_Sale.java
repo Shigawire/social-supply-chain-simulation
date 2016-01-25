@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import agents.DeliveryAgent;
 import artefacts.Order;
 //Combination of Interface Sale and class buy
-public abstract class Buy_Sale extends Buy implements Sale
+public abstract class Buy_Sale extends Buy implements Sale//combination of a actor who buys and sales
 {
-	protected int next_demand;
-	protected int price;
+	protected int next_demand;//demand of next tick
+	protected int price;//price for our goods
 	protected int order_quantity;
 	protected DeliveryAgent deliveryAgent;
 	protected int productionQueue;
@@ -48,18 +48,18 @@ public abstract class Buy_Sale extends Buy implements Sale
 	   */
 	public void order() 
 	{
-		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
-		// 2. Was hab ich noch im Inventar?
-		// 3. Differenz bestellen. mit orderArgent
+		// 1. need in the next tick
+		// 2. whats about my inventory
+		// 3. order difference
 		
 		// 1.
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 		
 		// 2.
-		current_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
+		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
 		
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		

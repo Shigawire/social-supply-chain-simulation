@@ -16,14 +16,14 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int next_demand;
-	private int price;
+	private int price;//price for the good
 	private int order_quantity;
 	private int amount_to_produce;
 	private DeliveryAgent deliveryAgent;
 	private ArrayList<ProductionBatch> Production;
 	
 	private ArrayList<ProductionBatch> toProduce;
-	private int lead_time = 2;
+	private int lead_time = 2;//the time needed to produce
 	
 	public Manufacturer(int price, int current_incoming_inventory_level,int current_outgoing_inventory_level)
 	{

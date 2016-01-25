@@ -17,14 +17,14 @@ import artefacts.trust.DimensionType;
 */
 public abstract class SupplyChainMember 
 {
-	protected String id;
-	protected int current_inventory_level;
-	protected int current_incoming_inventory_level;
-	protected int current_outgoing_inventory_level;
-	protected TrustAgent trustAgent;
+	protected String id;//id for every member
+	protected int current_incoming_inventory_level;//inventory with items that has to be used to produce sellable items
+	protected int current_outgoing_inventory_level;//inventory with sellable itmes
+	protected TrustAgent trustAgent;//Agent for the trust to suppliers
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
-	protected Map<DimensionType, Double> dimensionRatings;
+	protected Map<DimensionType, Double> dimensionRatings;//Map with dimension ratings gives the importance for
+														//every dimension of trust for every Supply Chain member based on the profiles
 	
 	/**
 	   * This constructor gives every supply chain member a unique
@@ -48,7 +48,7 @@ public abstract class SupplyChainMember
 	}
 	
 	// Methods every supply chain member must implement
-	public abstract void run();
+	public abstract void run();//run method what every supply chain member does in the tick
 	public abstract void receiveShipments();
 	
 	/*
