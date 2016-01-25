@@ -51,23 +51,7 @@ public class ForecastAgent
 	   */
 	public int calculateDemand(ArrayList<Order> everReceivedOrders)
 	{
-//		Iterator it = orderHistory.iterator();
-//		int lastTick = 0;
-//		Order rememberer = new Order();
-//		for (int i = 0; i < everReceivedOrders.size(); i++)
-//		{
-//			if (everReceivedOrders.get(i).getOrderedAt()!= lastTick)
-//			{
-//				orderHistory.add(everReceivedOrders.get(i));
-//				rememberer =(Order)it.next();
-//			}
-//			else{
-//				rememberer.setQuantity(rememberer.setSum()+everReceivedOrders.get(i).getQuantity());
-//				it.remove();
-//				orderHistory.add(rememberer);
-//				while(it.hasNext()) it.next();
-//			}
-//		}
+
 		int lastTick=0;
 		int firstOfTick=0;
 		for (int i = 0; i < everReceivedOrders.size(); i++)
@@ -170,7 +154,7 @@ public class ForecastAgent
     
 	public int customerDemand() 
 	{
-		int dem = RandomHelper.nextIntFromTo(2, 25);
+		int dem = RandomHelper.nextIntFromTo(10, 25);
 		// System.out.println(dem);
 		return dem;
 	}
