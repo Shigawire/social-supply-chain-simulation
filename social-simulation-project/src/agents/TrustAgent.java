@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import repast.simphony.random.RandomHelper;
 import actors.SupplyChainMember;
 import artefacts.Order;
 import artefacts.trust.CompetenceDimension;
@@ -13,7 +14,6 @@ import artefacts.trust.QualityDimension;
 import artefacts.trust.ReliabilityDimension;
 import artefacts.trust.SharedValuesDimension;
 import artefacts.trust.Trust;
-import artefacts.trust.TrustDimension;
 
 
 /**
@@ -31,6 +31,9 @@ public class TrustAgent
 	
 	// When do we classify a shipment as overdue?
 	private double ShipmentRuntimeOverdueThreshold = 2;
+	
+	private double tValue = 0.5;
+	private double learningRate = 0.6;
 	
 
 	public TrustAgent(ArrayList<DeliveryAgent> delivery_agents, Map<DimensionType, Double> dimensionRatings, SupplyChainMember supplyChainMember)
@@ -71,27 +74,42 @@ public class TrustAgent
 	//Jedes Shipment wird einzeln untersucht, daraufhin wird der Trust-Wert der spezifischen Dimension eines bestimmten orderAgent geändert
 	private void inspectShipment(OrderAgent orderAgent, Order shipment) 
 	{
+		
+		DimensionType[] dimensions = {DimensionType.RELIABILITY, DimensionType.COMPETENCE, DimensionType.QUALITY, DimensionType.SHARED_VALUES};
+		
 		//reliability
 		//is the shipment overdue?
 		int runtime = (shipment.getReceivedAt() - shipment.getOrderedAt());
 		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3
-						
-		DimensionType[] dimensions = {DimensionType.RELIABILITY, DimensionType.COMPETENCE, DimensionType.QUALITY, DimensionType.SHARED_VALUES};
 		
-		Map<TrustDimension, Double> orderFulfillments = new HashMap<TrustDimension, Double>();
+		shipment.setShipmentQuality(RandomHelper.nextDoubleFromTo(0.95, 1));
+		
+		//Map<TrustDimension, Double> orderFulfillments = new HashMap<TrustDimension, Double>();
 		
 		Trust trust = trustStorage.get(shipment.getDeliveryAgent());
 		
 		KPI Kpi = new KPI(shipment);
 		
-		for (DimensionType dimensionType : dimensions) {
+		double summedDimensionValues = 0;
 		
+		for (DimensionType dimensionType : dimensions) {
+	
+			
+			Map<DimensionType, Double> dimensionRating = supplyChainMember.getTrustDimensionRatings();
+			
+			double rating = dimensionRating.get(dimensionType);
+			
 			double kpiValue = Kpi.getKPIForDimension(dimensionType);
 			
-			orderFulfillments.put(trust.getDimension(DimensionType.RELIABILITY), kpiValue);
-		
+			double updatedDimensionValue = (kpiValue - rating) * rating;
+			
+			summedDimensionValues+=updatedDimensionValue;
+			//orderFulfillments.put(trust.getDimension(DimensionType.RELIABILITY), kpiValue);
+			
 		}
 		
+		double _tValue = this.tValue * (1 + summedDimensionValues);
+		this.tValue = this.tValue + this.learningRate * (_tValue - this.tValue);
 				
 		// recalculate reliability:
 		

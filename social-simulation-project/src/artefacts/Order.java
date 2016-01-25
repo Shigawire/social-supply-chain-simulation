@@ -30,6 +30,8 @@ public class Order
 	private boolean processed;
 	private int sum;
 	
+	private double shipmentQuality;
+	
 	public Order(int quantity, OrderAgent orderAgent) 
 	{
 		
@@ -133,6 +135,10 @@ public class Order
 	}
 	
 	public double getShipmentQuality() {
-		return RandomHelper.nextDoubleFromTo(0.95, 1);
+		return this.shipmentQuality;
+	}
+	
+	public void setShipmentQuality(double shipmentQuality) {
+		this.shipmentQuality = shipmentQuality;
 	}
 }
