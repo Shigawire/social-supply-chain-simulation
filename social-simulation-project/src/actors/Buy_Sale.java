@@ -3,6 +3,7 @@ package actors;
 import java.util.ArrayList;
 
 import agents.DeliveryAgent;
+import agents.ProductionAgent;
 import artefacts.Order;
 //Combination of Interface Sale and class buy
 public abstract class Buy_Sale extends Buy implements Sale
@@ -11,7 +12,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 	protected int price;
 	protected int order_quantity;
 	protected DeliveryAgent deliveryAgent;
-	protected int productionQueue;
+	protected ProductionAgent productionAgent;
 	protected ArrayList<DeliveryAgent> delivery_agents;
 	
 	public Buy_Sale(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
