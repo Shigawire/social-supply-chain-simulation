@@ -14,6 +14,9 @@ public class Trust
 	private SharedValuesDimension shared_values;
 	
 	private double tValue = 0.5;
+	private double oldtValue = 0.5;
+	
+	private double currentCompetenceValue = 0.5;
 	
 	private Map<DimensionType, TrustDimension> dimensionMapping = new HashMap<DimensionType, TrustDimension>();
 	
@@ -40,7 +43,30 @@ public class Trust
 	
 	public void setUnifiedTrustValue(double tValue) 
 	{
+		this.oldtValue = this.tValue;
 		this.tValue = tValue;
+	}
+	
+	//Returns true if the last trust update was positive, negative else.
+	public boolean getHistoricalTrustAppraisal() {
+		if (this.oldtValue > this.tValue) {
+			return false;
+			//negative
+			//System.out.println("Trust update is negative [from "+ _oldtValue + " to " + _newtValue +  "]");
+		} else {
+			return true;
+			//System.out.println("Trust update is positive [from "+ _oldtValue + " to " + _newtValue +  "]");
+		}
+	}
+	
+	public double getCurrentCompetenceValue() {
+		return this.currentCompetenceValue;
+	}
+	
+	public void setCurrentCompetenceValue(double competence) {
+		if (competence > 1) competence = 1;
+		if (competence < 0) competence = 0;
+		this.currentCompetenceValue = Math.ceil(competence, 1);
 	}
 	
 	public TrustDimension getDimension(DimensionType type) 

@@ -9,6 +9,7 @@ import artefacts.Order;
 public class KPI {
 	
 	private Order shipment;
+	private Trust trust;
 	
 	private double compareSharedValues(SupplyChainMember s1, SupplyChainMember s2) {
 		Map<DimensionType, Double> ratingMap1 = s1.getTrustDimensionRatings();
@@ -64,8 +65,9 @@ public class KPI {
 		
 	}
 	
-	public KPI(Order shipment){
+	public KPI(Order shipment, Trust trust){
 		this.shipment = shipment;
+		this.trust = trust;
 	}
 	
 	public double getKPIForDimension(DimensionType dimensionType) {
@@ -92,8 +94,18 @@ public class KPI {
 			break;
 			
 		case COMPETENCE:
-			double competence_value = 0.96;
+			double competence_value = trust.getCurrentCompetenceValue();
+			boolean direction = trust.getHistoricalTrustAppraisal();
+			
+			if (direction) {
+				trust.setCurrentCompetenceValue(competence_value + 0.1);
+			} else {
+				trust.setCurrentCompetenceValue(competence_value - 0.1);
+			}
+			
+			//competence_member
 			kpiValue = competence_value;
+		
 			
 			break;
 		}
