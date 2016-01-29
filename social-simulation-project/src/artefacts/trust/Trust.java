@@ -66,7 +66,7 @@ public class Trust
 	public void setCurrentCompetenceValue(double competence) {
 		if (competence > 1) competence = 1;
 		if (competence < 0) competence = 0;
-		this.currentCompetenceValue = Math.ceil(competence, 1);
+		this.currentCompetenceValue = competence;
 	}
 	
 	public TrustDimension getDimension(DimensionType type) 
