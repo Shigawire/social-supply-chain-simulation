@@ -20,7 +20,7 @@ import repast.simphony.essentials.RepastEssentials;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class Customer extends Buy 
+public class Customer extends SupplyChainMember 
 {
 	// what the customer consumes every tick
 	private int consumption;
@@ -73,7 +73,7 @@ public class Customer extends Buy
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand() ist glaube ich unnï¿½tig sieher Methode order!!!
+		//4. calculateDemand() ist glaube ich unnötig sieher Methode order!!!
 		//!
 		//!
 		// 4. calculateDemand() wird in order gemacht
