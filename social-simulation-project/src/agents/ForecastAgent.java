@@ -144,7 +144,8 @@ public class ForecastAgent
 			b = dp.getDependentValue(); //write forecast into output variable
 		}
 		//System.out.println(b);
-		return (int)b;
+		if (b>=0)return (int)b;
+		else return 0;
     }
     
     public void addToHistory(Order order)

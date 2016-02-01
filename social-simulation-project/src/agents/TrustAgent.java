@@ -82,7 +82,7 @@ public class TrustAgent
 		int runtime = (shipment.getReceivedAt() - shipment.getOrderedAt());
 		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3
 		
-		shipment.setShipmentQuality(RandomHelper.nextDoubleFromTo(0.45, 1));
+		shipment.setShipmentQuality(1-shipment.getfailurePercentage());
 		
 		//Map<TrustDimension, Double> orderFulfillments = new HashMap<TrustDimension, Double>();
 		

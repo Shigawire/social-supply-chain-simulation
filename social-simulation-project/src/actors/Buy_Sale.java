@@ -9,15 +9,17 @@ import agents.OrderAgent;
 import agents.ProductionAgent;
 import artefacts.Order;
 //Combination of Interface Sale and class buy
-public abstract class Buy_Sale extends Buy implements Sale//combination of a actor who buys and sales
+public abstract class Buy_Sale extends Buy implements Sale
 {
 	protected int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
+
 	protected int next_demand;//demand of next tick
 	protected int price;//price for our goods
 	protected int order_quantity;
 	protected DeliveryAgent deliveryAgent;
 	protected ProductionAgent productionAgent;
 	protected ArrayList<DeliveryAgent> delivery_agents;
+	
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	public Buy_Sale(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
@@ -53,20 +55,33 @@ public abstract class Buy_Sale extends Buy implements Sale//combination of a act
 	   */
 	public void order() 
 	{
+
+		int desired_inventory_level;
+		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
+		// 2. Was hab ich noch im Inventar?
+		// 3. Differenz bestellen. mit orderArgent
+
 		// 1. need in the next tick
 		// 2. whats about my inventory
 		// 3. order difference
+
 		
 		// 1.
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
+		desired_inventory_level = next_demand*15/10;
+		System.out.println("desired"+desired_inventory_level);
 		
 		// 2.
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
+		order_quantity = next_demand + deliveryAgent.getShortage()- current_inventory_level;
+		System.out.println("order_quantity"+order_quantity);
+		
 		System.out.println(subtractionByTrust+" subtraction by trust");
 		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
 		subtractionByTrust=0;
+
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		
 		// If the inventory level is sufficient for the next demand,

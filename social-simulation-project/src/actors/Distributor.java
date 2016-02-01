@@ -26,7 +26,7 @@ public class Distributor extends Buy_Sale
 		
 		this.price = price;
 		
-		this.deliveryAgent = new DeliveryAgent(price, this);
+		this.deliveryAgent = new DeliveryAgent(price, this,2,2);
 		this.productionAgent = new ProductionAgent(1, 1,this.inventoryAgent);
 	}
 	

@@ -24,7 +24,7 @@ public class Wholesaler extends Buy_Sale
 		
 		this.price=price;
 	
-		deliveryAgent = new DeliveryAgent(price, this);
+		deliveryAgent = new DeliveryAgent(price, this,3,4);
 		this.productionAgent = new ProductionAgent(2, 1,this.inventoryAgent);
 	}
 	
