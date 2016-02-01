@@ -1,11 +1,14 @@
 package actors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
+import artefacts.trust.Trust;
 //class for all those who buy
 public abstract class Buy extends SupplyChainMember
 {
@@ -24,7 +27,7 @@ public abstract class Buy extends SupplyChainMember
 		}
 		trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings, this);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
-		this.orderAgent = new OrderAgent(this, procurementAgent);	
+		this.orderAgent = new OrderAgent(this, procurementAgent,delivery_agents);	
 		
 	}
 	public TrustAgent getTrustAgent(){

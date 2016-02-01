@@ -42,13 +42,13 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// First parameter is price
 		// Second parameter is initial inventory level
 		Distributor distributor1 = new Distributor(manufacturerList, 15,11, 50);
-		Distributor distributor2 = new Distributor(manufacturerList, 16,11, 55);
+		//Distributor distributor2 = new Distributor(manufacturerList, 16,11, 55);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
 		ArrayList<Sale> distributorList = new ArrayList<Sale>();
 		distributorList.add(distributor1);
-		distributorList.add(distributor2);
+		//distributorList.add(distributor2);
 		
 		// --------------------------------------------------------------------------------
 		
@@ -62,13 +62,13 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// First parameter is price
 		// Second parameter is initial inventory level
 		Wholesaler wholesaler1 = new Wholesaler(distributorList, 12, 11,40);
-		Wholesaler wholesaler2 = new Wholesaler(distributorList, 11, 11,38);
+		//Wholesaler wholesaler2 = new Wholesaler(distributorList, 11, 11,38);
 		
 		// Create a list of wholesalers and add every 
 		// wholesaler to that list (for now only 1)
 		ArrayList<Sale> wholesalerList = new ArrayList<Sale>();
 		wholesalerList.add(wholesaler1);	
-		wholesalerList.add(wholesaler2);	
+		//wholesalerList.add(wholesaler2);	
 		
 		// --------------------------------------------------------------------------------
 		
@@ -82,13 +82,13 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// First parameter is price
 		// Second parameter is initial inventory level
 		Retailer retailer1 = new Retailer(wholesalerList, 10, 10,10);
-		Retailer retailer2 = new Retailer(wholesalerList, 15, 10,11);
+		//Retailer retailer2 = new Retailer(wholesalerList, 15, 10,11);
 		
 		// Create a list of distributors and add every 
 		// distributor to that list (for now only 1)
 		ArrayList<Sale> retailerList = new ArrayList<Sale>();
 		retailerList.add(retailer1);
-		retailerList.add(retailer2);
+		//retailerList.add(retailer2);
 		
 		// --------------------------------------------------------------------------------
 		
@@ -110,13 +110,13 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.add(manufacturer1);
 		
 		context.add(distributor1);
-		context.add(distributor2);
+		//context.add(distributor2);
 		
 		context.add(wholesaler1);
-		context.add(wholesaler2);
+		//context.add(wholesaler2);
 		
 		context.add(retailer1);
-		context.add(retailer2);
+		//context.add(retailer2);
 		context.add(customer1);
 		// the observer for openOrders
 

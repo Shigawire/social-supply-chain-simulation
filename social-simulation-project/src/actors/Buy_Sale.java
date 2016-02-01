@@ -1,19 +1,23 @@
 package actors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import agents.DeliveryAgent;
+import agents.OrderAgent;
 import artefacts.Order;
 //Combination of Interface Sale and class buy
 public abstract class Buy_Sale extends Buy implements Sale//combination of a actor who buys and sales
 {
+	protected int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
 	protected int next_demand;//demand of next tick
 	protected int price;//price for our goods
 	protected int order_quantity;
 	protected DeliveryAgent deliveryAgent;
 	protected int productionQueue;
 	protected ArrayList<DeliveryAgent> delivery_agents;
-	
+	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	public Buy_Sale(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
@@ -59,8 +63,9 @@ public abstract class Buy_Sale extends Buy implements Sale//combination of a act
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
-		
+		System.out.println(subtractionByTrust+" subtraction by trust");
+		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+		subtractionByTrust=0;
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		
 		// If the inventory level is sufficient for the next demand,
@@ -81,7 +86,28 @@ public abstract class Buy_Sale extends Buy implements Sale//combination of a act
 			orderAgent.order(this.trustAgent, order);
 		}
 	}
-
+	public void going2order(OrderAgent noOrderer){
+		if(buyer.containsKey(noOrderer)){
+			//System.out.println("subtraction"+buyer.get(noOrderer));
+			subtractionByTrust+=buyer.get(noOrderer);
+		}
+		else{
+			//System.out.println("ist nicht");
+		}
+		
+	}
+	public void updateList(OrderAgent orderer,int orderAtYou){
+		//System.out.println("update"+" "+orderer.getParent().getClass());
+		if(!buyer.containsKey(orderer)){
+			buyer.put(orderer, orderAtYou);
+		}
+		int newValue=(buyer.get(orderer)+orderAtYou)/2;
+		//System.out.println(newValue);
+		buyer.remove(orderer);
+		buyer.put(orderer, newValue);
+		//System.out.println("new value for him"+buyer.get(orderer));
+		
+	}
 	/*
 	 * GETTERS
 	 */
