@@ -2,6 +2,7 @@ package agents;
 
 import java.util.ArrayList;
 
+import actors.Sale;
 import actors.SupplyChainMember;
 import artefacts.Order;
 import social_simulation_project.OrderObserver;
@@ -25,12 +26,13 @@ public class OrderAgent
 	//List which orders have to be made amd which this tick
 	private Order nextTickOrder;
 	private ProcurementAgent procurementAgent;
-	
-	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent) 
+	private ArrayList<DeliveryAgent> delivery_agents;
+	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent, ArrayList<DeliveryAgent> delivery_agents) 
 	{
 		this.parent = orderer;
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent=procurementAgent;
+		this.delivery_agents=delivery_agents;
 	}
 	// order at the by the procuremnt agent choosen deliverer
 	//order will be recieved one tick later
@@ -40,17 +42,43 @@ public class OrderAgent
 		// e.g. select Retailer. with customer.procurementAgent
 		if(order!=null){
 			DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
-			
+			//for every supplier he trust more then 0.3 he tells if he will not order at him 
+			for (DeliveryAgent deliverer : delivery_agents)
+			{
+				if((parent.getTrustAgent().getTrustValue(deliverer))>0.3&&deliverer!=deliveryAgent){	
+					deliverer.getParent().going2order(this);
+				}
+			}
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
+			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
-			order.setDeliveryAgent(deliveryAgent);		
+			//if trustvalue > 0.6 immediatly order the last and the actual order
+			if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
+				if(nextTickOrder!=null){
+					nextTickOrder.getDeliveryAgent().receiveOrder(nextTickOrder);
+				
+				}
+				deliveryAgent.receiveOrder(order);
+				return;
+			}
 			
 		}
-		if(nextTickOrder!=null){
-			nextTickOrder.getDeliveryAgent().receiveOrder(nextTickOrder);
+		else{
+			//he will tell every agent he trust more than 0.3 that he will not order
+			for (DeliveryAgent deliverer : delivery_agents)
+			{
+				if((parent.getTrustAgent().getTrustValue(deliverer))>0.3){
+					deliverer.getParent().going2order(this);
+				}
+			}
 		}
-		nextTickOrder=order;
+		//do the last tick order
+		if(nextTickOrder!=null){
+				nextTickOrder.getDeliveryAgent().receiveOrder(nextTickOrder);
+			
+		}
 		//add the open order
+		nextTickOrder=order;
 		
 		
 	}

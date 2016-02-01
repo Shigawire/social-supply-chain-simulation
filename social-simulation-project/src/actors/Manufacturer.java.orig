@@ -6,7 +6,10 @@ import java.util.Map;
 
 import agents.DeliveryAgent;
 import agents.OrderAgent;
+<<<<<<< HEAD
+=======
 import agents.ProductionAgent;
+>>>>>>> Merge_Dominik_Jakob
 import artefacts.ProductionBatch;
 import artefacts.trust.Trust;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -22,10 +25,13 @@ public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
 	private int next_demand;
+<<<<<<< HEAD
 	private int price;//price for the good
 	private int order_quantity;
+=======
 	private int price;
 	private int machine_quantity;
+>>>>>>> Merge_Dominik_Jakob
 	private int amount_to_produce;
 	private DeliveryAgent deliveryAgent;
 	private OrderAgent orderAgent;
@@ -108,6 +114,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	
 	private void produce() 
 	{		
+<<<<<<< HEAD
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
@@ -118,7 +125,9 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		
 		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
 		Production.add(new_production_order);
+=======
 		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
+>>>>>>> Merge_Dominik_Jakob
 	}
 	
 	public DeliveryAgent getDeliveryAgent() 

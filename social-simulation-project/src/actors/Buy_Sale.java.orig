@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import agents.DeliveryAgent;
+<<<<<<< HEAD
 import agents.OrderAgent;
+=======
 import agents.ProductionAgent;
+>>>>>>> Merge_Dominik_Jakob
 import artefacts.Order;
 //Combination of Interface Sale and class buy
 public abstract class Buy_Sale extends Buy implements Sale//combination of a actor who buys and sales

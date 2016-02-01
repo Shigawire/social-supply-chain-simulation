@@ -3,6 +3,7 @@ package agents;
 import java.util.ArrayList;
 
 import social_simulation_project.OrderObserver;
+import actors.Sale;
 import actors.SupplyChainMember;
 import artefacts.Order;
 
@@ -48,6 +49,7 @@ public class DeliveryAgent
 		order.setDeliveryAgent(this);
 		receivedOrders.add(order);
 		everReceivedOrders.add(order);
+		parent.updateList(order.getOrderAgent(), order.getQuantity());
 	}
 	
 	/**

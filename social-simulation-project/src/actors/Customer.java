@@ -73,12 +73,8 @@ public class Customer extends Buy
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand() ist glaube ich unn�tig sieher Methode order!!!
-		//!
-		//!
-		// 4. calculateDemand() wird in order gemacht
-		//next_demand = this.forecastAgent.calculateDemand();
-		//5. order()
+	
+		//4. order()
 		this.order();
 	}
 	
@@ -100,7 +96,7 @@ public class Customer extends Buy
 		if (consumption > current_incoming_inventory_level) 
 		{
 			//TODO strafkosten/reaktion
-			//Inventory ist geringer als Nachfrage
+			//Inventory less then asked for
 			inventoryAgent.setIncomingInventoryLevel(0);
 		} 
 		else 
@@ -117,9 +113,9 @@ public class Customer extends Buy
 	   */
 	public void order() 
 	{
-		// 1. Was brauch ich im naechsten tick?  (forecastagent befragen)
-		// 2. Was hab ich noch im Inventar?
-		// 3. Differenz bestellen. mit orderArgent
+		// 1. need in the next tick
+		// 2. whats about my inventory
+		// 3. order difference
 		
 		// 1.
 		next_demand = this.forecastAgent.customerDemand();
@@ -151,8 +147,7 @@ public class Customer extends Buy
 		{
 			//System.out.println("[Customer] order_quantity is  " + order_quantity);
 			Order order = new Order(order_quantity, this.orderAgent);
-			
-			// Choose retailer
+			//say orderagent what he has to order
 			
 			orderAgent.order(this.trustAgent, order);
 		}
