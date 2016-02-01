@@ -82,6 +82,10 @@ public abstract class SupplyChainMember
 		
 	}
 	
+	public InventoryAgent getInventoryAgent() {
+		return this.inventoryAgent;
+	}
+	
 	/*
 	 * SETTERS
 	 */

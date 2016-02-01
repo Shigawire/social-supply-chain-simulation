@@ -58,10 +58,12 @@ public class Customer extends Buy
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
+		/*
 		if ((int)RepastEssentials.GetTickCount()==1)
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
 		}
+		*/
 		
 		//System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
@@ -130,7 +132,10 @@ public class Customer extends Buy
 		// 3.
 		order_quantity = next_demand - current_incoming_inventory_level;
 		
-		
+		if (order_quantity <= 0) 
+		{
+			order_quantity=0;
+		}
 
 		// TODO replenishment policy
 		
@@ -140,7 +145,6 @@ public class Customer extends Buy
 		{
 			//a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
-			order_quantity=0;
 			orderAgent.order(this.trustAgent, null);
 		}
 		else
@@ -163,6 +167,23 @@ public class Customer extends Buy
 	{
 		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
+	
+	public int getNextDemand() {
+		return this.next_demand;
+	}
+	
+	public int getNextOrderQuantity() {
+		return this.order_quantity;
+	}
+	
+	public OrderAgent getOrderAgent() {
+		return this.orderAgent;
+	}
+	
+	public TrustAgent getTrustAgent() {
+		return this.trustAgent;
+	}
+	
 
 	/*
 	 * GETTERS
