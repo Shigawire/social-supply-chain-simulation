@@ -143,7 +143,7 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		System.out.println(id+" " +quantity+" "+oftenProcessed);
+		//System.out.println(id+" " +quantity+" "+oftenProcessed);
 		this.processed = true;	
 	}
 	
