@@ -41,7 +41,7 @@ public class ProcurementAgent
 		{
 			//procurement fragt beim trust nur dummy
 			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));
-			System.out.println("Current Trust Value: " + values[0][i]);
+			//System.out.println("Current Trust Value: " + values[0][i]);
 			values[1][i] = 1;
 			values[2][i] = delivery_agents.get(i).getPrice();
 		}
@@ -92,7 +92,7 @@ public class ProcurementAgent
 		{
 			//procurement fragt beim trust nur dummy
 			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));
-			System.out.println("Current Trust Value: " + values[0][i]);
+			//System.out.println("Current Trust Value: " + values[0][i]);
 			values[2][i] = delivery_agents.get(i).getPrice();
 		}
 	}

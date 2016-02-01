@@ -5,6 +5,7 @@ import java.util.Map;
 
 import agents.ForecastAgent;
 import agents.InventoryAgent;
+import agents.OrderAgent;
 import agents.TrustAgent;
 import artefacts.trust.DimensionType;
 
@@ -69,6 +70,16 @@ public abstract class SupplyChainMember
 	
 	public TrustAgent getTrustAgent() {
 		return this.trustAgent;
+	}
+
+	public void updateList(OrderAgent orderAgent, int quantity) {
+		// is implemendet in the subclasses in every except for customer
+		
+	}
+
+	public void going2order(OrderAgent orderAgent) {
+		// is implemendet in the subclasses in every except for customer
+		
 	}
 	
 	/*

@@ -139,7 +139,8 @@ public class TrustAgent
 	public double getTrustValue(DeliveryAgent delivery_agent) 
 	{
 		//hier muss der trust wert zurueclgegeben werden.
-		return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
+		//return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
+		return(0.8);
 	} 
 	
 	public double getTrustValue(DeliveryAgent delivery_agent,int i) 
