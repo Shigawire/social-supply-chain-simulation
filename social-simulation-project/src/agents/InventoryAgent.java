@@ -1,5 +1,9 @@
 package agents;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import artefacts.Order;
 
 /**
@@ -15,6 +19,8 @@ public class InventoryAgent
 	private int outgoing_inventory_level;
 	private int a_inventory_level;
 	private int b_inventory_level;
+	
+	private Map<String, Order> everReceivedShipments = new HashMap<String, Order>();
 
 	public InventoryAgent(int incoming_inventory_level, int outgoing_inventory_level) 
 	{
@@ -35,6 +41,7 @@ public class InventoryAgent
 	{
 		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.incoming_inventory_level + " to level+" +shipment.getQuantity());
 		this.incoming_inventory_level += shipment.getPartDelivery();
+		this.everReceivedShipments.put(shipment.getId(), shipment);
 	}
 	
 	/**
@@ -109,5 +116,9 @@ public class InventoryAgent
 	public void SetBInventoryLevel(int inventory_level)
 	{
 		this.b_inventory_level=inventory_level;
+	}
+	
+	public Map<String, Order> getEverReceivedShipments() {
+		return this.everReceivedShipments;
 	}
 }

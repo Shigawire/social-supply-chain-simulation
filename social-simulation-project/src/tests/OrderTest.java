@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.schedule.Schedule;
 import social_simulation_project.OrderObserver;
-import social_simulation_project.SimulationBuilder;
 import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
 import actors.Sale;
 import actors.Wholesaler;
+import artefacts.Order;
 
 /*
  * http://repast.sourceforge.net/docs/RepastModelTesting.pdf documentation
@@ -110,19 +111,47 @@ public class OrderTest {
 		
 		//double inventory_beginning = customer1.getCurrent_outgoing_inventory_level();
 		
-		for (int i=0; i<=1; i++) {			
+		for (int i=1; i<=1; i++) {			
 			this.schedule.schedule(customer1);
 			this.schedule.schedule(retailer1);
 			this.schedule.schedule(wholesaler1);
+			this.schedule.schedule(distributor1);
+			this.schedule.schedule(manufacturer1);
 	    	this.schedule.execute();
-	    	System.out.println("================Demand at tick " + this.schedule.getTickCount()+ ": " + customer1.getNextDemand());
 		}
     	
+		//simulation clock has advanced
+    	assertTrue("Simulation clock has not advanced", this.schedule.getTickCount() > -1);
+    			
+    	//Customer demand is within boundaries (initially: 10, 25)
+    	assertTrue("Demand for next tick is out of range (10..25): " + customer1.getNextDemand(), 10 <= customer1.getNextDemand() && customer1.getNextDemand() <= 25);
     	
-    	assertEquals(1, this.schedule.getTickCount(), 0);
+    	//the next order quantity is larger than 0 and smaller than the customer demand
+    	assertTrue("Next order quantity is out of range", customer1.getNextOrderQuantity() >= 0 && customer1.getNextOrderQuantity() <= 25);
+  
+    	//Let's do a custom order with qty 1. This order must be received in tick 3.
+    	Order order = new Order(1, customer1.getOrderAgent());
+    	System.out.println(order.getId());
+    	customer1.getOrderAgent().order(customer1.getTrustAgent(), order);
+    	//somewhere in the next 500 Ticks I want my order from the beginning be arrived.
     	
-    	
-   
+    	while(true) {			
+			this.schedule.schedule(customer1);
+			this.schedule.schedule(retailer1);
+			this.schedule.schedule(wholesaler1);
+			this.schedule.schedule(distributor1);
+			this.schedule.schedule(manufacturer1);
+			
+	    	this.schedule.execute();
+	    	
+	    	if (customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()) != null) {
+	    		//assertEquals("The small order of qty 1 arrives in a later shipment", customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()), order);
+	    		assertEquals("The small order of qty. 1 arrives in tick 3", 3, schedule.getTickCount(), 0);
+	    		System.out.println("Our order that was sent in tick 1 was received as shipment in tick " + schedule.getTickCount());
+	    		break;
+	    	}
+		}
+    	    	
 		
 		fail("Not yet implemented");		
 

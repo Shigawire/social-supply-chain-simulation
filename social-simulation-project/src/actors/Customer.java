@@ -136,7 +136,10 @@ public class Customer extends Buy
 		// 3.
 		order_quantity = next_demand - current_incoming_inventory_level;
 		
-		
+		if (order_quantity <= 0) 
+		{
+			order_quantity=0;
+		}
 
 		// TODO replenishment policy
 		
@@ -146,7 +149,6 @@ public class Customer extends Buy
 		{
 			//a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
-			order_quantity=0;
 			orderAgent.order(this.trustAgent, null);
 		}
 		else
@@ -174,6 +176,19 @@ public class Customer extends Buy
 	public int getNextDemand() {
 		return this.next_demand;
 	}
+	
+	public int getNextOrderQuantity() {
+		return this.order_quantity;
+	}
+	
+	public OrderAgent getOrderAgent() {
+		return this.orderAgent;
+	}
+	
+	public TrustAgent getTrustAgent() {
+		return this.trustAgent;
+	}
+	
 
 	/*
 	 * GETTERS

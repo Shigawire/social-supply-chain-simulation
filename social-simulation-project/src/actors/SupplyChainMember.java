@@ -71,6 +71,10 @@ public abstract class SupplyChainMember
 		return this.trustAgent;
 	}
 	
+	public InventoryAgent getInventoryAgent() {
+		return this.inventoryAgent;
+	}
+	
 	/*
 	 * SETTERS
 	 */
