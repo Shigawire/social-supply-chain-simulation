@@ -58,12 +58,11 @@ public class Customer extends Buy
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
-		/*
+		
 		if ((int)RepastEssentials.GetTickCount()==1)
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
 		}
-		*/
 		
 		//System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()

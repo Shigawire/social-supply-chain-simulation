@@ -24,7 +24,6 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	private int next_demand;
 	private int price;//price for the good
 	private int order_quantity;
-	private int price;
 	private int machine_quantity;
 	private int amount_to_produce;
 	private DeliveryAgent deliveryAgent;

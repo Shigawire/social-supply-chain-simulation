@@ -75,7 +75,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand + deliveryAgent.getShortage()- current_inventory_level;
+		order_quantity = next_demand + deliveryAgent.getShortage()- current_outgoing_inventory_level;
 		System.out.println("order_quantity"+order_quantity);
 		
 		System.out.println(subtractionByTrust+" subtraction by trust");
