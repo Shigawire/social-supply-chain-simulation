@@ -54,7 +54,6 @@ public class Order
 		this.orderAgent = orderAgent;
 		fullfilledQuantity=0;
 		this.processed = false;
-		//System.out.println(id+" " +quantity+" "+oftenProcessed);
 		sum=quantity;
 	}
 	
