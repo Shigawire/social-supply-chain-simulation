@@ -1,5 +1,9 @@
 package agents;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import artefacts.Order;
 
 /**
@@ -13,11 +17,17 @@ public class InventoryAgent
 {
 	private int incoming_inventory_level;
 	private int outgoing_inventory_level;
+	private int a_inventory_level;
+	private int b_inventory_level;
+	
+	private Map<String, Order> everReceivedShipments = new HashMap<String, Order>();
 
 	public InventoryAgent(int incoming_inventory_level, int outgoing_inventory_level) 
 	{
 		this.outgoing_inventory_level = outgoing_inventory_level;
 		this.incoming_inventory_level = incoming_inventory_level;
+		this.a_inventory_level = 0;
+		this.b_inventory_level = 0;
 	}
 	
 	/**
@@ -31,6 +41,8 @@ public class InventoryAgent
 	{
 		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.incoming_inventory_level + " to level+" +shipment.getQuantity());
 		this.incoming_inventory_level += shipment.getPartDelivery();
+		this.everReceivedShipments.put(shipment.getId(), shipment);
+		this.incoming_inventory_level += shipment.getPartDelivery()*(1-shipment.getfailurePercentage());
 	}
 	
 	/**
@@ -47,11 +59,25 @@ public class InventoryAgent
 	{
 		this.outgoing_inventory_level -= reduction;
 	}
+	public void reduceAInventoryLevel(int reduction)
+	{
+		this.a_inventory_level -= reduction;
+	}
+	public void reduceBInventoryLevel(int reduction)
+	{
+		this.b_inventory_level -= reduction;
+	}
 	public void increaseIncomingInventoryLevel (int addition){
 		this.incoming_inventory_level += addition;
 	}
 	public void increaseOutgoingInventoryLevel (int addition){
 		this.outgoing_inventory_level += addition;
+	}
+	public void increaseAInventoryLevel (int addition){
+		this.a_inventory_level += addition;
+	}
+	public void increaseBInventoryLevel (int addition){
+		this.b_inventory_level += addition;
 	}
 	
 	/*
@@ -65,7 +91,14 @@ public class InventoryAgent
 	{
 		return this.outgoing_inventory_level;
 	}
-	
+	public int getAInventoryLevel()
+	{
+		return this.a_inventory_level;
+	}
+	public int getBInventoryLevel()
+	{
+		return this.b_inventory_level;
+	}
 	/*
 	 * SETTERS
 	 */
@@ -76,5 +109,17 @@ public class InventoryAgent
 	public void setOutgoingInventoryLevel(int inventory_level) 
 	{
 		this.outgoing_inventory_level = inventory_level;
+	}
+	public void SetAInventoryLevel(int inventory_level)
+	{
+		this.a_inventory_level=inventory_level;
+	}
+	public void SetBInventoryLevel(int inventory_level)
+	{
+		this.b_inventory_level=inventory_level;
+	}
+	
+	public Map<String, Order> getEverReceivedShipments() {
+		return this.everReceivedShipments;
 	}
 }

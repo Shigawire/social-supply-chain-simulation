@@ -21,6 +21,7 @@ public class Order
 {
 	//quantity that has to be completly fullfilled
 	private final int quantity;
+	private double failurePercentage;	
 	private int ordered_at; // tick it is orderd
 	private int received_at;//tick it is received
 	private int oftenProcessed=0;//how often has parts of the order been processed
@@ -54,7 +55,6 @@ public class Order
 		this.orderAgent = orderAgent;
 		fullfilledQuantity=0;
 		this.processed = false;
-		//System.out.println(id+" " +quantity+" "+oftenProcessed);
 		sum=quantity;
 	}
 	
@@ -114,6 +114,9 @@ public class Order
 	{
 		return this.quantity;
 	}
+	public double getfailurePercentage(){
+		return this.failurePercentage;
+	}
 	public int getUnfullfilledQuantity(){
 		return this.quantity-this.fullfilledQuantity;
 	}
@@ -144,7 +147,7 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		System.out.println(id+" " +quantity+" "+oftenProcessed);
+		//System.out.println(id+" " +quantity+" "+oftenProcessed);
 		this.processed = true;	
 	}
 	
@@ -156,6 +159,9 @@ public class Order
 //	{
 //		this.quantity = quantity;
 //	}
+	public void setfailurePercentage(double failure){
+		this.failurePercentage=failure;
+	}
 	public void setSum(int quantity){
 		this.sum = quantity;
 	}

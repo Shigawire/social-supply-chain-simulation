@@ -1,9 +1,14 @@
 package actors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import agents.DeliveryAgent;
+import agents.OrderAgent;
+import agents.ProductionAgent;
 import artefacts.ProductionBatch;
+import artefacts.trust.Trust;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 /**
@@ -15,21 +20,28 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Manufacturer extends SupplyChainMember implements Sale
 {	
+	private int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
 	private int next_demand;
-	private int price;
+	private int price;//price for the good
 	private int order_quantity;
+	private int machine_quantity;
 	private int amount_to_produce;
 	private DeliveryAgent deliveryAgent;
+	private OrderAgent orderAgent;
+	private ProductionAgent productionAgent;
 	private ArrayList<ProductionBatch> Production;
+	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
 	private ArrayList<ProductionBatch> toProduce;
-	private int lead_time = 2;
+	private int lead_time = 2;//the time needed to produce
 	
 	public Manufacturer(int price, int current_incoming_inventory_level,int current_outgoing_inventory_level)
 	{
 		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	
-		deliveryAgent = new DeliveryAgent(price, this);
+		deliveryAgent = new DeliveryAgent(price, this,10,5);
+		this.machine_quantity = 3;
+		productionAgent = new ProductionAgent(lead_time,machine_quantity, this.inventoryAgent);
 		Production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
 	}
@@ -45,7 +57,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		//4. produce();
 		produce();
 	}
-
+	
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 
@@ -65,39 +77,52 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
-	
-	private void harvest() 
-	{
-		for (ProductionBatch current_batch : Production) 
-		{
-			current_batch.incrementTimeInProduction();
-			if (current_batch.getTimeInProduction() >= this.lead_time) 
-			{
-				//This batch is ready to be added to inventory
-				this.inventoryAgent.setOutgoingInventoryLevel(this.inventoryAgent.getOutgoingInventoryLevel() + current_batch.getQuantity());
-				//Production.remove(current_batch);
-			} 
-			else
-			{
-				toProduce.add(current_batch);
-			}
+	public void going2order(OrderAgent noOrderer){
+		if(buyer.containsKey(noOrderer)){
+			//System.out.println("subtraction"+buyer.get(noOrderer));
+			subtractionByTrust+=buyer.get(noOrderer);
+		}
+		else{
+			//System.out.println("ist nicht");
 		}
 		
-		Production.clear();
-		Production.addAll(toProduce);
-		toProduce.clear();
+	}
+	public void updateList(OrderAgent orderer,int orderAtYou){
+		//System.out.println("update"+" "+orderer.getParent().getClass());
+		if(!buyer.containsKey(orderer)){
+			buyer.put(orderer, orderAtYou);
+		}
+		System.out.println(buyer.toString());
+		int newValue=(buyer.get(orderer)+orderAtYou)/2;
+		//System.out.println(newValue);
+		buyer.remove(orderer);
+		buyer.put(orderer, newValue);
+		//System.out.println("new value for him"+buyer.get(orderer));
+		
+	}
+	private void harvest() 
+	{
+		this.productionAgent.harvest();
 	}
 	
 	private void produce() 
 	{		
+		if(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()>=0)
+		{
+
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
-		amount_to_produce = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
+		//System.out.println(subtractionByTrust+" subtraction by trust");
+		amount_to_produce = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+		subtractionByTrust=0;
 		amount_to_produce = (amount_to_produce > 0) ? amount_to_produce : 0;
 		
 		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
 		Production.add(new_production_order);
+
+		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
+		}
 	}
 	
 	public DeliveryAgent getDeliveryAgent() 

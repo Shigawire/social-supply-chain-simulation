@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProcurementAgent;
+import agents.ProductionAgent;
 import agents.TrustAgent;
 import artefacts.Order;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -25,32 +26,34 @@ public class Distributor extends Buy_Sale
 		
 		this.price = price;
 		
-		this.deliveryAgent = new DeliveryAgent(price, this);
-		this.productionQueue=0;
+		this.deliveryAgent = new DeliveryAgent(price, this,2,2);
+		this.productionAgent = new ProductionAgent(1, 1,this.inventoryAgent);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void run() 
 	{
-		// 1. processShipments() receive shipments
+		// 1. harvest
+		this.harvest();
+		// 2. processShipments() receive shipments
 		this.receiveShipments();
-		// 2. updateTrust()	
+		// 3. updateTrust()	
 		this.updateTrust();
 		//clear receivedShipments;
 		orderAgent.clearReceivedShipments();
-		// 3. produce
+		// 4. produce
 		this.produce();
-		// 4. deliver()
+		// 5. deliver()
 		this.deliver();
-		// 5. calculateDemand() wird in order gemacht
-		//next_demand = this.forecastAgent.calculateDemand();
 		// 6. order()
 		this.order();
 	}
+	
+	private void harvest(){
+		this.productionAgent.harvest();
+	}
 	private void produce(){
-		this.inventoryAgent.increaseOutgoingInventoryLevel(productionQueue);
-		productionQueue = this.inventoryAgent.getIncomingInventoryLevel()/2;
-		this.inventoryAgent.setIncomingInventoryLevel(0);
+		this.productionAgent.label();
 	}
 	public void order() 
 	{
@@ -62,11 +65,11 @@ public class Distributor extends Buy_Sale
 		next_demand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
 		
 		// 2.
-		current_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
-		
+		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+		subtractionByTrust=0;
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		// If the inventory level is sufficient for the next demand,
 		// do not order

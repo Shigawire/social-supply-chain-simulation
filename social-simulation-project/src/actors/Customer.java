@@ -58,6 +58,7 @@ public class Customer extends Buy
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
+		
 		if ((int)RepastEssentials.GetTickCount()==1)
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
@@ -73,12 +74,8 @@ public class Customer extends Buy
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-		//4. calculateDemand() ist glaube ich unn�tig sieher Methode order!!!
-		//!
-		//!
-		// 4. calculateDemand() wird in order gemacht
-		//next_demand = this.forecastAgent.calculateDemand();
-		//5. order()
+	
+		//4. order()
 		this.order();
 	}
 	
@@ -100,7 +97,7 @@ public class Customer extends Buy
 		if (consumption > current_incoming_inventory_level) 
 		{
 			//TODO strafkosten/reaktion
-			//Inventory ist geringer als Nachfrage
+			//Inventory less then asked for
 			inventoryAgent.setIncomingInventoryLevel(0);
 		} 
 		else 
@@ -117,9 +114,9 @@ public class Customer extends Buy
 	   */
 	public void order() 
 	{
-		// 1. Was brauch ich im naechsten tick?  (forecastagent befragen)
-		// 2. Was hab ich noch im Inventar?
-		// 3. Differenz bestellen. mit orderArgent
+		// 1. need in the next tick
+		// 2. whats about my inventory
+		// 3. order difference
 		
 		// 1.
 		next_demand = this.forecastAgent.customerDemand();
@@ -134,7 +131,10 @@ public class Customer extends Buy
 		// 3.
 		order_quantity = next_demand - current_incoming_inventory_level;
 		
-		
+		if (order_quantity <= 0) 
+		{
+			order_quantity=0;
+		}
 
 		// TODO replenishment policy
 		
@@ -144,15 +144,13 @@ public class Customer extends Buy
 		{
 			//a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
-			order_quantity=0;
 			orderAgent.order(this.trustAgent, null);
 		}
 		else
 		{
 			//System.out.println("[Customer] order_quantity is  " + order_quantity);
 			Order order = new Order(order_quantity, this.orderAgent);
-			
-			// Choose retailer
+			//say orderagent what he has to order
 			
 			orderAgent.order(this.trustAgent, order);
 		}
@@ -168,6 +166,23 @@ public class Customer extends Buy
 	{
 		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
+	
+	public int getNextDemand() {
+		return this.next_demand;
+	}
+	
+	public int getNextOrderQuantity() {
+		return this.order_quantity;
+	}
+	
+	public OrderAgent getOrderAgent() {
+		return this.orderAgent;
+	}
+	
+	public TrustAgent getTrustAgent() {
+		return this.trustAgent;
+	}
+	
 
 	/*
 	 * GETTERS
