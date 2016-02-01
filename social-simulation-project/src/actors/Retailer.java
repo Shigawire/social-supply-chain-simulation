@@ -24,9 +24,8 @@ public class Retailer extends Buy_Sale
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
 		
 		this.price=price;
-		deliveryAgent = new DeliveryAgent(price, this);
+		deliveryAgent = new DeliveryAgent(price, this,1,1);
 		this.productionAgent = new ProductionAgent(1, 1,this.inventoryAgent);
-
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)

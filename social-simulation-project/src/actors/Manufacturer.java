@@ -40,7 +40,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{
 		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	
-		deliveryAgent = new DeliveryAgent(price, this);
+		deliveryAgent = new DeliveryAgent(price, this,10,5);
 		this.machine_quantity = 3;
 		productionAgent = new ProductionAgent(lead_time,machine_quantity, this.inventoryAgent);
 		Production = new ArrayList<ProductionBatch>();
@@ -108,6 +108,9 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	
 	private void produce() 
 	{		
+		if(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()>=0)
+		{
+
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
@@ -118,7 +121,9 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		
 		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
 		Production.add(new_production_order);
+
 		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
+		}
 	}
 	
 	public DeliveryAgent getDeliveryAgent() 
