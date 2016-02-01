@@ -15,6 +15,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 	protected ProductionAgent productionAgent;
 	protected ArrayList<DeliveryAgent> delivery_agents;
 	
+	
 	public Buy_Sale(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
 	{
 		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
@@ -49,18 +50,22 @@ public abstract class Buy_Sale extends Buy implements Sale
 	   */
 	public void order() 
 	{
+		int desired_inventory_level;
 		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
 		// 2. Was hab ich noch im Inventar?
 		// 3. Differenz bestellen. mit orderArgent
 		
 		// 1.
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
+		desired_inventory_level = next_demand*15/10;
+		System.out.println("desired"+desired_inventory_level);
 		
 		// 2.
 		current_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
+		order_quantity = next_demand + deliveryAgent.getShortage()- current_inventory_level;
+		System.out.println("order_quantity"+order_quantity);
 		
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		

@@ -33,7 +33,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{
 		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	
-		deliveryAgent = new DeliveryAgent(price, this);
+		deliveryAgent = new DeliveryAgent(price, this,10,5);
 		this.machine_quantity = 3;
 		productionAgent = new ProductionAgent(lead_time,machine_quantity, this.inventoryAgent);
 		Production = new ArrayList<ProductionBatch>();
@@ -79,7 +79,10 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	
 	private void produce() 
 	{		
+		if(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()>=0)
+		{
 		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
+		}
 	}
 	
 	public DeliveryAgent getDeliveryAgent() 

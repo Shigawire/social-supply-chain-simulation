@@ -2,6 +2,7 @@ package agents;
 
 import java.util.ArrayList;
 
+import repast.simphony.random.RandomHelper;
 import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import artefacts.Order;
@@ -22,19 +23,25 @@ public class DeliveryAgent
 	//price for the goods
 	private int price;
 	private int current_outgoing_inventory_level;
+	private double failurePercentage;
 	private ArrayList<Order> receivedOrders; // list for all received orders
 	private ArrayList<Order> everReceivedOrders;//all orders ever received
 	private ArrayList<Order> openOrders;//list to transfer open orders
 	private int shortage = 0;//gives the shortage of the last tick, will be used for the forecast
 	private SupplyChainMember parent;//to which SupplyChainMember it belongs
 	
-	public DeliveryAgent(int price, SupplyChainMember parent) 
+	private int failure_mean;
+	private int failure_standard_deviation;
+	
+	public DeliveryAgent(int price, SupplyChainMember parent, int mean, int deviation) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
 		this.everReceivedOrders = new ArrayList<Order>();
 		this.openOrders = new ArrayList<Order>();
 		this.price = price;
 		this.parent = parent;
+		this.failure_mean = mean;
+		this.failure_standard_deviation = deviation;
 	}
 	
 	/**
@@ -68,6 +75,8 @@ public class DeliveryAgent
 				//if the needed rest quantity of the order is higher then the inventory
 				//part of the order will be delivered
 				order.partDelivery(current_outgoing_inventory_level);
+				RandomHelper.createNormal(failure_mean, failure_standard_deviation);
+				order.setfailurePercentage(RandomHelper.getNormal().nextDouble()/100);
 				openOrders.add(order);
 				shortage=+order.getUnfullfilledQuantity();
 				inventoryAgent.reduceOutgoingInventoryLevel(current_outgoing_inventory_level);

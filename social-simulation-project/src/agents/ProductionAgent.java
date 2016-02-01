@@ -49,8 +49,8 @@ public class ProductionAgent
 		//2.
 		if (inventoryAgent.getAInventoryLevel()>=production_quantity*2 && inventoryAgent.getBInventoryLevel()>=production_quantity) 
 		{
-			int dem = RandomHelper.nextIntFromTo(1, 20);
-			if (dem==1)production_quantity=production_quantity*90/100;
+//			int dem = RandomHelper.nextIntFromTo(1, 20);
+//			if (dem==1)production_quantity=production_quantity*90/100;
 			ProductionBatch new_production_order = new ProductionBatch(this.lead_time, production_quantity);
 			Production.add(new_production_order);
 			inventoryAgent.reduceAInventoryLevel(production_quantity*2);
@@ -83,7 +83,7 @@ public class ProductionAgent
 		production_quantity = this.inventoryAgent.getIncomingInventoryLevel()/2;
 		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, this.inventoryAgent.getIncomingInventoryLevel());
 		Production.add(new_production_order);
-		inventoryAgent.reduceIncomingInventoryLevel(production_quantity);
+		inventoryAgent.reduceIncomingInventoryLevel(production_quantity*2);
 	}
 	// put finally produced products into outgoing inventory
 	public void harvest ()
@@ -110,7 +110,6 @@ public class ProductionAgent
 	public void deliverRawMaterialA(int amount){
 		RandomHelper.createNormal(97, 2);
 		int var = RandomHelper.getNormal().nextInt();
-		System.out.println(var);
 		amount= amount*var/100;
 		inventoryAgent.increaseAInventoryLevel(amount);
 	}
