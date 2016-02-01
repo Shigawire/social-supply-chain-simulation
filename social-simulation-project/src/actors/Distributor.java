@@ -65,11 +65,11 @@ public class Distributor extends Buy_Sale
 		next_demand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
 		
 		// 2.
-		current_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		// 3.
-		order_quantity = next_demand - current_inventory_level+ deliveryAgent.getShortage();
-		
+		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+		subtractionByTrust=0;
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 		// If the inventory level is sufficient for the next demand,
 		// do not order
