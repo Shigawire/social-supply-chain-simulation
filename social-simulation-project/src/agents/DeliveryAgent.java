@@ -121,7 +121,8 @@ public class DeliveryAgent
 
 	public int getShortage() 
 	{
-		return shortage;
+		//gives half of the shortage
+		return (shortage/2);
 	}
 	
 	public ArrayList<Order> getAllOrders()
@@ -137,6 +138,11 @@ public class DeliveryAgent
 	
 	public SupplyChainMember getParent() {
 		return this.parent;
+	}
+
+	public void setShortage(int i) {
+		shortage=0;
+		
 	}
 	
 	/*

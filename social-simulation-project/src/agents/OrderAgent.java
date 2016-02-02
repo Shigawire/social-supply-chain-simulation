@@ -24,7 +24,9 @@ public class OrderAgent
 	//list of received Orders
 	private ArrayList<Order> receivedShipments;
 	//List which orders have to be made amd which this tick
-	private Order nextTickOrder;
+	private ArrayList<Order> nextTickOrder= new ArrayList<Order>();
+	//where will I order next ticks
+	ArrayList<DeliveryAgent> willOrder= new ArrayList<DeliveryAgent>();
 	private ProcurementAgent procurementAgent;
 	private ArrayList<DeliveryAgent> delivery_agents;
 	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent, ArrayList<DeliveryAgent> delivery_agents) 
@@ -34,6 +36,32 @@ public class OrderAgent
 		this.procurementAgent=procurementAgent;
 		this.delivery_agents=delivery_agents;
 	}
+	public void trustWhereIOrder(){
+		//for every supplier he trust more then 0.3 he tells if he will not order at him 
+		for (DeliveryAgent deliverer : delivery_agents)
+		{
+			if((parent.getTrustAgent().getTrustValue(deliverer))>0.3&&!willOrder.contains(deliverer)){	
+				deliverer.getParent().going2order(this);
+			}
+		}
+		willOrder.clear();
+	}
+	//send the orders were made last tick
+	public void orderIt() {
+		//do the last tick order
+		
+		if(!nextTickOrder.isEmpty()){
+			for (Order orderToDo : nextTickOrder)
+			{
+				if(orderToDo!=null){
+					orderToDo.getDeliveryAgent().receiveOrder(orderToDo);
+				}
+
+			}
+		}
+		nextTickOrder.clear();
+		
+	}
 	// order at the by the procuremnt agent choosen deliverer
 	//order will be recieved one tick later
 	//Because of the structure an order (even one that is empty) has to be made every tick
@@ -42,47 +70,48 @@ public class OrderAgent
 		// e.g. select Retailer. with customer.procurementAgent
 		if(order!=null){
 			DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
-			//for every supplier he trust more then 0.3 he tells if he will not order at him 
-			for (DeliveryAgent deliverer : delivery_agents)
-			{
-				if((parent.getTrustAgent().getTrustValue(deliverer))>0.3&&deliverer!=deliveryAgent){	
-					deliverer.getParent().going2order(this);
-				}
-			}
+			//the delivery Agent is put into a list where are all at which I want to order
+			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 			//if trustvalue > 0.6 immediatly order the last and the actual order
 			if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
-				if(nextTickOrder!=null){
-					nextTickOrder.getDeliveryAgent().receiveOrder(nextTickOrder);
-				
-				}
 				deliveryAgent.receiveOrder(order);
+				//return because all orders are send!
 				return;
 			}
 			
 		}
-		else{
-			//he will tell every agent he trust more than 0.3 that he will not order
-			for (DeliveryAgent deliverer : delivery_agents)
-			{
-				if((parent.getTrustAgent().getTrustValue(deliverer))>0.3){
-					deliverer.getParent().going2order(this);
-				}
-			}
-		}
-		//do the last tick order
-		if(nextTickOrder!=null){
-				nextTickOrder.getDeliveryAgent().receiveOrder(nextTickOrder);
-			
-		}
 		//add the open order
-		nextTickOrder=order;
+		nextTickOrder.add(order);
 		
 		
 	}
-	
+	//for a second order
+	public void secondOrder(TrustAgent trustAgent, Order order) 
+	{
+		// e.g. select Retailer. with customer.procurementAgent
+		if(order!=null){
+			DeliveryAgent deliveryAgent=procurementAgent.chooseSecondSupplier();
+			//the delivery Agent is put into a list where are all at which I want to order
+			willOrder.add(deliveryAgent);
+			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
+			order.setDeliveryAgent(deliveryAgent);
+			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
+			//if trustvalue > 0.6 immediatly order the last and the actual order
+			if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
+				deliveryAgent.receiveOrder(order);
+				//return because all orders are send!
+				return;
+			}
+			
+		}
+		//add the open order
+		nextTickOrder.add(order);
+		
+		
+	}
 	public void deliverRawMaterialA(int neededAmount)
 	{
 		
@@ -143,6 +172,7 @@ public class OrderAgent
 	{
 		return this.receivedShipments;
 	}
+	
 	
 	/*
 	 * SETTERS

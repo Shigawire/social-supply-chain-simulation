@@ -85,6 +85,31 @@ public class ProcurementAgent
 		}
 		return delivery_agents.get(highestPoint);
 	}
+	//method for choosing the second best supplier
+	public DeliveryAgent chooseSecondSupplier() 
+	{
+		updateTrust();
+		fillBest();
+		double highest = 0;
+		double moment;
+		double secondMoment=0;
+		int secondPoint = 0;
+		int highestPoint = 0;
+		for (int i = 0; i < delivery_agents.size(); i++)
+		{
+			// calculation according to concept team
+			moment = values[0][i] / best[0]*trustrelevance+best[1]/values[1][i]*averageDeliveryTimeRelevance+best[2]/values[2][i]*priceRelevance;
+			if (moment >= highest){
+				highestPoint = i;
+				highest = moment;
+			}
+			if(moment>=secondMoment&&moment<highest){
+				secondMoment=moment;
+				secondPoint=i;
+			}
+		}
+		return delivery_agents.get(secondPoint);
+	}
 	
 	private void updateTrust() {
 		// TODO Auto-generated method stub

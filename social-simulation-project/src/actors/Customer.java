@@ -28,6 +28,8 @@ public class Customer extends Buy
 	// what the customer needs for the next tick (forecasted)
 	private int next_demand;
 	
+	//the desired inventory
+	int desired_inventory_level;
 	// what the customer orders at the end, based 
 	// on next_demand and current_inventory_level
 	private int order_quantity;
@@ -63,7 +65,8 @@ public class Customer extends Buy
 		{
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
 		}
-		
+		//set the inventory agents desired level
+		inventoryAgent.desiredLevel(lying, desired());
 		//System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();
@@ -74,11 +77,20 @@ public class Customer extends Buy
 		// this.trustAgent.update();
 		//3. consume()
 		this.consume();
-	
+		//5.send order that he made the last tick
+		orderAgent.orderIt();
 		//4. order()
 		this.order();
+		//5. say those suppliers which I trust, that I will not order at them
+		orderAgent.trustWhereIOrder();
 	}
 	
+	private int desired() {
+		next_demand = this.forecastAgent.customerDemand();
+		desired_inventory_level = next_demand*15/10;
+		return desired_inventory_level;
+	}
+
 	/**
 	   * This method consumes goods and refreshes the
 	   * inventory level based upon the actual received 
@@ -150,9 +162,13 @@ public class Customer extends Buy
 		{
 			//System.out.println("[Customer] order_quantity is  " + order_quantity);
 			Order order = new Order(order_quantity, this.orderAgent);
-			//say orderagent what he has to order
-			
+			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
+			//if he is lying he will order the same at a second supplier
+			if(lying){
+				Order order2 = new Order(order_quantity, this.orderAgent);
+				orderAgent.secondOrder(this.trustAgent, order2);
+			}
 		}
 	}
 	

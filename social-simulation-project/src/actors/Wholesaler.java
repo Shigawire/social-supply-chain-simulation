@@ -33,6 +33,8 @@ public class Wholesaler extends Buy_Sale
 	{
 		// 1. harvest
 		this.harvest();
+		//set the inventory agents desired level
+		inventoryAgent.desiredLevel(lying, desired());		
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// 3. updateTrust()	
@@ -41,8 +43,12 @@ public class Wholesaler extends Buy_Sale
 		this.produce();
 		// 5. deliver()
 		this.deliver();
-		// 6. order()
+		//6.send order that he made the last tick
+		orderAgent.orderIt();
+		// 7. order()
 		this.order();
+		//8. say those suppliers which I trust, that I will not order at them
+		orderAgent.trustWhereIOrder();
 	}
 	
 	private void harvest(){

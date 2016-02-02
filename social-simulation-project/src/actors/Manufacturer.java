@@ -22,6 +22,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
 	private int next_demand;
+	private int desired_inventory_level;
 	private int price;//price for the good
 	private int order_quantity;
 	private int machine_quantity;
@@ -111,6 +112,11 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		{
 
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+		desired_inventory_level = next_demand*15/10;
+		if(current_outgoing_inventory_level>desired_inventory_level){
+			deliveryAgent.setShortage(0);
+			return;
+		}
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
 		//System.out.println(subtractionByTrust+" subtraction by trust");

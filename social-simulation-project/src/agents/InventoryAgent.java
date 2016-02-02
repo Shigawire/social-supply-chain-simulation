@@ -17,9 +17,11 @@ public class InventoryAgent
 {
 	private int incoming_inventory_level;
 	private int outgoing_inventory_level;
+	private int desired_inventory_level;
+	private boolean lying;
 	private int a_inventory_level;
 	private int b_inventory_level;
-	
+	//wozu?
 	private Map<String, Order> everReceivedShipments = new HashMap<String, Order>();
 
 	public InventoryAgent(int incoming_inventory_level, int outgoing_inventory_level) 
@@ -40,11 +42,22 @@ public class InventoryAgent
 	public void store(Order shipment) 
 	{
 		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.incoming_inventory_level + " to level+" +shipment.getQuantity());
-		this.incoming_inventory_level += shipment.getPartDelivery();
+		if(lying){
+			if(desired_inventory_level<outgoing_inventory_level){
+				shipment.getDeliveryAgent().getParent().returning(shipment.getPartDelivery());
+				shipment.partDelivery(shipment.getUnfullfilledQuantity());
+				shipment.setProcessed(true);
+			}
+		}
 		this.everReceivedShipments.put(shipment.getId(), shipment);
+		
 		this.incoming_inventory_level += shipment.getPartDelivery()*(1-shipment.getfailurePercentage());
 	}
-	
+	//method that sets the desired level
+	public void desiredLevel(boolean lying,int desired){
+		this.lying=lying;
+		desired_inventory_level=desired;
+	}
 	/**
 	   * This method reduces the incoming inventory
 	   * of a supply chain member

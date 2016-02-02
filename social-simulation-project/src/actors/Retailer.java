@@ -33,6 +33,8 @@ public class Retailer extends Buy_Sale
 	{
 		// 1. harvest()
 		this.harvest();
+		//set the inventory agents desired level
+		inventoryAgent.desiredLevel(lying, desired());
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// 3. updateTrust()
@@ -41,8 +43,12 @@ public class Retailer extends Buy_Sale
 		this.produce();
 		// 5. deliver()
 		this.deliver();
-		// 6. order()
+		//6.send order that he made the last tick
+		orderAgent.orderIt();
+		// 7. order()
 		this.order();
+		//8. say those suppliers which I trust, that I will not order at them
+		orderAgent.trustWhereIOrder();
 	}
 	
 	private void harvest(){
@@ -50,6 +56,17 @@ public class Retailer extends Buy_Sale
 	}
 	private void produce(){
 		this.productionAgent.label();
+	}
+	//gives the desired level
+	public int desired(){
+		if(lying){
+			next_demand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
+			desired_inventory_level = next_demand*15/10;
+			System.out.println("desired_inventory_level"+desired_inventory_level);
+			return desired_inventory_level;
+		}
+		return 1000;
+		
 	}
 	/**
 	   * This method receives goods at the beginning of each tick
