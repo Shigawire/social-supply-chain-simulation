@@ -81,7 +81,7 @@ public class TrustAgent
 		//reliability
 		//is the shipment overdue?
 		int runtime = (shipment.getReceivedAt() - shipment.getOrderedAt());
-		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3
+		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3 (when trust <0.6 see OrderAgent)
 		
 		shipment.setShipmentQuality(1-shipment.getfailurePercentage());
 		

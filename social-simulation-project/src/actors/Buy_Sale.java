@@ -146,7 +146,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 	{	
 		return this.deliveryAgent;
 	}
-	
+
 	public int getPrice()
 	{
 		return this.price;

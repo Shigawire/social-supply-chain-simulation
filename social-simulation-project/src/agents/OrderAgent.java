@@ -102,7 +102,7 @@ public class OrderAgent
 			//if trustvalue > 0.6 immediatly order the last and the actual order
 			if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
 				deliveryAgent.receiveOrder(order);
-				//return because all orders are send!
+				//return because all orders are sent!
 				return;
 			}
 			
@@ -146,7 +146,7 @@ public class OrderAgent
 		//set time of the first received
 		//shipment.received();
 		//information for the procurement agent 
-		procurementAgent.updateTime(shipment.getOrderedAt()-shipment.getReceivedAt(),deliverer);
+		
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);
 	}

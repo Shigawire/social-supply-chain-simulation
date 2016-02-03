@@ -90,6 +90,11 @@ public abstract class SupplyChainMember
 		inventoryAgent.increaseOutgoingInventoryLevel(partDelivery);
 		
 	}
+
+	public Object getProcurementAgent() {
+		// implemented for relevant actors in Buy
+		return null;
+	}
 	
 	/*
 	 * SETTERS

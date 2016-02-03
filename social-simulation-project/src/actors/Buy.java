@@ -35,6 +35,9 @@ public abstract class Buy extends SupplyChainMember
 	public TrustAgent getTrustAgent(){
 		return trustAgent;
 	}
+	public ProcurementAgent getProcurementAgent(){
+		return procurementAgent;
+	}
 	public void setLying(){
 		lying=true;
 	}

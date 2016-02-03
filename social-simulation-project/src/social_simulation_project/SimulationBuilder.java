@@ -33,6 +33,10 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		Manufacturer manufacturer1 = new Manufacturer(10, 200,200);
 		ArrayList<Sale> manufacturerList = new ArrayList<Sale>();
 		manufacturerList.add(manufacturer1);
+		//for the indirect trust a special List is needed
+		ArrayList<Manufacturer> manufacturerList_indirectTrust = new ArrayList<Manufacturer>();
+		manufacturerList_indirectTrust.add(manufacturer1);
+		IndirectTrustAgent.getIndirectTrustAgent().setManufacturerList(manufacturerList_indirectTrust);
 		/*
 		 * 
 		 * D I S T R I B U T O R S
@@ -51,7 +55,11 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		distributorList.add(distributor1);
 		distributor1.setLying();
 		//distributorList.add(distributor2);
-		
+
+		//for the indirect trust a special List is needed
+		ArrayList<Distributor> distributorList_indirectTrust = new ArrayList<Distributor>();
+		distributorList_indirectTrust.add(distributor1);
+		IndirectTrustAgent.getIndirectTrustAgent().setDistributorList(distributorList_indirectTrust);
 		// --------------------------------------------------------------------------------
 		
 		/*
@@ -72,6 +80,10 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		wholesalerList.add(wholesaler1);	
 		//wholesalerList.add(wholesaler2);	
 		
+		//special list for indirect trust
+		ArrayList<Wholesaler> wholesalerList_indirectTrust = new ArrayList<Wholesaler>();
+		wholesalerList_indirectTrust.add(wholesaler1);	
+		IndirectTrustAgent.getIndirectTrustAgent().setWholesalerList(wholesalerList_indirectTrust);
 		// --------------------------------------------------------------------------------
 		
 		/*
@@ -86,12 +98,16 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		Retailer retailer1 = new Retailer(wholesalerList, 100, 100,10);
 		//Retailer retailer2 = new Retailer(wholesalerList, 15, 10,11);
 		
-		// Create a list of distributors and add every 
-		// distributor to that list (for now only 1)
+		// Create a list of Retailers and add every 
+		// retailer to that list (for now only 1)
 		ArrayList<Sale> retailerList = new ArrayList<Sale>();
 		retailerList.add(retailer1);
 		//retailerList.add(retailer2);
-		
+
+		//special list for indirect trust
+		ArrayList<Retailer> retailerList_indirectTrust = new ArrayList<Retailer>();
+		retailerList_indirectTrust.add(retailer1);
+		IndirectTrustAgent.getIndirectTrustAgent().setRetailerList(retailerList_indirectTrust);
 		// --------------------------------------------------------------------------------
 		
 		/*
@@ -101,14 +117,15 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		 */
 		
 		// We have only one customer in our supply chain
-		// Maybe the customer class could be designed as 
-		// a singleton class
 		Customer customer1 = new Customer(retailerList, 100,150);
 		ArrayList<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(customer1);
+		IndirectTrustAgent.getIndirectTrustAgent().setCustomerList(customerList);
+	
 		// --------------------------------------------------------------------------------
 		// Add everything to the simulation's context
-		//IndirectTrustAgent.setLists(manufacturerList, distributorList, wholesalerList, retailerList, customerList);
+		
+		context.add(IndirectTrustAgent.getIndirectTrustAgent());
 		context.add(manufacturer1);
 		
 		context.add(distributor1);

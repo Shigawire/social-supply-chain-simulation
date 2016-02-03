@@ -9,6 +9,7 @@ import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
+import agents.ProcurementAgent;
 import artefacts.trust.Trust;
 
 /**
@@ -147,6 +148,9 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
+		//set the time it needed to deliver
+		ProcurementAgent receiver=(ProcurementAgent) orderAgent.getParent().getProcurementAgent();
+		receiver.updateTime(this.getOrderedAt()-this.getReceivedAt(),deliveryAgent);
 		//System.out.println(id+" " +quantity+" "+oftenProcessed);
 		this.processed = true;	
 	}
