@@ -1,0 +1,16 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>CumulatedActorsOu</name>
+  <dataSet>A Data Set</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>Open Orders</string>
+    <string>Retailer Inv</string>
+    <string>Wholesaler Inv</string>
+    <string>Distributor Inv</string>
+    <string>Manufacturer Inv</string>
+    <string>Customer Inv</string>
+  </sourceIds>
+  <fileName>CumActorsOutput.xlsx</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

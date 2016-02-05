@@ -21,13 +21,15 @@ public class IndirectTrustAgent {
 	private ArrayList<Retailer> retailerList;
 	private  ArrayList<Customer> customerList;
 	
-	private static final IndirectTrustAgent indirectTrustAgent= new IndirectTrustAgent();
+	private static IndirectTrustAgent indirectTrustAgent= new IndirectTrustAgent();
 	private IndirectTrustAgent(){
 		
 	}
+	
 	public static void setLists(ArrayList<Manufacturer> manufacturerList,ArrayList<Distributor> distributorList,ArrayList<Wholesaler> wholesalerList,
 			ArrayList<Retailer> retailerList, ArrayList<Customer> customerList){
 		//listen geben
+		
 		indirectTrustAgent.setManufacturerList(manufacturerList);
 		indirectTrustAgent.setDistributorList(distributorList);
 		indirectTrustAgent.setRetailerList(retailerList);
@@ -106,7 +108,9 @@ public class IndirectTrustAgent {
 	public void setCustomerList(ArrayList<Customer> customerList) {
 		this.customerList = customerList;
 	}
-
+	public static void reset(){
+		indirectTrustAgent = new IndirectTrustAgent();
+	}
 	
 	
 }
