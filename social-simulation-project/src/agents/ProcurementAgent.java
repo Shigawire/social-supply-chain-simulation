@@ -103,6 +103,8 @@ public class ProcurementAgent
 				highestPoint = i;
 				highest = moment;
 			}
+			//if the moment is higher than the second moment but not lower than the highest
+			//it is the second highest
 			if(moment>=secondMoment&&moment<highest){
 				secondMoment=moment;
 				secondPoint=i;

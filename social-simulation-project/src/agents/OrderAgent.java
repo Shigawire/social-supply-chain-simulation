@@ -88,7 +88,7 @@ public class OrderAgent
 		
 		
 	}
-	//for a second order
+	//for a second order will be used by the lying agent
 	public void secondOrder(TrustAgent trustAgent, Order order) 
 	{
 		// e.g. select Retailer. with customer.procurementAgent
@@ -129,8 +129,12 @@ public class OrderAgent
 		{
 			for (Order shipment : receivedShipments) 
 			{
-				parent.getTrustAgent().inspectShipment(this, shipment);
 				inventoryAgent.store(shipment);
+				//if the shipment was not cancelled it will be inspected
+				if(!shipment.getCancelled()){
+					parent.getTrustAgent().inspectShipment(this, shipment);
+				}
+
 			}
 		}
 		receivedShipments.clear();

@@ -44,6 +44,7 @@ public class InventoryAgent
 		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.incoming_inventory_level + " to level+" +shipment.getQuantity());
 		if(lying){
 			if(desired_inventory_level<outgoing_inventory_level){
+				shipment.setCancelled();
 				shipment.getDeliveryAgent().getParent().returning(shipment.getPartDelivery());
 				shipment.partDelivery(shipment.getUnfullfilledQuantity());
 				shipment.setProcessed(true);

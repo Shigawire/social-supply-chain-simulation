@@ -28,6 +28,7 @@ public class Order
 	private int oftenProcessed=0;//how often has parts of the order been processed
 	private int firstDelivery; //how much was fullfilled in the first fullfillment
 	private int firstTick;
+	boolean cancelled = false;
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;//who ordered
@@ -149,16 +150,22 @@ public class Order
 	public void setProcessed(boolean processed) 
 	{
 		//set the time it needed to deliver
-		ProcurementAgent receiver=(ProcurementAgent) orderAgent.getParent().getProcurementAgent();
-		receiver.updateTime(this.getOrderedAt()-this.getReceivedAt(),deliveryAgent);
+		if(!cancelled){
+			ProcurementAgent receiver=(ProcurementAgent) orderAgent.getParent().getProcurementAgent();
+			receiver.updateTime(this.getOrderedAt()-this.getReceivedAt(),deliveryAgent);
+		}
 		//System.out.println(id+" " +quantity+" "+oftenProcessed);
-		this.processed = true;	
+		this.processed = processed;	
 	}
 	
 	public void setExpectedDeliveryDuration(double duration) {
 		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
 	}
-	
+	public void setCancelled() {
+		cancelled = true;
+		// TODO Auto-generated method stub
+		
+	}
 //	public void setQuantity(int quantity) 
 //	{
 //		this.quantity = quantity;
@@ -187,5 +194,12 @@ public class Order
 	
 	public Map<Integer, Integer> getPartialDeliveryHistory() {
 		return this.partialDeliveryHistory;
+	}
+
+	
+
+	public boolean getCancelled() {
+		return cancelled;
+		
 	}
 }

@@ -70,9 +70,14 @@ public class DeliveryAgent
 		current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
 		shortage=0;
 		for (Order order : receivedOrders) 
-		{
+		{	
+			//if the order is already processed, it will just disapper (when set e.g. by the
+			//inventory Agent after cancellation
+			if(order.getProcessed()){
+				
+			}
 			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8
-			if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
+			else if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
 			{
 				//if the needed rest quantity of the order is higher then the inventory
 				//part of the order will be delivered
