@@ -66,7 +66,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 		// 1.
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 		desired_inventory_level = next_demand*15/10;
-		System.out.println("desired"+desired_inventory_level);
+		//System.out.println("desired"+desired_inventory_level);
 		
 		// 2.
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
@@ -77,7 +77,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 		}
 		// 3.
 		
-		System.out.println(subtractionByTrust+" subtraction by trust");
+		//System.out.println(subtractionByTrust+" subtraction by trust");
 		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
 		
 		subtractionByTrust=0;
@@ -111,7 +111,7 @@ public abstract class Buy_Sale extends Buy implements Sale
 		if(lying){
 			next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 			desired_inventory_level = next_demand*15/10;
-			System.out.println("desired_inventory_level"+desired_inventory_level);
+			//System.out.println("desired_inventory_level"+desired_inventory_level);
 			return desired_inventory_level;
 		}
 		return 1000;

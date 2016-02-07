@@ -94,21 +94,21 @@ public class TrustAgent
 		double summedDimensionValues = 0;
 		
 		for (DimensionType dimensionType : dimensions) {
-			System.out.println("---------Dimension " + dimensionType + " ---------");
+			//System.out.println("---------Dimension " + dimensionType + " ---------");
 			
 			Map<DimensionType, Double> dimensionRating = supplyChainMember.getTrustDimensionRatings();
 			
 			double rating = dimensionRating.get(dimensionType);
 			
-			System.out.println("Dimension rating: " + rating);
+			//System.out.println("Dimension rating: " + rating);
 			
 			double kpiValue = Kpi.getKPIForDimension(dimensionType);
 			
-			System.out.println("Dimension kpiValue: " + kpiValue);
+			//System.out.println("Dimension kpiValue: " + kpiValue);
 			
 			double updatedDimensionValue = (kpiValue - rating) * rating;
 			
-			System.out.println("updatedDimensionValue: " + updatedDimensionValue);
+			//System.out.println("updatedDimensionValue: " + updatedDimensionValue);
 			
 			summedDimensionValues+=updatedDimensionValue;
 			//orderFulfillments.put(trust.getDimension(DimensionType.RELIABILITY), kpiValue);

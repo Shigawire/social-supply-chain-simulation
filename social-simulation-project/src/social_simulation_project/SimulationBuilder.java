@@ -77,7 +77,9 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		}
 		
 		IndirectTrustAgent.getIndirectTrustAgent().setCustomerList(setup.getCustomerList());
-		
+		BWeffectMeasurer.getMeasurer().setTheDummys(setup.getCustomerList().get(0),retailerList_indirectTrust.get(0) , 
+				wholesalerList_indirectTrust.get(0), distributorList_indirectTrust.get(0));
+		context.add(BWeffectMeasurer.getMeasurer());
 		return context;
 	}
 }

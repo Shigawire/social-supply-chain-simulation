@@ -5,6 +5,7 @@ import java.util.Map;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
+import social_simulation_project.BWeffectMeasurer;
 import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
@@ -48,8 +49,8 @@ public class Order
 	
 	public Order(int quantity, OrderAgent orderAgent) 
 	{
-		
 		OrderObserver.giveObserver().addAmount(quantity);
+		
 		this.quantity = quantity;
 		//generate an ID, so it is easier to track the Order through the system :)
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
@@ -58,6 +59,7 @@ public class Order
 		fullfilledQuantity=0;
 		this.processed = false;
 		sum=quantity;
+		BWeffectMeasurer.getMeasurer().update(this);
 	}
 	
 //	public boolean finished() 

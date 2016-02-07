@@ -93,7 +93,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		if(!buyer.containsKey(orderer)){
 			buyer.put(orderer, orderAtYou);
 		}
-		System.out.println(buyer.toString());
+		//System.out.println(buyer.toString());
 		int newValue=(buyer.get(orderer)+orderAtYou)/2;
 		//System.out.println(newValue);
 		buyer.remove(orderer);

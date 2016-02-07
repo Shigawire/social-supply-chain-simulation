@@ -10,6 +10,7 @@ import artefacts.Order;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.essentials.RepastEssentials;
+import social_simulation_project.BWeffectMeasurer;
 
 /**
 * This class represents the customer. We have one
