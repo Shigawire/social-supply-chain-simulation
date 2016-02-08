@@ -48,7 +48,6 @@ public class ProductionAgent
 
 		}
 		//2.
-		System.out.println(inventoryAgent.getAInventoryLevel()>=production_quantity*2 && inventoryAgent.getBInventoryLevel()>=production_quantity);
 		if (inventoryAgent.getAInventoryLevel()>=production_quantity*2 && inventoryAgent.getBInventoryLevel()>=production_quantity) 
 		{
 //			int dem = RandomHelper.nextIntFromTo(1, 20);

@@ -119,9 +119,11 @@ public class TrustAgent
 //		System.out.println("Summed up values: " + summedDimensionValues);
 		
 //		System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
-		double _tValue = 0.5 * (1 + summedDimensionValues);
+		
 		
 		double _oldtValue = trust.getUnifiedTrustValue();
+		
+		double _tValue = _oldtValue * (1 + summedDimensionValues);
 		//this.tValue = ((1- this.learningRate) * trust.getUnifiedTrustValue()) + (this.learningRate * _tValue);
 		
 		//System.out.println("_tValue: " + _tValue);
@@ -134,14 +136,14 @@ public class TrustAgent
 		
 		//determine if trust update was positive or negative, necessary for competence dimension
 		
-		/*
+		
 		if (_oldtValue > _newtValue) {
 			//negative
 			System.out.println("Trust update is negative [from "+ _oldtValue + " to " + _newtValue +  "]");
 		} else {
 			System.out.println("Trust update is positive [from "+ _oldtValue + " to " + _newtValue +  "]");
 		}
-		*/
+		
 		
 	}
 	
