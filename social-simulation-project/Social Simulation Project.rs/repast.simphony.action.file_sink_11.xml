@@ -6,6 +6,8 @@
   <sourceIds class="linked-hash-set">
     <string>Current_incoming_inventory_level</string>
     <string>Current_outgoing_inventory_level</string>
+    <string>NextOrderQuantity</string>
+    <string>NextDemand</string>
   </sourceIds>
   <fileName>CustomerlOutput.txt</fileName>
   <addTimeStamp>true</addTimeStamp>

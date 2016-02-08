@@ -25,11 +25,19 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Current_outgoing_inventory_level</string>
+      <string>NextDemand</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current_outgoing_inventory_level</id>
+        <id>NextDemand</id>
         <className>actors.Customer</className>
-        <methodName>getCurrent_outgoing_inventory_level</methodName>
+        <methodName>getNextDemand</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>NextOrderQuantity</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>NextOrderQuantity</id>
+        <className>actors.Customer</className>
+        <methodName>getNextOrderQuantity</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

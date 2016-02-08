@@ -29,6 +29,7 @@ public class OrderAgent
 	ArrayList<DeliveryAgent> willOrder= new ArrayList<DeliveryAgent>();
 	private ProcurementAgent procurementAgent;
 	private ArrayList<DeliveryAgent> delivery_agents;
+	private int thisTickReceived;
 	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent, ArrayList<DeliveryAgent> delivery_agents) 
 	{
 		this.parent = orderer;
@@ -124,11 +125,12 @@ public class OrderAgent
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
 		//System.out.println("[Order Agent] receiving shipment list");
-		
+		thisTickReceived = 0;
 		if (!receivedShipments.isEmpty())
 		{
 			for (Order shipment : receivedShipments) 
 			{
+				thisTickReceived+=shipment.getQuantity();
 				inventoryAgent.store(shipment);
 				//if the shipment was not cancelled it will be inspected
 				if(!shipment.getCancelled()){
@@ -176,7 +178,9 @@ public class OrderAgent
 	{
 		return this.receivedShipments;
 	}
-	
+	public int getThisTickReceived(){
+		return thisTickReceived;
+	}
 	
 	/*
 	 * SETTERS

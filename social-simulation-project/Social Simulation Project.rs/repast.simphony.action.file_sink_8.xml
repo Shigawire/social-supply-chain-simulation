@@ -6,6 +6,8 @@
   <sourceIds class="linked-hash-set">
     <string>Current_incoming_inventory_level</string>
     <string>Current_outgoing_inventory_level</string>
+    <string>OrderQuantity</string>
+    <string>ThisTickReceived</string>
   </sourceIds>
   <fileName>DistributorOutput.txt</fileName>
   <addTimeStamp>true</addTimeStamp>

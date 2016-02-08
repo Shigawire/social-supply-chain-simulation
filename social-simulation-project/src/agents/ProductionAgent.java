@@ -3,6 +3,7 @@ package agents;
 import java.util.ArrayList;
 
 import cern.jet.random.engine.MersenneTwister;
+import repast.simphony.essentials.RepastEssentials;
 import repast.simphony.random.RandomHelper;
 import artefacts.ProductionBatch;
 
@@ -47,6 +48,7 @@ public class ProductionAgent
 
 		}
 		//2.
+		System.out.println(inventoryAgent.getAInventoryLevel()>=production_quantity*2 && inventoryAgent.getBInventoryLevel()>=production_quantity);
 		if (inventoryAgent.getAInventoryLevel()>=production_quantity*2 && inventoryAgent.getBInventoryLevel()>=production_quantity) 
 		{
 //			int dem = RandomHelper.nextIntFromTo(1, 20);

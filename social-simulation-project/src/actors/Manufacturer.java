@@ -56,7 +56,8 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		//3. calculateDemand()
 		this.calculateDemand();
 		//4. produce();
-		produce();
+		this.produce();
+		this.deliverRawMaterials();
 	}
 	
 	/**
@@ -98,7 +99,10 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		//System.out.println(newValue);
 		buyer.remove(orderer);
 		buyer.put(orderer, newValue);
-		//System.out.println("new value for him"+buyer.get(orderer));
+		//System.out.println("new value for him"+buyer.get(orderer));	
+	}
+	
+	public void deliverRawMaterials(){
 		
 	}
 	private void harvest() 
@@ -120,12 +124,6 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
 		//System.out.println(subtractionByTrust+" subtraction by trust");
-		amount_to_produce = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
-		subtractionByTrust=0;
-		amount_to_produce = (amount_to_produce > 0) ? amount_to_produce : 0;
-		
-		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
-		Production.add(new_production_order);
 
 		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
 		}
