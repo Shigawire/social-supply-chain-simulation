@@ -87,16 +87,16 @@ public class BWeffectMeasurer {
 		measurer.setTickWholesaler(0);
 		measurer.setTickDistributor(0);
 		
-		System.out.println();
+		//System.out.println();
 		//compute the variances
 		 double customerVar = variance(measurer.getCustomer());
 		 double retailerVar = variance(measurer.getRetailer());
 		 double wholesalerVar = variance(measurer.getWholesaler());
 		 double distributorVar = variance(measurer.getDistributor());
 		 //bullwhip meaurements:
-		 System.out.println(retailerVar/customerVar);
-		 System.out.println(wholesalerVar/retailerVar);
-		 System.out.println(distributorVar/wholesalerVar);
+		// System.out.println(retailerVar/customerVar);
+		// System.out.println(wholesalerVar/retailerVar);
+		// System.out.println(distributorVar/wholesalerVar);
 	}
 	
 	

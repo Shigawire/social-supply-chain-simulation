@@ -71,8 +71,10 @@ public class Order
 	{
 		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
+	
 	//a part or the whole delivery
 	public void partDelivery(int delivery){
+		
 		if(oftenProcessed==0){
 			firstDelivery=delivery;
 			firstTick=(int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
@@ -81,7 +83,6 @@ public class Order
 		this.partDelivery=delivery;
 		OrderObserver.giveObserver().subAmount(delivery);
 		fullfilledQuantity+=delivery;
-		
 		if (this.fullfilledQuantity == this.quantity) {
 			this.received();
 		}

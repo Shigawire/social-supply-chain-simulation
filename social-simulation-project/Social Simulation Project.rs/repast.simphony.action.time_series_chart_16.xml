@@ -1,0 +1,36 @@
+<repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
+  <name>Distributor Inventory</name>
+  <dataSet>Distributors</dataSet>
+  <xAxisLabel>Tick Count</xAxisLabel>
+  <yAxisLabel>Inv/Quantity</yAxisLabel>
+  <chartTitle>Distributor Inventory</chartTitle>
+  <type>TIME_SERIES</type>
+  <background>
+    <red>192</red>
+    <green>192</green>
+    <blue>192</blue>
+    <alpha>255</alpha>
+  </background>
+  <gridLineColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </gridLineColor>
+  <showGrid>true</showGrid>
+  <showLegend>true</showLegend>
+  <seriesIds>
+    <entry>
+      <string>Current_incoming_inventory_level</string>
+      <SeriesData>
+        <label></label>
+      </SeriesData>
+    </entry>
+  </seriesIds>
+  <dataValueIds>
+    <string>Current_outgoing_inventory_level</string>
+    <string>OrderQuantity</string>
+    <string>Current_incoming_inventory_level</string>
+  </dataValueIds>
+  <plotRangeLength>-1</plotRangeLength>
+</repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

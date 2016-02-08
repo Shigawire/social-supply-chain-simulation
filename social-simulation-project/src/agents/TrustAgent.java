@@ -76,12 +76,16 @@ public class TrustAgent
 	//Jedes Shipment wird einzeln untersucht, daraufhin wird der Trust-Wert der spezifischen Dimension eines bestimmten orderAgent geändert
 	public void inspectShipment(OrderAgent orderAgent, Order shipment) 
 	{		
+		if (shipment.getQuantity() == 0) return;
+		
 		DimensionType[] dimensions = {DimensionType.RELIABILITY, DimensionType.COMPETENCE, DimensionType.QUALITY, DimensionType.SHARED_VALUES};
 		
 		//reliability
 		//is the shipment overdue?
 		int runtime = (shipment.getReceivedAt() - shipment.getOrderedAt());
 		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3 (when trust <0.6 see OrderAgent)
+		
+		if (!shipment.getProcessed()) return;
 		
 		shipment.setShipmentQuality(1-shipment.getfailurePercentage());
 		
@@ -93,22 +97,24 @@ public class TrustAgent
 		
 		double summedDimensionValues = 0;
 		
+		System.out.println("Shipment runtime: " + runtime);
+		
 		for (DimensionType dimensionType : dimensions) {
-			//System.out.println("---------Dimension " + dimensionType + " ---------");
+			System.out.println("---------Dimension " + dimensionType + " ---------");
 			
 			Map<DimensionType, Double> dimensionRating = supplyChainMember.getTrustDimensionRatings();
 			
 			double rating = dimensionRating.get(dimensionType);
 			
-			//System.out.println("Dimension rating: " + rating);
+			System.out.println("Dimension rating: " + rating);
 			
 			double kpiValue = Kpi.getKPIForDimension(dimensionType);
 			
-			//System.out.println("Dimension kpiValue: " + kpiValue);
+			System.out.println("Dimension kpiValue: " + kpiValue);
 			
 			double updatedDimensionValue = (kpiValue - rating) * rating;
 			
-			//System.out.println("updatedDimensionValue: " + updatedDimensionValue);
+			System.out.println("updatedDimensionValue: " + updatedDimensionValue);
 			
 			summedDimensionValues+=updatedDimensionValue;
 			//orderFulfillments.put(trust.getDimension(DimensionType.RELIABILITY), kpiValue);
@@ -116,9 +122,11 @@ public class TrustAgent
 			
 		}
 		
-//		System.out.println("Summed up values: " + summedDimensionValues);
+		System.out.println("####################");
 		
-//		System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
+		System.out.println("Summed up values: " + summedDimensionValues);
+		
+		System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
 		
 		
 		double _oldtValue = trust.getUnifiedTrustValue();
@@ -132,6 +140,7 @@ public class TrustAgent
 		
 		double _newtValue = ((1- this.learningRate) * trust.getUnifiedTrustValue()) + (this.learningRate * _tValue);
 
+		if (_newtValue > 1) _newtValue = 1;
 		trust.setUnifiedTrustValue(_newtValue);
 		
 		//determine if trust update was positive or negative, necessary for competence dimension

@@ -42,10 +42,10 @@ public abstract class SupplyChainMember
 		
 		this.dimensionRatings = new HashMap<DimensionType, Double>();
 		
-		dimensionRatings.put(DimensionType.RELIABILITY, 0.25);
-		dimensionRatings.put(DimensionType.COMPETENCE, 0.25);
-		dimensionRatings.put(DimensionType.SHARED_VALUES, 0.25);
-		dimensionRatings.put(DimensionType.QUALITY, 0.25);
+		dimensionRatings.put(DimensionType.RELIABILITY, 0.7);
+		dimensionRatings.put(DimensionType.COMPETENCE, 0.2);
+		dimensionRatings.put(DimensionType.SHARED_VALUES, 0.05);
+		dimensionRatings.put(DimensionType.QUALITY, 0.05);
 	}
 	
 	// Methods every supply chain member must implement
