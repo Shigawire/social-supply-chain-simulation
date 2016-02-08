@@ -31,8 +31,8 @@ public class DeliveryAgent
 	private int shortage = 0;//gives the shortage of the last tick, will be used for the forecast
 	private SupplyChainMember parent;//to which SupplyChainMember it belongs
 	
-	private int failure_mean;
-	private int failure_standard_deviation;
+	private double failure_mean;
+	private double failure_deviation;
 	
 	public DeliveryAgent(int price, SupplyChainMember parent, int mean, int deviation) 
 	{
@@ -42,7 +42,7 @@ public class DeliveryAgent
 		this.price = price;
 		this.parent = parent;
 		this.failure_mean = mean;
-		this.failure_standard_deviation = deviation;
+		this.failure_deviation = deviation;
 	}
 	
 	/**
@@ -70,15 +70,21 @@ public class DeliveryAgent
 		current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
 		shortage=0;
 		for (Order order : receivedOrders) 
-		{
+		{	
+			//if the order is already processed, it will just disapper (when set e.g. by the
+			//inventory Agent after cancellation
+			if(order.getProcessed()){
+				
+			}
 			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8
-			if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
+			else if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
 			{
 				//if the needed rest quantity of the order is higher then the inventory
 				//part of the order will be delivered
 				order.partDelivery(current_outgoing_inventory_level);
-				RandomHelper.createNormal(failure_mean, failure_standard_deviation);
-				order.setfailurePercentage(RandomHelper.getNormal().nextDouble()/100);
+//				RandomHelper.createNormal(failure_mean, failure_deviation);
+				order.setfailurePercentage((failure_mean +RandomHelper.nextDoubleFromTo(+failure_deviation, -failure_deviation))/100);
+//				System.out.println("failure "+order.getfailurePercentage());
 				openOrders.add(order);
 				shortage=+order.getUnfullfilledQuantity();
 				inventoryAgent.reduceOutgoingInventoryLevel(current_outgoing_inventory_level);
@@ -121,7 +127,8 @@ public class DeliveryAgent
 
 	public int getShortage() 
 	{
-		return shortage;
+		//gives half of the shortage
+		return (shortage/2);
 	}
 	
 	public ArrayList<Order> getAllOrders()
@@ -137,6 +144,11 @@ public class DeliveryAgent
 	
 	public SupplyChainMember getParent() {
 		return this.parent;
+	}
+
+	public void setShortage(int i) {
+		shortage=0;
+		
 	}
 	
 	/*

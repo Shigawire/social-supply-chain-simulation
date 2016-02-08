@@ -3,6 +3,7 @@ package agents;
 import java.util.ArrayList;
 
 import cern.jet.random.engine.MersenneTwister;
+import repast.simphony.essentials.RepastEssentials;
 import repast.simphony.random.RandomHelper;
 import artefacts.ProductionBatch;
 

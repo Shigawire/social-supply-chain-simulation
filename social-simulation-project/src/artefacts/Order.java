@@ -5,10 +5,12 @@ import java.util.Map;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
+import social_simulation_project.BWeffectMeasurer;
 import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
+import agents.ProcurementAgent;
 import artefacts.trust.Trust;
 
 /**
@@ -27,6 +29,7 @@ public class Order
 	private int oftenProcessed=0;//how often has parts of the order been processed
 	private int firstDelivery; //how much was fullfilled in the first fullfillment
 	private int firstTick;
+	boolean cancelled = false;
 	private String id;
 	// Who ordered?
 	private OrderAgent orderAgent;//who ordered
@@ -46,8 +49,8 @@ public class Order
 	
 	public Order(int quantity, OrderAgent orderAgent) 
 	{
-		
 		OrderObserver.giveObserver().addAmount(quantity);
+		
 		this.quantity = quantity;
 		//generate an ID, so it is easier to track the Order through the system :)
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
@@ -56,6 +59,7 @@ public class Order
 		fullfilledQuantity=0;
 		this.processed = false;
 		sum=quantity;
+		BWeffectMeasurer.getMeasurer().update(this);
 	}
 	
 //	public boolean finished() 
@@ -147,14 +151,23 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
+		//set the time it needed to deliver
+		if(!cancelled){
+			ProcurementAgent receiver=(ProcurementAgent) orderAgent.getParent().getProcurementAgent();
+			receiver.updateTime(this.getOrderedAt()-this.getReceivedAt(),deliveryAgent);
+		}
 		//System.out.println(id+" " +quantity+" "+oftenProcessed);
-		this.processed = true;	
+		this.processed = processed;	
 	}
 	
 	public void setExpectedDeliveryDuration(double duration) {
 		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
 	}
-	
+	public void setCancelled() {
+		cancelled = true;
+		// TODO Auto-generated method stub
+		
+	}
 //	public void setQuantity(int quantity) 
 //	{
 //		this.quantity = quantity;
@@ -183,5 +196,12 @@ public class Order
 	
 	public Map<Integer, Integer> getPartialDeliveryHistory() {
 		return this.partialDeliveryHistory;
+	}
+
+	
+
+	public boolean getCancelled() {
+		return cancelled;
+		
 	}
 }

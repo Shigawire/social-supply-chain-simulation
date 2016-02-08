@@ -85,6 +85,16 @@ public abstract class SupplyChainMember
 	public InventoryAgent getInventoryAgent() {
 		return this.inventoryAgent;
 	}
+
+	public void returning(int partDelivery) {
+		inventoryAgent.increaseOutgoingInventoryLevel(partDelivery);
+		
+	}
+
+	public Object getProcurementAgent() {
+		// implemented for relevant actors in Buy
+		return null;
+	}
 	
 	/*
 	 * SETTERS

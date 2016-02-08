@@ -15,6 +15,8 @@ public abstract class Buy extends SupplyChainMember
 	protected OrderAgent orderAgent;
 	protected ProcurementAgent procurementAgent;
 	protected TrustAgent trustAgent;
+	//boolean if he is a "lying agent"
+	protected boolean lying=false;
 	protected ArrayList<Sale> sailor_list;//list with possible salers
 	private ArrayList<DeliveryAgent> delivery_agents;//list of the delivery agents of the salers
 	public Buy( ArrayList<Sale> sailor,int incoming_inventory_level, int outgoing_inventory_level) 
@@ -32,6 +34,12 @@ public abstract class Buy extends SupplyChainMember
 	}
 	public TrustAgent getTrustAgent(){
 		return trustAgent;
+	}
+	public ProcurementAgent getProcurementAgent(){
+		return procurementAgent;
+	}
+	public void setLying(){
+		lying=true;
 	}
 }
 

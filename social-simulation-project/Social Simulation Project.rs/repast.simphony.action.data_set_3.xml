@@ -1,0 +1,55 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Distributors</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>actors.Distributor</sourceType>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-482600139</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>Current_incoming_inventory_level</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Current_incoming_inventory_level</id>
+        <className>actors.Distributor</className>
+        <methodName>getCurrent_incoming_inventory_level</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Current_outgoing_inventory_level</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Current_outgoing_inventory_level</id>
+        <className>actors.Distributor</className>
+        <methodName>getCurrent_outgoing_inventory_level</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>OrderQuantity</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>OrderQuantity</id>
+        <className>actors.Distributor</className>
+        <methodName>getOrderQuantity</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>ThisTickReceived</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>ThisTickReceived</id>
+        <className>actors.Distributor</className>
+        <methodName>getThisTickReceived</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

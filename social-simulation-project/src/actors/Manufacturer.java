@@ -22,6 +22,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 {	
 	private int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
 	private int next_demand;
+	private int desired_inventory_level;
 	private int price;//price for the good
 	private int order_quantity;
 	private int machine_quantity;
@@ -35,7 +36,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	private ArrayList<ProductionBatch> toProduce;
 	private int lead_time = 2;//the time needed to produce
 	
-	public Manufacturer(int price, int current_incoming_inventory_level,int current_outgoing_inventory_level)
+	public Manufacturer(int current_incoming_inventory_level,int current_outgoing_inventory_level, int price)
 	{
 		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	
@@ -55,7 +56,8 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		//3. calculateDemand()
 		this.calculateDemand();
 		//4. produce();
-		produce();
+		this.produce();
+		this.deliverRawMaterials();
 	}
 	
 	/**
@@ -92,12 +94,15 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		if(!buyer.containsKey(orderer)){
 			buyer.put(orderer, orderAtYou);
 		}
-		System.out.println(buyer.toString());
+		//System.out.println(buyer.toString());
 		int newValue=(buyer.get(orderer)+orderAtYou)/2;
 		//System.out.println(newValue);
 		buyer.remove(orderer);
 		buyer.put(orderer, newValue);
-		//System.out.println("new value for him"+buyer.get(orderer));
+		//System.out.println("new value for him"+buyer.get(orderer));	
+	}
+	
+	public void deliverRawMaterials(){
 		
 	}
 	private void harvest() 
@@ -111,15 +116,14 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		{
 
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+		desired_inventory_level = next_demand*15/10;
+		if(current_outgoing_inventory_level>desired_inventory_level){
+			deliveryAgent.setShortage(0);
+			return;
+		}
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
 		//System.out.println(subtractionByTrust+" subtraction by trust");
-		amount_to_produce = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
-		subtractionByTrust=0;
-		amount_to_produce = (amount_to_produce > 0) ? amount_to_produce : 0;
-		
-		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, amount_to_produce);
-		Production.add(new_production_order);
 
 		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
 		}

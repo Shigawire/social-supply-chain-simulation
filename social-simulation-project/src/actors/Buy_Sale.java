@@ -12,7 +12,7 @@ import artefacts.Order;
 public abstract class Buy_Sale extends Buy implements Sale
 {
 	protected int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
-
+	protected int desired_inventory_level;
 	protected int next_demand;//demand of next tick
 	protected int price;//price for our goods
 	protected int order_quantity;
@@ -55,8 +55,6 @@ public abstract class Buy_Sale extends Buy implements Sale
 	   */
 	public void order() 
 	{
-
-		int desired_inventory_level;
 		// 1. Was brauch ich im nächsten tick?  (forecastagent befragen)
 		// 2. Was hab ich noch im Inventar?
 		// 3. Differenz bestellen. mit orderArgent
@@ -65,21 +63,24 @@ public abstract class Buy_Sale extends Buy implements Sale
 		// 2. whats about my inventory
 		// 3. order difference
 
-		
 		// 1.
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 		desired_inventory_level = next_demand*15/10;
-		System.out.println("desired"+desired_inventory_level);
+		//System.out.println("desired"+desired_inventory_level);
 		
 		// 2.
 		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
-		
+		//if current bigger than desiredlevel return
+		if(current_outgoing_inventory_level>desired_inventory_level){
+			//deliveryAgent.setShortage(0);
+			return;
+		}
 		// 3.
-		order_quantity = next_demand + deliveryAgent.getShortage()- current_outgoing_inventory_level;
-		System.out.println("order_quantity"+order_quantity);
 		
-		System.out.println(subtractionByTrust+" subtraction by trust");
+		//System.out.println(subtractionByTrust+" subtraction by trust");
+		System.out.println("Desired inventory Level: " + desired_inventory_level);
 		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+		
 		subtractionByTrust=0;
 
 		//System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
@@ -100,7 +101,22 @@ public abstract class Buy_Sale extends Buy implements Sale
 			
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
+			if(lying){
+				Order order2 = new Order(order_quantity, this.orderAgent);
+				orderAgent.secondOrder(this.trustAgent, order2);
+			}
+			
 		}
+	}
+	public int desired(){
+		if(lying){
+			next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
+			desired_inventory_level = next_demand*15/10;
+			//System.out.println("desired_inventory_level"+desired_inventory_level);
+			return desired_inventory_level;
+		}
+		return 1000;
+		
 	}
 	public void going2order(OrderAgent noOrderer){
 		if(buyer.containsKey(noOrderer)){
@@ -131,9 +147,15 @@ public abstract class Buy_Sale extends Buy implements Sale
 	{	
 		return this.deliveryAgent;
 	}
-	
+
 	public int getPrice()
 	{
 		return this.price;
 	}	
+	public int getOrderQuantity(){
+		return this.order_quantity;
+	}
+	public int getThisTickReceived(){
+		return this.orderAgent.getThisTickReceived();
+	}
 }

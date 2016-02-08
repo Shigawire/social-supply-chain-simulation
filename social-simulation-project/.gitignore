@@ -1,1 +1,6 @@
 /bin/
+*.xlsx
+*.txt
+*.xls
+*.log
+*.log.*
