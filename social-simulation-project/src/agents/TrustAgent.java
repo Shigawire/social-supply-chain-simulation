@@ -151,11 +151,13 @@ public class TrustAgent
 	 */
 	public double getTrustValue(DeliveryAgent delivery_agent) 
 	{	
+		
 		//indirect trust
 		int runs =0;
 		double trustvalue=0; 
 		for (Trust trust:IndirectTrustAgent.getTrustValue(this, delivery_agent)){
 			trustvalue+=trust.getUnifiedTrustValue();
+			runs++;
 		}
 		if(runs>0){
 			trustvalue=trustvalue/runs;
@@ -166,11 +168,12 @@ public class TrustAgent
 		}
 	} 
 	
-	public double getTrustValue(DeliveryAgent delivery_agent,int i) 
+	/*public double getTrustValue(DeliveryAgent delivery_agent,int i) 
 	{
 		//hier muss der trust wert zurueclgegeben werden.
 		return(1);
 	} 
+	*/
 	
 	public Trust getTrustObject(DeliveryAgent delivery_agent){
 		return this.trustStorage.get(delivery_agent);

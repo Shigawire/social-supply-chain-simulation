@@ -132,8 +132,8 @@ public class OrderAgent
 			{
 				thisTickReceived+=shipment.getQuantity();
 				inventoryAgent.store(shipment);
-				//if the shipment was not cancelled it will be inspected
-				if(!shipment.getCancelled()){
+				//if the shipment was not cancelled and if it is finally completely fulfilled it will be inspected
+				if(!shipment.getCancelled() && shipment.getProcessed()){
 					parent.getTrustAgent().inspectShipment(this, shipment);
 				}
 

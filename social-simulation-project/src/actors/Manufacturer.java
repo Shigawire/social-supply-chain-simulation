@@ -36,7 +36,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	private ArrayList<ProductionBatch> toProduce;
 	private int lead_time = 2;//the time needed to produce
 	
-	public Manufacturer(int price, int current_incoming_inventory_level,int current_outgoing_inventory_level)
+	public Manufacturer(int current_incoming_inventory_level,int current_outgoing_inventory_level, int price)
 	{
 		super(current_incoming_inventory_level, current_outgoing_inventory_level);
 		this.price = price;	

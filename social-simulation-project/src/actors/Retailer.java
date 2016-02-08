@@ -57,17 +57,6 @@ public class Retailer extends Buy_Sale
 	private void produce(){
 		this.productionAgent.label();
 	}
-	//gives the desired level
-	public int desired(){
-		if(lying){
-			next_demand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
-			desired_inventory_level = next_demand*15/10;
-			System.out.println("desired_inventory_level"+desired_inventory_level);
-			return desired_inventory_level;
-		}
-		return 1000;
-		
-	}
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 

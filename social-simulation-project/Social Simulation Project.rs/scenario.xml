@@ -14,4 +14,6 @@
 <repast.simphony.action.file_sink context="Social Simulation Project" file="repast.simphony.action.file_sink_11.xml" />
 <repast.simphony.action.file_sink context="Social Simulation Project" file="repast.simphony.action.file_sink_12.xml" />
 <repast.simphony.action.time_series_chart context="Social Simulation Project" file="repast.simphony.action.time_series_chart_13.xml" />
+<repast.simphony.action.time_series_chart context="Social Simulation Project" file="repast.simphony.action.time_series_chart_14.xml" />
+<repast.simphony.action.time_series_chart context="Social Simulation Project" file="repast.simphony.action.time_series_chart_15.xml" />
 </Scenario>
