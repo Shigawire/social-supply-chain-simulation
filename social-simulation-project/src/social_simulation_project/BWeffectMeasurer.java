@@ -12,7 +12,7 @@ import actors.Wholesaler;
 
 public class BWeffectMeasurer {
 	
-	//Dummys for Comparison only
+	//Dummys for Comparison of classes only
 	Customer c;
 	Retailer r;
 	Wholesaler w;
@@ -46,7 +46,7 @@ public class BWeffectMeasurer {
 	public void updateDistributor(int order_amount){
 		measurer.setTickDistributor(measurer.getTickDistributor()  + order_amount);
 	}
-	//enter the orders every tier made in every step to the list
+	//enter the orders every whole tier made in every step to the list
 	@ScheduledMethod(start = 2, interval = 1, priority = 6)
 	public void run(){
 		//append value of customer for the last tick
@@ -101,7 +101,7 @@ public class BWeffectMeasurer {
 	
 	
 	
-	
+	//computes the variance for list of integers
 	public double variance(ArrayList<Integer> toCompute){
 		double mid=0;
 		double variance=0;
@@ -121,6 +121,24 @@ public class BWeffectMeasurer {
 		return variance;
 		
 	}
+	
+	//update the with new order
+		public void update(Order order) {
+			
+			if(order.getOrderAgent().getParent().getClass().equals(c.getClass())){
+				measurer.updateCustomer(order.getQuantity());
+			}
+			else if(order.getOrderAgent().getParent().getClass().equals(r.getClass())){
+				measurer.updateRetailer(order.getQuantity());			
+			}
+			else if(order.getOrderAgent().getParent().getClass().equals(w.getClass())){
+				measurer.updateWholesaler(order.getQuantity());			
+			}
+			else if(order.getOrderAgent().getParent().getClass().equals(d.getClass())){
+				measurer.updateDistributor(order.getQuantity());			
+			}
+			
+		}
 	//Getters and setters
 	public int getTickCustomer() {
 		return tickCustomer;
@@ -197,22 +215,6 @@ public class BWeffectMeasurer {
 		this.w=w;
 		this.d=d;
 	}
-	//update the with new order
-	public void update(Order order) {
-		
-		if(order.getOrderAgent().getParent().getClass().equals(c.getClass())){
-			measurer.updateCustomer(order.getQuantity());
-		}
-		else if(order.getOrderAgent().getParent().getClass().equals(r.getClass())){
-			measurer.updateRetailer(order.getQuantity());			
-		}
-		else if(order.getOrderAgent().getParent().getClass().equals(w.getClass())){
-			measurer.updateWholesaler(order.getQuantity());			
-		}
-		else if(order.getOrderAgent().getParent().getClass().equals(d.getClass())){
-			measurer.updateDistributor(order.getQuantity());			
-		}
-		
-	}
+	
 	
 }

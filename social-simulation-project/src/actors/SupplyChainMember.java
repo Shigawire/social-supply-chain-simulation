@@ -19,8 +19,11 @@ import artefacts.trust.DimensionType;
 public abstract class SupplyChainMember 
 {
 	protected String id;//id for every member
-	protected int current_incoming_inventory_level;//inventory with items that has to be used to produce sellable items
-	protected int current_outgoing_inventory_level;//inventory with sellable itmes
+	protected int current_incoming_inventory_level;
+	/*inventory with items that has to be used to produce sellable items
+	 respectively for the customer the inventory of items he consumes
+	*/
+	protected int current_outgoing_inventory_level;//inventory with produced and therfore now sellable itmes
 	protected TrustAgent trustAgent;//Agent for the trust to suppliers
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
@@ -52,6 +55,26 @@ public abstract class SupplyChainMember
 	public abstract void run();//run method what every supply chain member does in the tick
 	public abstract void receiveShipments();
 	
+	//updates the list of buyers needed for information sharing
+	// is implemented in every subclass except for customer
+	public void updateList(OrderAgent orderAgent, int quantity) {		
+	}
+	// is called by the buyer, if he trust this actor and will not order at this actor
+	// is implemented in every subclass except for customer
+	public void going2order(OrderAgent orderAgent) {
+	}
+	
+	
+	// used if an actor returns deliveries/part deliveries he got	
+	public void returning(int partDelivery) {
+		inventoryAgent.increaseOutgoingInventoryLevel(partDelivery);
+		
+	}
+
+	public Object getProcurementAgent() {
+		// implemented for relevant actors in Buy
+		return null;
+	}
 	/*
 	 * GETTERS
 	 */
@@ -71,31 +94,9 @@ public abstract class SupplyChainMember
 	public TrustAgent getTrustAgent() {
 		return this.trustAgent;
 	}
-
-	public void updateList(OrderAgent orderAgent, int quantity) {
-		// is implemendet in the subclasses in every except for customer
-		
-	}
-
-	public void going2order(OrderAgent orderAgent) {
-		// is implemendet in the subclasses in every except for customer
-		
-	}
-	
 	public InventoryAgent getInventoryAgent() {
 		return this.inventoryAgent;
 	}
-
-	public void returning(int partDelivery) {
-		inventoryAgent.increaseOutgoingInventoryLevel(partDelivery);
-		
-	}
-
-	public Object getProcurementAgent() {
-		// implemented for relevant actors in Buy
-		return null;
-	}
-	
 	/*
 	 * SETTERS
 	 */

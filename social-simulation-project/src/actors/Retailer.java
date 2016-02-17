@@ -27,7 +27,7 @@ public class Retailer extends Buy_Sale
 		deliveryAgent = new DeliveryAgent(price, this,1,1);
 		this.productionAgent = new ProductionAgent(1, 1,this.inventoryAgent);
 	}
-	
+	//method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)	
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	public void run() 
 	{

@@ -17,18 +17,18 @@ public class ProcurementAgent
 	private double averageDeliveryTimeRelevance = 1;
 	private double priceRelevance = 1;
 	private double[] best = { 1.0, 1.0, 1.0 };
-	private int[] oftenUpdatet;//how often was delivery time updatet
+	private int[] oftenUpdatet;//how often was delivery time updated
 	private double[][] values; //store the values for the dimensions (1. trust,2.averageDeliveryTime 3.price)
 	
 	public ProcurementAgent(ArrayList<DeliveryAgent> delivery_agents, TrustAgent trustAgent) 
 	{
 		this.trustAgent = trustAgent;
 		this.delivery_agents = delivery_agents;
-		// how big must the array be
+		// how big the array must be
 		values = new double[3][delivery_agents.size()];
 		oftenUpdatet = new int[delivery_agents.size()];
 		for(int i=0;i<oftenUpdatet.length;i++){
-			oftenUpdatet[i]=0;//oftenUpdatet with 0 initialised
+			oftenUpdatet[i]=0;//oftenUpdatet with 0 initialized
 		}
 		valueFill();
 	}
@@ -39,7 +39,7 @@ public class ProcurementAgent
 		
 		for (int i = 0; i < delivery_agents.size(); i++)
 		{
-			//procurement fragt beim trust nur dummy
+			//procurement asks trust only at a dummy
 			values[0][i] = trustAgent.getTrustValue(delivery_agents.get(i));
 			//System.out.println("Current Trust Value: " + values[0][i]);
 			values[1][i] = 1;
@@ -49,6 +49,7 @@ public class ProcurementAgent
 	
 	private void fillBest()
 	{
+		//best values for every dimension is needed because ot the formula
 		for (int i = 0; i < delivery_agents.size(); i++)
 		{
 			if (best[0] <= values[0][i])
@@ -114,7 +115,6 @@ public class ProcurementAgent
 	}
 	
 	private void updateTrust() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < delivery_agents.size(); i++)
 		{
 			//procurement fragt beim trust nur dummy
@@ -124,6 +124,7 @@ public class ProcurementAgent
 		}
 	}
 
+	//updates the needed time by the last order arrived
 	public void updateTime(int ticksTillDelivery, DeliveryAgent deliverer) 
 	{
 		int updaten = delivery_agents.indexOf(deliverer);

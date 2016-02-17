@@ -97,24 +97,24 @@ public class TrustAgent
 		
 		double summedDimensionValues = 0;
 		
-		System.out.println("Shipment runtime: " + runtime);
+		//System.out.println("Shipment runtime: " + runtime);
 		
 		for (DimensionType dimensionType : dimensions) {
-			System.out.println("---------Dimension " + dimensionType + " ---------");
+			//System.out.println("---------Dimension " + dimensionType + " ---------");
 			
 			Map<DimensionType, Double> dimensionRating = supplyChainMember.getTrustDimensionRatings();
 			
 			double rating = dimensionRating.get(dimensionType);
 			
-			System.out.println("Dimension rating: " + rating);
+			//System.out.println("Dimension rating: " + rating);
 			
 			double kpiValue = Kpi.getKPIForDimension(dimensionType);
 			
-			System.out.println("Dimension kpiValue: " + kpiValue);
+			//System.out.println("Dimension kpiValue: " + kpiValue);
 			
 			double updatedDimensionValue = (kpiValue - rating) * rating;
 			
-			System.out.println("updatedDimensionValue: " + updatedDimensionValue);
+			//System.out.println("updatedDimensionValue: " + updatedDimensionValue);
 			
 			summedDimensionValues+=updatedDimensionValue;
 			//orderFulfillments.put(trust.getDimension(DimensionType.RELIABILITY), kpiValue);
@@ -122,11 +122,11 @@ public class TrustAgent
 			
 		}
 		
-		System.out.println("####################");
+		//System.out.println("####################");
 		
-		System.out.println("Summed up values: " + summedDimensionValues);
+		//System.out.println("Summed up values: " + summedDimensionValues);
 		
-		System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
+		//System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
 		
 		
 		double _oldtValue = trust.getUnifiedTrustValue();
@@ -148,9 +148,9 @@ public class TrustAgent
 		
 		if (_oldtValue > _newtValue) {
 			//negative
-			System.out.println("Trust update is negative [from "+ _oldtValue + " to " + _newtValue +  "]");
+			//System.out.println("Trust update is negative [from "+ _oldtValue + " to " + _newtValue +  "]");
 		} else {
-			System.out.println("Trust update is positive [from "+ _oldtValue + " to " + _newtValue +  "]");
+			//System.out.println("Trust update is positive [from "+ _oldtValue + " to " + _newtValue +  "]");
 		}
 		
 		
