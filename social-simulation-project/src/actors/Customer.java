@@ -58,6 +58,7 @@ public class Customer extends Buy
 	   * 
 	   * @return Nothing.
 	   */
+	//method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
@@ -68,17 +69,12 @@ public class Customer extends Buy
 		}
 		//set the inventory agents desired level
 		inventoryAgent.desiredLevel(lying, desired());
-		//System.out.println("[Customer] 1. my inventory Level is " + inventoryAgent.getInventoryLevel());
 		//1. processShipments()
 		this.receiveShipments();
-		//System.out.println("[Customer] 2. received shipments. Now my inventory Level is " + inventoryAgent.getInventoryLevel());
-		//
 		orderAgent.clearReceivedShipments();
-		//2. updateTrust()
-		// this.trustAgent.update();
-		//3. consume()
+		//2. consume()
 		this.consume();
-		//5.send order that he made the last tick
+		//3.send order that he made the last tick
 		orderAgent.orderIt();
 		//4. order()
 		this.order();
@@ -103,8 +99,8 @@ public class Customer extends Buy
 	   */
 	public void consume()
 	{
-		//TODO tempor�r, muss noch implementiert werden
-		consumption = 10; //forecastAgent.getNextDemand();
+		//consumes every tick amount of 10
+		consumption = 10;
 		current_incoming_inventory_level = inventoryAgent.getIncomingInventoryLevel();
 		
 		if (consumption > current_incoming_inventory_level) 
@@ -133,23 +129,15 @@ public class Customer extends Buy
 		
 		// 1.
 		next_demand = this.forecastAgent.customerDemand();
-		//System.out.println("[Customer] Next demand is  " + next_demand);
 		
 		// 2.
 		current_incoming_inventory_level = this.inventoryAgent.getIncomingInventoryLevel();
 		
-		//System.out.println("[Customer] current_inventory_level is  " + this.inventoryAgent.getIncomingInventoryLevel());
+	
 		//Update Trust missing?
 		
 		// 3.
 		order_quantity = next_demand - current_incoming_inventory_level;
-		
-		if (order_quantity <= 0) 
-		{
-			order_quantity=0;
-		}
-
-		// TODO replenishment policy
 		
 		// If the inventory level is sufficient for the next demand,
 		// do not order
@@ -157,6 +145,7 @@ public class Customer extends Buy
 		{
 			//a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
+			order_quantity=0;
 			orderAgent.order(this.trustAgent, null);
 		}
 		else
@@ -183,7 +172,10 @@ public class Customer extends Buy
 	{
 		this.orderAgent.receiveShipments(this.inventoryAgent);
 	}
-	
+
+	/*
+	 * GETTERS
+	 */
 	public int getNextDemand() {
 		return this.next_demand;
 	}
@@ -198,13 +190,7 @@ public class Customer extends Buy
 	
 	public TrustAgent getTrustAgent() {
 		return this.trustAgent;
-	}
-	
-
-	/*
-	 * GETTERS
-	 */
-	 
+	}	 
 	/* 
 	 * SETTERS
 	 */

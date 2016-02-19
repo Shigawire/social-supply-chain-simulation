@@ -41,7 +41,8 @@ public class InventoryAgent
 	//store a received shipment
 	public void store(Order shipment) 
 	{
-		//System.out.println("[Inventory Agent] setting inventory quantitiy from "+ this.incoming_inventory_level + " to level+" +shipment.getQuantity());
+		//when he is a lying agent it is possible that he will cancel the order based on his desired inventory level
+		//and send this partdelivery back
 		if(lying){
 			if(desired_inventory_level<outgoing_inventory_level){
 				shipment.setCancelled();

@@ -25,10 +25,9 @@ public class IndirectTrustAgent {
 	private IndirectTrustAgent(){
 		
 	}
-	
+	//set lists of all actors that are in the simulation
 	public static void setLists(ArrayList<Manufacturer> manufacturerList,ArrayList<Distributor> distributorList,ArrayList<Wholesaler> wholesalerList,
 			ArrayList<Retailer> retailerList, ArrayList<Customer> customerList){
-		//listen geben
 		
 		indirectTrustAgent.setManufacturerList(manufacturerList);
 		indirectTrustAgent.setDistributorList(distributorList);
@@ -41,7 +40,7 @@ public class IndirectTrustAgent {
 		//looking for the parent of the trustagent
 		SupplyChainMember parent= trustAgent.getSupplyChainMember();
 		ArrayList<Trust> trust_liste= new ArrayList<Trust>();
-		//differnetiates from which class the 
+		//differnetiates from which class the trust has to be gotten
 		if(indirectTrustAgent.getCustomerList()!=null&&indirectTrustAgent.getCustomerList().get(0).getClass().equals(parent.getClass())){
 			for (Customer customer : indirectTrustAgent.getCustomerList()){
 				if(customer.getTrustAgent()!=trustAgent){
@@ -70,6 +69,7 @@ public class IndirectTrustAgent {
 				}
 			}
 		}
+		//returns every trust value from the same tier
 		return trust_liste;
 	}
 	

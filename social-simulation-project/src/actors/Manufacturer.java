@@ -46,6 +46,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		Production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
 	}
+	//method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)
 	@ScheduledMethod(start = 1, interval = 1, priority = 1)
 	public void run() 
 	{
@@ -79,27 +80,23 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
+	// if a possible buyer trust this actor enough, but will not order at him, he will tell it
 	public void going2order(OrderAgent noOrderer){
 		if(buyer.containsKey(noOrderer)){
-			//System.out.println("subtraction"+buyer.get(noOrderer));
 			subtractionByTrust+=buyer.get(noOrderer);
-		}
-		else{
-			//System.out.println("ist nicht");
-		}
-		
+		}	
 	}
+	//the list of what amount which orderAgent ordered is updated with every order
 	public void updateList(OrderAgent orderer,int orderAtYou){
-		//System.out.println("update"+" "+orderer.getParent().getClass());
+		//when the buyer is not already in the map
 		if(!buyer.containsKey(orderer)){
 			buyer.put(orderer, orderAtYou);
 		}
-		//System.out.println(buyer.toString());
+		//the value is changed by the value he ordered this time
 		int newValue=(buyer.get(orderer)+orderAtYou)/2;
-		//System.out.println(newValue);
+		//because of RePast the new value has to be put int the map this way
 		buyer.remove(orderer);
-		buyer.put(orderer, newValue);
-		//System.out.println("new value for him"+buyer.get(orderer));	
+		buyer.put(orderer, newValue);	
 	}
 	
 	public void deliverRawMaterials(){
@@ -114,18 +111,16 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{		
 		if(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()>=0)
 		{
-
-		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
-		desired_inventory_level = next_demand*15/10;
-		if(current_outgoing_inventory_level>desired_inventory_level){
-			deliveryAgent.setShortage(0);
-			return;
+			current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+			desired_inventory_level = next_demand*15/10;
+			if(current_outgoing_inventory_level>desired_inventory_level){
+				deliveryAgent.setShortage(0);
+				return;
 		}
 		//shortage at the current orders will be produced to
 		//TODO in which far did he already include this by FABIAN, because he wrote the class
-		//System.out.println(subtractionByTrust+" subtraction by trust");
-
-		this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage());
+			this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()-subtractionByTrust);
+			subtractionByTrust=0;
 		}
 	}
 	

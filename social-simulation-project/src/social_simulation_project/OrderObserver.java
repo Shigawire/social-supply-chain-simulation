@@ -3,7 +3,7 @@ package social_simulation_project;
 import java.util.ArrayList;
 
 import artefacts.Order;
-
+//class that observes all open orders
 public class OrderObserver 
 {
 	private static OrderObserver observer = new OrderObserver();
@@ -12,32 +12,23 @@ public class OrderObserver
 
 	private OrderObserver()
 	{
-		amount=0;
+		observer.amount=0;
 	}
-	
+	//add amount of an open order
 	public void addAmount(int adding)
 	{
-		//orderHistory.add(adding);
-		amount+= adding;
+		observer.amount+= adding;
 		
 	}
-	
+	//sub amount of a part delivery
 	public void subAmount(int sub)
 	{
-//		Integer weg=sub;
-//		if(orderHistory.contains(weg)){
-//			orderHistory.remove(weg);
-//		}
-//		else{
-//			System.out.println("Fick Dich");
-//		}
-
-		amount-= sub;
+		observer.amount-= sub;
 	}
 	
 	public int getAmount()
 	{
-		return amount;
+		return observer.amount;
 	}
 	
 	public static OrderObserver giveObserver()
@@ -46,7 +37,7 @@ public class OrderObserver
 	}
 
 	public void setAmount(int i) {
-		amount=0;
+		observer.amount=i;
 		// TODO Auto-generated method stub
 		
 	}

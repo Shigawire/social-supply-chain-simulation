@@ -58,7 +58,7 @@ public class DeliveryAgent
 		everReceivedOrders.add(order);
 		parent.updateList(order.getOrderAgent(), order.getQuantity());
 	}
-	
+	//? wer auch immer das geschrieben hat hä :D
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 
@@ -76,17 +76,17 @@ public class DeliveryAgent
 			if(order.getProcessed()){
 				
 			}
-			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8
+			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8(he will not deliver just 7 goods)
 			else if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
 			{
 				//if the needed rest quantity of the order is higher then the inventory
 				//part of the order will be delivered
 				order.partDelivery(current_outgoing_inventory_level);
-//				RandomHelper.createNormal(failure_mean, failure_deviation);
 				order.setfailurePercentage((failure_mean +RandomHelper.nextDoubleFromTo(+failure_deviation, -failure_deviation))/100);
-//				System.out.println("failure "+order.getfailurePercentage());
 				openOrders.add(order);
+				//shortage will be increased by the higher need
 				shortage=+order.getUnfullfilledQuantity();
+				//what was delivered will be taken out of the inventory
 				inventoryAgent.reduceOutgoingInventoryLevel(current_outgoing_inventory_level);
 				order.getOrderAgent().receiveShipment(order,this);
 				current_outgoing_inventory_level=0;
@@ -99,6 +99,7 @@ public class DeliveryAgent
 			//if the order can be completly fullfilled, it will be
 			else 
 			{
+				//just a buffer of the unfullfilled
 				int buffer=order.getUnfullfilledQuantity();
 				order.setProcessed(true);
 				order.partDelivery(buffer);
@@ -138,7 +139,7 @@ public class DeliveryAgent
 	}
 	
 	public double getExpectedDeliveryTime() {
-		//TODO implement
+		//TODO implement?
 		return 2;
 	}
 	
@@ -146,12 +147,13 @@ public class DeliveryAgent
 		return this.parent;
 	}
 
-	public void setShortage(int i) {
-		shortage=0;
-		
-	}
+	
 	
 	/*
 	 * SETTERS
 	 */
+	public void setShortage(int i) {
+		shortage=0;
+		
+	}
 }

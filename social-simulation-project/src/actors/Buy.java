@@ -23,21 +23,26 @@ public abstract class Buy extends SupplyChainMember
 	{	
 		super(incoming_inventory_level, outgoing_inventory_level);
 		delivery_agents=new ArrayList<DeliveryAgent>();
+		//a list will be filled with all the delivery Agents of the sellers
+		//because that is the contact where this buyer will order
 		for (Sale sailor1 : sailor)
 		{
 			delivery_agents.add(sailor1.getDeliveryAgent());
 		}
-		trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings, this);
+		//must be in this order, because they need each other to be initialised!
+		this.trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings, this);
 		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
 		this.orderAgent = new OrderAgent(this, procurementAgent,delivery_agents);	
 		
 	}
+	//getters
 	public TrustAgent getTrustAgent(){
 		return trustAgent;
 	}
 	public ProcurementAgent getProcurementAgent(){
 		return procurementAgent;
 	}
+	//setters
 	public void setLying(){
 		lying=true;
 	}
