@@ -2,6 +2,8 @@ package agents;
 
 import java.util.ArrayList;
 
+import SimulationSetups.TrustSetter;
+
 /**
 * This class represents a procurement agent.
 * He is responsible for choosing the supplier.
@@ -69,22 +71,44 @@ public class ProcurementAgent
 	
 	public DeliveryAgent chooseSupplier() 
 	{
-		updateTrust();
-		fillBest();
-		double highest = 0;
-		double moment;
-		int highestPoint = 0;
-		for (int i = 0; i < delivery_agents.size(); i++)
+		TrustSetter s = TrustSetter.getInstance();
+		if(s.getTrustIntegrated())
 		{
-			// calculation according to concept team
-			moment = values[0][i] / best[0]*trustrelevance+best[1]/values[1][i]*averageDeliveryTimeRelevance+best[2]/values[2][i]*priceRelevance;
-			if (moment >= highest)
+			updateTrust();
+			fillBest();
+			double highest = 0;
+			double moment;
+			int highestPoint = 0;
+			for (int i = 0; i < delivery_agents.size(); i++)
 			{
-				highestPoint = i;
-				highest = moment;
+				// calculation according to concept team
+				moment = values[0][i] / best[0]*trustrelevance+best[1]/values[1][i]*averageDeliveryTimeRelevance+best[2]/values[2][i]*priceRelevance;
+				if (moment >= highest)
+				{	
+					highestPoint = i;
+					highest = moment;
+				}
 			}
+			return delivery_agents.get(highestPoint);
 		}
-		return delivery_agents.get(highestPoint);
+		else
+		{
+
+			DeliveryAgent cheapestSupplier = delivery_agents.get(0);
+			
+			for (int i = 0; i < delivery_agents.size() - 1; i++)
+			{
+				if (delivery_agents.get(i).getPrice() < delivery_agents.get(i+1).getPrice())
+				{
+					cheapestSupplier = delivery_agents.get(i);					
+				}
+				else
+				{
+					cheapestSupplier = delivery_agents.get(i+1);
+				}
+			}
+			return cheapestSupplier;
+		}
 	}
 	//method for choosing the second best supplier
 	public DeliveryAgent chooseSecondSupplier() 

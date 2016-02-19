@@ -17,6 +17,9 @@ public abstract class SimSetup {
 	protected ArrayList<Sale> wholesalerList;
 	protected ArrayList<Sale> retailerList;
 	protected ArrayList<Customer> customerList;
+	protected boolean trustIntegrated;
+	protected boolean indirectTrustIntegrated;
+	protected boolean informationSharingIntegrated;
 	
 	
 	public SimSetup(){
@@ -43,6 +46,14 @@ public abstract class SimSetup {
 	public ArrayList<Sale> getRetailerList(){
 		return this.retailerList;
 	}
-
+	public boolean getTrustIntegrated(){
+		return this.trustIntegrated;
+	}
+	public boolean getIndirectTrustIntegrated(){
+		return this.indirectTrustIntegrated;
+	}
+	public boolean getInformationSharingIntegrated(){
+		return this.informationSharingIntegrated;
+	}
 
 }

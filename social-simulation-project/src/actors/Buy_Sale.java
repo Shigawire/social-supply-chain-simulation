@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import SimulationSetups.TrustSetter;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProductionAgent;
@@ -64,8 +65,15 @@ public abstract class Buy_Sale extends Buy implements Sale
 			return;
 		}
 		// 3.
+		TrustSetter s = TrustSetter.getInstance();
+		if(s.getInformationSharingIntegrated())
+		{
 		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
-		
+		}
+		else
+		{
+			order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
+		}
 		subtractionByTrust=0;
 	
 		// If the inventory level is sufficient for the next demand,
@@ -138,4 +146,5 @@ public abstract class Buy_Sale extends Buy implements Sale
 	public int getThisTickReceived(){
 		return this.orderAgent.getThisTickReceived();
 	}
+	
 }

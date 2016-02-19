@@ -12,7 +12,7 @@ public class OrderObserver
 
 	private OrderObserver()
 	{
-		observer.amount=0;
+//		observer.amount=0;
 	}
 	//add amount of an open order
 	public void addAmount(int adding)

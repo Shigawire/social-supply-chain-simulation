@@ -3,9 +3,10 @@ package social_simulation_project;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import SimulationSetups.Setup2;
 import SimulationSetups.SimSetup;
 import SimulationSetups.SimSetup1;
+import SimulationSetups.SimSetup2;
+import SimulationSetups.TrustSetter;
 import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
@@ -34,12 +35,15 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		context.add(OrderObserver.giveObserver());
 		OrderObserver.giveObserver().setAmount(0);
 		RunEnvironment.getInstance().setScheduleTickDelay(20);
-		SimSetup setup = new Setup2();
-	
+		SimSetup setup = new SimSetup2();
+		TrustSetter s = TrustSetter.getInstance();
+		s.setTrustIntegrated(setup.getTrustIntegrated());
+		s.setIndirectTrustIntegrated(setup.getIndirectTrustIntegrated());
+		s.setInformationSharingIntegrated(setup.getInformationSharingIntegrated());
 		// --------------------------------------------------------------------------------
 		// Add everything to the simulation's context
 		context.add(IndirectTrustAgent.getIndirectTrustAgent());
-		
+		context.add(s);
 		for(Sale manufacturer : setup.getManufacturerList()){
 			context.add(manufacturer);
 		}

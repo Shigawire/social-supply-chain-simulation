@@ -6,10 +6,13 @@ import actors.Manufacturer;
 import actors.Retailer;
 import actors.Wholesaler;
 
-public class Setup2 extends SimSetup {
+public class SimSetup2 extends SimSetup {
 	
-	public Setup2 (){
+	public SimSetup2 (){
 		super();
+		trustIntegrated=true;
+		indirectTrustIntegrated=true;
+		informationSharingIntegrated=false;
 		manufacturerList.add(new Manufacturer(0, 0,200));
 		manufacturerList.add(new Manufacturer(0, 0,150));
 		distributorList.add(new Distributor(manufacturerList, 0,0, 55));
