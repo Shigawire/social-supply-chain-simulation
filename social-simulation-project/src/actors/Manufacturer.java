@@ -52,11 +52,11 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{
 		// 1. harvest() = collect the produced goods that are ready now
 		this.harvest();
-		// 2. deliver()
-		this.deliver();
-		//3. calculateDemand()
+		// 2. deliver() all previously harvested goods that can be delivered to customers
+		this.deliver(); 
+		//3. calculateDemand() = calculate own demand
 		this.calculateDemand();
-		//4. produce();
+		//4. produce() = produce new goods()
 		this.produce();
 		this.deliverRawMaterials();
 	}
@@ -73,11 +73,13 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	
 	private void calculateDemand() 
 	{
+		//ask the forecast Agent about the next demand
 		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 	}
 	
 	private void deliver() 
 	{
+		//delegate delivery of produced goods the delivery Agent
 		this.deliveryAgent.deliver(this.inventoryAgent);
 	}
 	// if a possible buyer trust this actor enough, but will not order at him, he will tell it
@@ -106,10 +108,10 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	{
 		this.productionAgent.harvest();
 	}
-	
+	//TODO collaborative commenting
 	private void produce() 
 	{		
-		if(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()>=0)
+		if(next_demand - inventoryAgent.getOutgoingInventoryLevel() + deliveryAgent.getShortage() >= 0)
 		{
 			current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
 			desired_inventory_level = next_demand*15/10;

@@ -20,6 +20,7 @@ public class Trust
 	
 	private Map<DimensionType, TrustDimension> dimensionMapping = new HashMap<DimensionType, TrustDimension>();
 	
+	//Create a Trust Object the encapsulates the four dimensions
 	public Trust(ReliabilityDimension reliability, 
 			     CompetenceDimension competence, 
 			     QualityDimension quality, 
@@ -30,6 +31,7 @@ public class Trust
 		this.quality = quality;
 		this.shared_values = shared_values;
 		
+		//Map all dimensions to their type.
 		dimensionMapping.put(DimensionType.RELIABILITY, reliability);
 		dimensionMapping.put(DimensionType.COMPETENCE, competence);
 		dimensionMapping.put(DimensionType.QUALITY, quality);
@@ -63,7 +65,10 @@ public class Trust
 		return this.currentCompetenceValue;
 	}
 	
+	//write the new competence value.. 
+	//TODO can be removed?
 	public void setCurrentCompetenceValue(double competence) {
+		//Ensure the competence value is never below 0 or above 1.
 		if (competence > 1) competence = 1;
 		if (competence < 0) competence = 0;
 		this.currentCompetenceValue = competence;

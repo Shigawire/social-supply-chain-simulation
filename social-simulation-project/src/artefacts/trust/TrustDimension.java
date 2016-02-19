@@ -5,8 +5,7 @@ abstract public class TrustDimension
 	private double dimensionRating; // how important is this trust dimension to the specific agent?
 	private double trustValue;
 	
-	// private DimensionType dimension_type;
-	
+	//Just the parent class for each dimension...
 	public TrustDimension(double dimension_rating, double starting_value) 
 	{
 		this.trustValue = starting_value;

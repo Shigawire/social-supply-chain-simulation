@@ -31,10 +31,9 @@ public class TrustAgent
 	
 	private Map<DeliveryAgent, Trust> trustStorage = new HashMap<DeliveryAgent, Trust>();
 	
-	// When do we classify a shipment as overdue?
+	// When do we classify a shipment as overdue? (After how many ticks)
 	private double ShipmentRuntimeOverdueThreshold = 2;
 	
-	//private double tValue = 0.5;
 	private double learningRate = 0.6;
 	
 
@@ -43,62 +42,52 @@ public class TrustAgent
 	{
 		this.delivery_agents = delivery_agents;
 		this.supplyChainMember = supplyChainMember;
+		//Let's build up a trust Object for every deliveryAgent, resp. every Supply Chain member we might deal with
 		for (DeliveryAgent delivery_agent : this.delivery_agents) 
 		{
-			// Alle TrustDimensions starten mit 25% Wichtigkeit und 50% Initialwert
+			// Initialize Trust Dimensions with the passed in Dimension Ratings...
 			
 			ReliabilityDimension reliability = new ReliabilityDimension(dimensionRatings.get(DimensionType.RELIABILITY), 0.5);
 			CompetenceDimension competence = new CompetenceDimension(dimensionRatings.get(DimensionType.COMPETENCE), 0.5);
 			QualityDimension quality = new QualityDimension(dimensionRatings.get(DimensionType.QUALITY), 0.5);
 			SharedValuesDimension shared_values = new SharedValuesDimension(dimensionRatings.get(DimensionType.SHARED_VALUES), 0.5);
 			
+			//create a Trust Object based on the four Dimensions
 			Trust trust = new Trust(reliability, competence, quality, shared_values);
 			
+			//store the Trust Object
 			trustStorage.put(delivery_agent, trust);
 		}
 	}
 
-	private void updateTrustDimensionValue(DeliveryAgent delivery_agent, DimensionType type, double value) 
-	{
-		this.trustStorage.get(delivery_agent).getDimension(type).updateDimension(value);
-	}
-	
-	/*public void inspectNewArrivals(OrderAgent orderAgent) 
-	{
-		ArrayList<Order> shipments = orderAgent.getReceivedShipments();
 
-		for (Order shipment : shipments) 
-		{
-			inspectShipment(orderAgent, shipment);
-		}
-	}
-	*/
-	
-	//Jedes Shipment wird einzeln untersucht, daraufhin wird der Trust-Wert der spezifischen Dimension eines bestimmten orderAgent geändert
+	//Inspect each shipment individually, based on this "check" the trust values of the supplier will adapt
 	public void inspectShipment(OrderAgent orderAgent, Order shipment) 
 	{		
+		//We had to introduce some dirty hack to send out zero qty. orders.. Ignore these here.
+		//TODO fix if possible?
 		if (shipment.getQuantity() == 0) return;
+		
+		//Never rate shipments that are not fully processed yet. This basically means we would inspect partial shipments. We don't want to do that.
+		if (!shipment.getProcessed()) return;
+
 		
 		DimensionType[] dimensions = {DimensionType.RELIABILITY, DimensionType.COMPETENCE, DimensionType.QUALITY, DimensionType.SHARED_VALUES};
 		
-		//reliability
-		//is the shipment overdue?
-		int runtime = (shipment.getReceivedAt() - shipment.getOrderedAt());
 		//runtime is at least 2 weeks: ordered at 1, processed at 2, delivered at 3 (when trust <0.6 see OrderAgent)
 		
-		if (!shipment.getProcessed()) return;
-		
 		shipment.setShipmentQuality(1-shipment.getfailurePercentage());
-		
-		//Map<TrustDimension, Double> orderFulfillments = new HashMap<TrustDimension, Double>();
-		
+				
 		Trust trust = trustStorage.get(shipment.getDeliveryAgent());
 		
+		//create a KPI Object for each shipment
 		KPI Kpi = new KPI(shipment, this.trustStorage.get(shipment.getDeliveryAgent()));
 		
 		double summedDimensionValues = 0;
 		
 		//System.out.println("Shipment runtime: " + runtime);
+		
+		//Question the KPI Object regarding the specific order performance for each dimension
 		
 		for (DimensionType dimensionType : dimensions) {
 			//System.out.println("---------Dimension " + dimensionType + " ---------");
@@ -129,7 +118,7 @@ public class TrustAgent
 		
 		//System.out.println("Old trust Value is :" + trust.getUnifiedTrustValue());
 		
-		
+		//This is the actual trust calculation. Check the documentation for further details.
 		double _oldtValue = trust.getUnifiedTrustValue();
 		
 		double _tValue = _oldtValue * (1 + summedDimensionValues);
@@ -141,11 +130,11 @@ public class TrustAgent
 		
 		double _newtValue = ((1- this.learningRate) * trust.getUnifiedTrustValue()) + (this.learningRate * _tValue);
 
+		//if the calculated trust is above 1, stop at 1. Again, for explanation please check the docs.
 		if (_newtValue > 1) _newtValue = 1;
 		trust.setUnifiedTrustValue(_newtValue);
 		
 		//determine if trust update was positive or negative, necessary for competence dimension
-		
 		
 		if (_oldtValue > _newtValue) {
 			//negative
@@ -163,6 +152,7 @@ public class TrustAgent
 	 */
 	public double getTrustValue(DeliveryAgent delivery_agent) 
 	{	
+		//TODO Jakob's code...
 		TrustSetter s = TrustSetter.getInstance();
 		if (s.getIndirectTrustIndegrated())
 		{
@@ -184,17 +174,12 @@ public class TrustAgent
 		else return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
 	} 
 	
-	/*public double getTrustValue(DeliveryAgent delivery_agent,int i) 
-	{
-		//hier muss der trust wert zurueclgegeben werden.
-		return(1);
-	} 
-	*/
 	
 	public Trust getTrustObject(DeliveryAgent delivery_agent){
 		return this.trustStorage.get(delivery_agent);
 	}
 	
+	//TODO ask Jakob why this is necessary here? Isn't there a method in a parent that already implements this?
 	public DeliveryAgent getCheapestSupplier() 
 	{
 		DeliveryAgent cheapestSupplier = delivery_agents.get(0);
@@ -217,8 +202,5 @@ public class TrustAgent
 	public Trust getTrustAbout(DeliveryAgent deliveryAgent) {
 		return trustStorage.get(deliveryAgent);
 	}
-	
-	/* 
-	 * SETTERS
-	 */
+
 }
