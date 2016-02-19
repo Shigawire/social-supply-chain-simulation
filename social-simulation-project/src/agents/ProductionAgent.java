@@ -78,7 +78,7 @@ public class ProductionAgent
 		Production.add(new_production_order);
 		inventoryAgent.reduceIncomingInventoryLevel(production_quantity);
 	}
-	//production method for Wholesaler
+	//production method for Wholesaler, produces products out of 2 materials from incoming_inventory
 	public void process()
 	{
 		production_quantity = this.inventoryAgent.getIncomingInventoryLevel()/2;
@@ -96,7 +96,6 @@ public class ProductionAgent
 			{
 				//This batch is ready to be added to inventory
 				this.inventoryAgent.increaseOutgoingInventoryLevel(current_batch.getQuantity());
-				//Production.remove(current_batch);
 			} 
 			else
 			{
@@ -108,12 +107,16 @@ public class ProductionAgent
 		Production.addAll(toProduce);
 		toProduce.clear();
 	}
+
+	//delivers RawMaterial A with a failure-percentage
 	public void deliverRawMaterialA(int amount){
 		RandomHelper.createNormal(97, 2);
 		int var = RandomHelper.getNormal().nextInt();
 		amount= amount*var/100;
 		inventoryAgent.increaseAInventoryLevel(amount);
 	}
+	
+	//delivers RawMaterial B with a failure-percentage
 	public void deliverRawMaterialB(int amount){
 		RandomHelper.createNormal(97, 2);
 		int var = RandomHelper.getNormal().nextInt();

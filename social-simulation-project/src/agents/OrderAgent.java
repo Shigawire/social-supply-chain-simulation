@@ -2,6 +2,7 @@ package agents;
 
 import java.util.ArrayList;
 
+import SimulationSetups.TrustSetter;
 import actors.Sale;
 import actors.SupplyChainMember;
 import artefacts.Order;
@@ -63,8 +64,8 @@ public class OrderAgent
 		nextTickOrder.clear();
 		
 	}
-	// order at the by the procuremnt agent choosen deliverer
-	//order will be recieved one tick later
+	// order at the by the procurement agent chosen deliverer
+	//order will be received one tick later
 	//Because of the structure an order (even one that is empty) has to be made every tick
 	public void order(TrustAgent trustAgent, Order order) 
 	{
@@ -76,13 +77,16 @@ public class OrderAgent
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
-			//if trustvalue > 0.6 immediatly order the last and the actual order
-			if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
-				deliveryAgent.receiveOrder(order);
-				//return because all orders are send!
-				return;
+			TrustSetter s = TrustSetter.getInstance();
+			if(s.getInformationSharingIntegrated())
+			{	
+				//if trustvalue > 0.6 immediatly order the last and the actual order
+				if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
+					deliveryAgent.receiveOrder(order);
+					//return because all orders are send!
+					return;
+				}
 			}
-			
 		}
 		//add the open order
 		nextTickOrder.add(order);
@@ -100,13 +104,16 @@ public class OrderAgent
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
-			//if trustvalue > 0.6 immediatly order the last and the actual order
-			if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
-				deliveryAgent.receiveOrder(order);
-				//return because all orders are sent!
-				return;
+			TrustSetter s = TrustSetter.getInstance();
+			if(s.getInformationSharingIntegrated())
+			{
+				//if trustvalue > 0.6 immediatly order the last and the actual order
+				if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
+					deliveryAgent.receiveOrder(order);
+					//return because all orders are send!
+					return;
+				}
 			}
-			
 		}
 		//add the open order
 		nextTickOrder.add(order);

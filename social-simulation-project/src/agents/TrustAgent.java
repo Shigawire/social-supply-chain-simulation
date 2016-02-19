@@ -6,6 +6,7 @@ import java.util.Map;
 
 import repast.simphony.random.RandomHelper;
 import repast.simphony.systemdynamics.translator.InformationManagers;
+import SimulationSetups.TrustSetter;
 import actors.SupplyChainMember;
 import artefacts.Order;
 import artefacts.trust.CompetenceDimension;
@@ -162,21 +163,25 @@ public class TrustAgent
 	 */
 	public double getTrustValue(DeliveryAgent delivery_agent) 
 	{	
-		
-		//indirect trust
-		int runs =0;
-		double trustvalue=0; 
-		for (Trust trust:IndirectTrustAgent.getTrustValue(this, delivery_agent)){
-			trustvalue+=trust.getUnifiedTrustValue();
-			runs++;
+		TrustSetter s = TrustSetter.getInstance();
+		if (s.getIndirectTrustIndegrated())
+		{
+			//indirect trust
+			int runs =0;
+			double trustvalue=0; 
+			for (Trust trust:IndirectTrustAgent.getTrustValue(this, delivery_agent)){
+				trustvalue+=trust.getUnifiedTrustValue();
+				runs++;
+			}
+			if(runs>0){
+				trustvalue=trustvalue/runs;
+				return (this.trustStorage.get(delivery_agent).getUnifiedTrustValue()*0.5+trustvalue*0.5);		}
+			else{
+				//whole trust value
+				return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
+			}
 		}
-		if(runs>0){
-			trustvalue=trustvalue/runs;
-			return (this.trustStorage.get(delivery_agent).getUnifiedTrustValue()*0.5+trustvalue*0.5);		}
-		else{
-			//whole trust value
-			return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
-		}
+		else return this.trustStorage.get(delivery_agent).getUnifiedTrustValue();
 	} 
 	
 	/*public double getTrustValue(DeliveryAgent delivery_agent,int i) 
