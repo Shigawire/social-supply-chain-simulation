@@ -2,8 +2,8 @@
   <name>Retailer Inventory</name>
   <dataSet>Retailers</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Inventory Level / Quantity</yAxisLabel>
-  <chartTitle>Retailer Inventory</chartTitle>
+  <yAxisLabel></yAxisLabel>
+  <chartTitle>Retailer Inv</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,7 +21,7 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Current_incoming_inventory_level</string>
+      <string>OrderQuantity</string>
       <SeriesData>
         <label></label>
       </SeriesData>
@@ -29,7 +29,8 @@
   </seriesIds>
   <dataValueIds>
     <string>OrderQuantity</string>
-    <string>Current_outgoing_inventory_level</string>
+    <string>CurrentIncomingInventoryLevel</string>
+    <string>ThisTickReceived</string>
   </dataValueIds>
   <plotRangeLength>-1</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

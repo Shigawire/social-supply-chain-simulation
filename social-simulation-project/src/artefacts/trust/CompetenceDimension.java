@@ -2,8 +2,8 @@ package artefacts.trust;
 
 public class CompetenceDimension extends TrustDimension 
 {
-	public CompetenceDimension(double dimension_rating, double starting_value) 
+	public CompetenceDimension(double dimensionRating, double startingValue) 
 	{
-		super(dimension_rating, starting_value);
+		super(dimensionRating, startingValue);
 	}
 }

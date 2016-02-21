@@ -20,14 +20,17 @@ import artefacts.trust.ReliabilityDimension;
 import artefacts.trust.SharedValuesDimension;
 import artefacts.trust.Trust;
 
-public class TrustAssessment {
+public class TrustAssessment 
+{
 	
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public static void tearDownAfterClass() throws Exception
+	{
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception 
+	{
 		Schedule schedule = new Schedule();
 		RunEnvironment.init(schedule, new DefaultScheduleRunner(), null, true);
 		Context<Object> context = new DefaultContext<Object>();
@@ -35,38 +38,41 @@ public class TrustAssessment {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception 
+	{
 	}
 	
-	
 	@Test
-	public void ConstantShouldFireOnEvenTicks() {
+	public void ConstantShouldFireOnEvenTicks() 
+	{
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 
-        for (int i = 0; i < 200; ++i) {
+        for (int i = 0; i < 200; ++i) 
+        {
         	RunEnvironment.getInstance().getCurrentSchedule().execute();
         	
-        	//schedule.execute();    // geht nicht.
+        	// schedule.execute(); // geht nicht.
         }
         
         assertEquals(0, schedule.getTickCount(), 0);
 		schedule.execute();
-		assertEquals(schedule.getTickCount(),2,0);
+		assertEquals(schedule.getTickCount(), 2, 0);
 		schedule.execute();
-		assertEquals(schedule.getTickCount(),3,0);
+		assertEquals(schedule.getTickCount(), 3, 0);
 		//assertEquals(admissions.getFacility().getOccupancy(),3);
 		
 		System.out.println(schedule.getTickCount());
 	}
 	
-
 	@Test
-	public void test() {
+	public void test()
+	{
 		//fail("Not yet implemented");
 	}
 	
 	@Test
-	public void assertTrustUpdate() {
+	public void assertTrustUpdate() 
+	{
 		
 		ReliabilityDimension reliability = new ReliabilityDimension(0.25, 0.5);
 		CompetenceDimension competence = new CompetenceDimension(0.25, 0.5);
@@ -76,5 +82,4 @@ public class TrustAssessment {
 		
 		assertEquals("Initial Trust Value is not correct.", 0.5, trust.getUnifiedTrustValue(), 0);
 	}
-
 }

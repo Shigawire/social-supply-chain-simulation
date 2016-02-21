@@ -17,19 +17,19 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Current_outgoing_inventory_level</string>
+      <string>CurrentOutgoingInventoryLevel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current_outgoing_inventory_level</id>
+        <id>CurrentOutgoingInventoryLevel</id>
         <className>actors.Manufacturer</className>
-        <methodName>getCurrent_outgoing_inventory_level</methodName>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Current_incoming_inventory_level</string>
+      <string>CurrentIncomingInventoryLevel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current_incoming_inventory_level</id>
+        <id>CurrentIncomingInventoryLevel</id>
         <className>actors.Manufacturer</className>
-        <methodName>getCurrent_incoming_inventory_level</methodName>
+        <methodName>getCurrentIncomingInventoryLevel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

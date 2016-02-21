@@ -15,21 +15,21 @@ import artefacts.Order;
 */
 public class InventoryAgent 
 {
-	private int incoming_inventory_level;
-	private int outgoing_inventory_level;
-	private int desired_inventory_level;
+	private int incomingInventoryLevel;
+	private int outgoingInventoryLevel;
+	private int desiredInventoryLevel;
 	private boolean lying;
-	private int a_inventory_level;
-	private int b_inventory_level;
-	//wozu?
+	private int aInventoryLevel;
+	private int bInventoryLevel;
+	// wozu?
 	private Map<String, Order> everReceivedShipments = new HashMap<String, Order>();
 
-	public InventoryAgent(int incoming_inventory_level, int outgoing_inventory_level) 
+	public InventoryAgent(int incomingInventoryLevel, int outgoingInventoryLevel) 
 	{
-		this.outgoing_inventory_level = outgoing_inventory_level;
-		this.incoming_inventory_level = incoming_inventory_level;
-		this.a_inventory_level = 0;
-		this.b_inventory_level = 0;
+		this.outgoingInventoryLevel = outgoingInventoryLevel;
+		this.incomingInventoryLevel = incomingInventoryLevel;
+		this.aInventoryLevel = 0;
+		this.bInventoryLevel = 0;
 	}
 	
 	/**
@@ -38,13 +38,13 @@ public class InventoryAgent
 	   * @param ?
 	   * @return Nothing.
 	   */
-	//store a received shipment
+	// store a received shipment
 	public void store(Order shipment) 
 	{
-		//when he is a lying agent it is possible that he will cancel the order based on his desired inventory level
-		//and send this partdelivery back
-		if(lying){
-			if(desired_inventory_level<outgoing_inventory_level){
+		// when he is a lying agent it is possible that he will cancel the order based on his desired inventory level
+		// and send this partdelivery back
+		if (lying) {
+			if (desiredInventoryLevel < outgoingInventoryLevel) {
 				shipment.setCancelled();
 				shipment.getDeliveryAgent().getParent().returning(shipment.getPartDelivery());
 				shipment.partDelivery(shipment.getUnfullfilledQuantity());
@@ -53,13 +53,16 @@ public class InventoryAgent
 		}
 		this.everReceivedShipments.put(shipment.getId(), shipment);
 		
-		this.incoming_inventory_level += shipment.getPartDelivery()*(1-shipment.getfailurePercentage());
+		this.incomingInventoryLevel += shipment.getPartDelivery() * (1 - shipment.getfailurePercentage());
 	}
-	//method that sets the desired level
-	public void desiredLevel(boolean lying,int desired){
-		this.lying=lying;
-		desired_inventory_level=desired;
+	
+	// method that sets the desired level
+	public void desiredLevel(boolean lying, int desired) 
+	{
+		this.lying = lying;
+		desiredInventoryLevel = desired;
 	}
+	
 	/**
 	   * This method reduces the incoming inventory
 	   * of a supply chain member
@@ -68,31 +71,42 @@ public class InventoryAgent
 	   */
 	public void reduceIncomingInventoryLevel(int reduction)
 	{
-		this.incoming_inventory_level -= reduction;
+		this.incomingInventoryLevel -= reduction;
 	}
+	
 	public void reduceOutgoingInventoryLevel(int reduction)
 	{
-		this.outgoing_inventory_level -= reduction;
+		this.outgoingInventoryLevel -= reduction;
 	}
+	
 	public void reduceAInventoryLevel(int reduction)
 	{
-		this.a_inventory_level -= reduction;
+		this.aInventoryLevel -= reduction;
 	}
+	
 	public void reduceBInventoryLevel(int reduction)
 	{
-		this.b_inventory_level -= reduction;
+		this.bInventoryLevel -= reduction;
 	}
-	public void increaseIncomingInventoryLevel (int addition){
-		this.incoming_inventory_level += addition;
+	
+	public void increaseIncomingInventoryLevel (int addition)
+	{
+		this.incomingInventoryLevel += addition;
 	}
-	public void increaseOutgoingInventoryLevel (int addition){
-		this.outgoing_inventory_level += addition;
+	
+	public void increaseOutgoingInventoryLevel (int addition)
+	{
+		this.outgoingInventoryLevel += addition;
 	}
-	public void increaseAInventoryLevel (int addition){
-		this.a_inventory_level += addition;
+	
+	public void increaseAInventoryLevel (int addition)
+	{
+		this.aInventoryLevel += addition;
 	}
-	public void increaseBInventoryLevel (int addition){
-		this.b_inventory_level += addition;
+	
+	public void increaseBInventoryLevel (int addition)
+	{
+		this.bInventoryLevel += addition;
 	}
 	
 	/*
@@ -100,41 +114,49 @@ public class InventoryAgent
 	 */
 	public int getIncomingInventoryLevel() 
 	{
-		return this.incoming_inventory_level;
+		return this.incomingInventoryLevel;
 	}
+	
 	public int getOutgoingInventoryLevel() 
 	{
-		return this.outgoing_inventory_level;
+		return this.outgoingInventoryLevel;
 	}
+	
 	public int getAInventoryLevel()
 	{
-		return this.a_inventory_level;
+		return this.aInventoryLevel;
 	}
+	
 	public int getBInventoryLevel()
 	{
-		return this.b_inventory_level;
+		return this.bInventoryLevel;
 	}
+	
+	public Map<String, Order> getEverReceivedShipments() 
+	{
+		return this.everReceivedShipments;
+	}
+	
 	/*
 	 * SETTERS
 	 */
 	public void setIncomingInventoryLevel(int inventory_level) 
 	{
-		this.incoming_inventory_level = inventory_level;
-	}
-	public void setOutgoingInventoryLevel(int inventory_level) 
-	{
-		this.outgoing_inventory_level = inventory_level;
-	}
-	public void SetAInventoryLevel(int inventory_level)
-	{
-		this.a_inventory_level=inventory_level;
-	}
-	public void SetBInventoryLevel(int inventory_level)
-	{
-		this.b_inventory_level=inventory_level;
+		this.incomingInventoryLevel = inventory_level;
 	}
 	
-	public Map<String, Order> getEverReceivedShipments() {
-		return this.everReceivedShipments;
+	public void setOutgoingInventoryLevel(int inventory_level) 
+	{
+		this.outgoingInventoryLevel = inventory_level;
+	}
+	
+	public void SetAInventoryLevel(int inventory_level)
+	{
+		this.aInventoryLevel = inventory_level;
+	}
+	
+	public void SetBInventoryLevel(int inventory_level)
+	{
+		this.bInventoryLevel = inventory_level;
 	}
 }

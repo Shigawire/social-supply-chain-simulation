@@ -17,22 +17,6 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Current_incoming_inventory_level</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current_incoming_inventory_level</id>
-        <className>actors.Retailer</className>
-        <methodName>getCurrent_incoming_inventory_level</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Current_outgoing_inventory_level</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current_outgoing_inventory_level</id>
-        <className>actors.Retailer</className>
-        <methodName>getCurrent_outgoing_inventory_level</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
       <string>OrderQuantity</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>OrderQuantity</id>
@@ -46,6 +30,22 @@
         <id>ThisTickReceived</id>
         <className>actors.Retailer</className>
         <methodName>getThisTickReceived</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>CurrentIncomingInventoryLevel</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CurrentIncomingInventoryLevel</id>
+        <className>actors.Retailer</className>
+        <methodName>getCurrentIncomingInventoryLevel</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>CurrentOutgoingInventoryLevel</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CurrentOutgoingInventoryLevel</id>
+        <className>actors.Retailer</className>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

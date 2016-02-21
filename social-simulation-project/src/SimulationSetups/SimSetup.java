@@ -11,7 +11,8 @@ import actors.Sale;
 import actors.SupplyChainMember;
 import actors.Wholesaler;
 
-public abstract class SimSetup {
+public abstract class SimSetup 
+{
 	protected ArrayList<Sale> manufacturerList;
 	protected ArrayList<Sale> distributorList;
 	protected ArrayList<Sale> wholesalerList;
@@ -21,8 +22,8 @@ public abstract class SimSetup {
 	protected boolean indirectTrustIntegrated;
 	protected boolean informationSharingIntegrated;
 	
-	
-	public SimSetup(){
+	public SimSetup()
+	{
 		manufacturerList = new ArrayList<Sale>();
 		distributorList = new ArrayList<Sale>();
 		wholesalerList = new ArrayList<Sale>();
@@ -30,30 +31,46 @@ public abstract class SimSetup {
 		customerList = new ArrayList<Customer>();
 	}
 
-
-	public ArrayList<Customer> getCustomerList(){
+	/*
+	 * GETTERS
+	 */
+	public ArrayList<Customer> getCustomerList()
+	{
 		return this.customerList;
 	}
-	public ArrayList<Sale> getManufacturerList(){
+	
+	public ArrayList<Sale> getManufacturerList()
+	{
 		return this.manufacturerList;
 	}
-	public ArrayList<Sale> getDistributorList(){
+	
+	public ArrayList<Sale> getDistributorList()
+	{
 		return this.distributorList;
 	}
-	public ArrayList<Sale> getWholesalerList(){
+	
+	public ArrayList<Sale> getWholesalerList()
+	{
 		return this.wholesalerList;
 	}
-	public ArrayList<Sale> getRetailerList(){
+	
+	public ArrayList<Sale> getRetailerList()
+	{
 		return this.retailerList;
 	}
-	public boolean getTrustIntegrated(){
+	
+	public boolean getTrustIntegrated()
+	{
 		return this.trustIntegrated;
 	}
-	public boolean getIndirectTrustIntegrated(){
+	
+	public boolean getIndirectTrustIntegrated()
+	{
 		return this.indirectTrustIntegrated;
 	}
-	public boolean getInformationSharingIntegrated(){
+	
+	public boolean getInformationSharingIntegrated()
+	{
 		return this.informationSharingIntegrated;
 	}
-
 }

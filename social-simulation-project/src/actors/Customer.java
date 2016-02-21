@@ -27,24 +27,22 @@ public class Customer extends Buy
 	private int consumption;
 	
 	// what the customer needs for the next tick (forecasted)
-	private int next_demand;
+	private int nextDemand;
 	
-	//the desired inventory
-	int desired_inventory_level;
+	// the desired inventory
+	int desiredInventoryLevel;
 	// what the customer orders at the end, based 
 	// on next_demand and current_inventory_level
-	private int order_quantity;
-	
-
+	private int orderQuantity;
 	
 	/**
 	   * This constructor gives the customer its own inventory
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
+	public Customer(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel) 
 	{
-		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
 	}
 	
 	/**
@@ -62,30 +60,29 @@ public class Customer extends Buy
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
-		
-		if ((int)RepastEssentials.GetTickCount()==1)
-		{
+		if ((int)RepastEssentials.GetTickCount() == 1) {
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
 		}
-		//set the inventory agents desired level
+		// set the inventory agents desired level
 		inventoryAgent.desiredLevel(lying, desired());
-		//1. processShipments()
+		// 1. processShipments()
 		this.receiveShipments();
 		orderAgent.clearReceivedShipments();
-		//2. consume()
+		// 2. consume()
 		this.consume();
-		//3.send order that he made the last tick
+		// 3.send order that he made the last tick
 		orderAgent.orderIt();
-		//4. order()
+		// 4. order()
 		this.order();
-		//5. say those suppliers which I trust, that I will not order at them
+		// 5. say those suppliers which I trust, that I will not order at them
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private int desired() {
-		next_demand = this.forecastAgent.customerDemand();
-		desired_inventory_level = next_demand*15/10;
-		return desired_inventory_level;
+	private int desired() 
+	{
+		nextDemand = this.forecastAgent.customerDemand();
+		desiredInventoryLevel = nextDemand * 15 / 10;
+		return desiredInventoryLevel;
 	}
 
 	/**
@@ -99,19 +96,16 @@ public class Customer extends Buy
 	   */
 	public void consume()
 	{
-		//consumes every tick amount of 10
+		// consumes every tick amount of 10
 		consumption = 10;
-		current_incoming_inventory_level = inventoryAgent.getIncomingInventoryLevel();
+		currentIncomingInventoryLevel = inventoryAgent.getIncomingInventoryLevel();
 		
-		if (consumption > current_incoming_inventory_level) 
-		{
-			//TODO strafkosten/reaktion
-			//Inventory less then asked for
+		if (consumption > currentIncomingInventoryLevel) {
+			// TODO strafkosten/reaktion
+			// Inventory less then asked for
 			inventoryAgent.setIncomingInventoryLevel(0);
-		} 
-		else 
-		{
-			inventoryAgent.setIncomingInventoryLevel(current_incoming_inventory_level - consumption);
+		} else {
+			inventoryAgent.setIncomingInventoryLevel(currentIncomingInventoryLevel - consumption);
 		}
 	}
 	
@@ -128,35 +122,32 @@ public class Customer extends Buy
 		// 3. order difference
 		
 		// 1.
-		next_demand = this.forecastAgent.customerDemand();
+		nextDemand = this.forecastAgent.customerDemand();
 		
 		// 2.
-		current_incoming_inventory_level = this.inventoryAgent.getIncomingInventoryLevel();
+		currentIncomingInventoryLevel = this.inventoryAgent.getIncomingInventoryLevel();
 		
 	
 		//Update Trust missing?
 		
 		// 3.
-		order_quantity = next_demand - current_incoming_inventory_level;
+		orderQuantity = nextDemand - currentIncomingInventoryLevel;
 		
 		// If the inventory level is sufficient for the next demand,
 		// do not order
-		if (order_quantity <= 0) 
-		{
-			//a order with quantity null has to be made for the process in the orderAgent
+		if (orderQuantity <= 0) {
+			// a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
-			order_quantity=0;
+			orderQuantity = 0;
 			orderAgent.order(this.trustAgent, null);
-		}
-		else
-		{
-			//System.out.println("[Customer] order_quantity is  " + order_quantity);
-			Order order = new Order(order_quantity, this.orderAgent);
+		} else {
+			// System.out.println("[Customer] order_quantity is  " + order_quantity);
+			Order order = new Order(orderQuantity, this.orderAgent);
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
-			//if he is lying he will order the same at a second supplier
-			if(lying){
-				Order order2 = new Order(order_quantity, this.orderAgent);
+			// if he is lying he will order the same at a second supplier
+			if (lying) {
+				Order order2 = new Order(orderQuantity, this.orderAgent);
 				orderAgent.secondOrder(this.trustAgent, order2);
 			}
 		}
@@ -176,22 +167,23 @@ public class Customer extends Buy
 	/*
 	 * GETTERS
 	 */
-	public int getNextDemand() {
-		return this.next_demand;
+	public int getNextDemand() 
+	{
+		return this.nextDemand;
 	}
 	
-	public int getNextOrderQuantity() {
-		return this.order_quantity;
+	public int getNextOrderQuantity() 
+	{
+		return this.orderQuantity;
 	}
 	
-	public OrderAgent getOrderAgent() {
+	public OrderAgent getOrderAgent() 
+	{
 		return this.orderAgent;
 	}
 	
-	public TrustAgent getTrustAgent() {
+	public TrustAgent getTrustAgent() 
+	{
 		return this.trustAgent;
 	}	 
-	/* 
-	 * SETTERS
-	 */
 }

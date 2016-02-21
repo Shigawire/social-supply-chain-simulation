@@ -1,12 +1,12 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>ManufakturerOu</name>
+  <name>ManufacturerOU</name>
   <dataSet>Manufacturers</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
-    <string>Current_outgoing_inventory_level</string>
-    <string>Current_incoming_inventory_level</string>
+    <string>CurrentIncomingInventoryLevel</string>
+    <string>CurrentOutgoingInventoryLevel</string>
   </sourceIds>
-  <fileName>ManufacturerOutput.txt</fileName>
+  <fileName>ModelOutput.txt</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

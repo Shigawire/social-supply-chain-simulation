@@ -3,8 +3,8 @@ package artefacts.trust;
 public class QualityDimension extends TrustDimension 
 {
 	
-	public QualityDimension(double dimension_rating, double starting_value) 
+	public QualityDimension(double dimensionRating, double startingValue) 
 	{
-		super(dimension_rating, starting_value);
+		super(dimensionRating, startingValue);
 	}
 }

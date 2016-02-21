@@ -22,128 +22,124 @@ import social_simulation_project.OrderObserver;
 public class OrderAgent 
 {
 	private SupplyChainMember parent;
-	//list of received Orders
+	// list of received Orders
 	private ArrayList<Order> receivedShipments;
-	//List which orders have to be made amd which this tick
-	private ArrayList<Order> nextTickOrder= new ArrayList<Order>();
-	//where will I order next ticks
-	ArrayList<DeliveryAgent> willOrder= new ArrayList<DeliveryAgent>();
+	// List which orders have to be made amd which this tick
+	private ArrayList<Order> nextTickOrder = new ArrayList<Order>();
+	// where will I order next ticks
+	ArrayList<DeliveryAgent> willOrder = new ArrayList<DeliveryAgent>();
 	private ProcurementAgent procurementAgent;
-	private ArrayList<DeliveryAgent> delivery_agents;
+	private ArrayList<DeliveryAgent> deliveryAgents;
 	private int thisTickReceived;
-	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent, ArrayList<DeliveryAgent> delivery_agents) 
+	public OrderAgent(SupplyChainMember orderer, ProcurementAgent procurementAgent, ArrayList<DeliveryAgent> deliveryAgents) 
 	{
 		this.parent = orderer;
 		this.receivedShipments = new ArrayList<Order>();
-		this.procurementAgent=procurementAgent;
-		this.delivery_agents=delivery_agents;
+		this.procurementAgent = procurementAgent;
+		this.deliveryAgents = deliveryAgents;
 	}
-	public void trustWhereIOrder(){
-		//for every supplier he trust more then 0.3 he tells if he will not order at him 
-		for (DeliveryAgent deliverer : delivery_agents)
+	
+	public void trustWhereIOrder()
+	{
+		// for every supplier he trust more then 0.3 he tells if he will not order at him 
+		for (DeliveryAgent deliverer : deliveryAgents)
 		{
-			if((parent.getTrustAgent().getTrustValue(deliverer))>0.3&&!willOrder.contains(deliverer)){	
+			if ((parent.getTrustAgent().getTrustValue(deliverer)) > 0.3 && !willOrder.contains(deliverer)) {	
 				deliverer.getParent().going2order(this);
 			}
 		}
 		willOrder.clear();
 	}
-	//send the orders were made last tick
-	public void orderIt() {
-		//do the last tick order
+	
+	// send the orders were made last tick
+	public void orderIt() 
+	{
+		// do the last tick order
 		
-		if(!nextTickOrder.isEmpty()){
+		if (!nextTickOrder.isEmpty()) {
 			for (Order orderToDo : nextTickOrder)
 			{
-				if(orderToDo!=null){
+				if (orderToDo != null) {
 					orderToDo.getDeliveryAgent().receiveOrder(orderToDo);
 				}
-
 			}
 		}
 		nextTickOrder.clear();
-		
 	}
+	
 	// order at the by the procurement agent chosen deliverer
-	//order will be received one tick later
-	//Because of the structure an order (even one that is empty) has to be made every tick
+	// order will be received one tick later
+	// Because of the structure an order (even one that is empty) has to be made every tick
 	public void order(TrustAgent trustAgent, Order order) 
 	{
 		// e.g. select Retailer. with customer.procurementAgent
-		if(order!=null){
-			DeliveryAgent deliveryAgent=procurementAgent.chooseSupplier();
-			//the delivery Agent is put into a list where are all at which I want to order
+		if (order != null) {
+			DeliveryAgent deliveryAgent = procurementAgent.chooseSupplier();
+			// the delivery Agent is put into a list where are all at which I want to order
 			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 			TrustSetter s = TrustSetter.getInstance();
-			if(s.getInformationSharingIntegrated())
-			{	
-				//if trustvalue > 0.6 immediatly order the last and the actual order
-				if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
+			if (s.getInformationSharingIntegrated()) {	
+				// if trustvalue > 0.6 immediatly order the last and the actual order
+				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > 0.6) {
 					deliveryAgent.receiveOrder(order);
-					//return because all orders are send!
+					// return because all orders are send!
 					return;
 				}
 			}
 		}
-		//add the open order
+		// add the open order
 		nextTickOrder.add(order);
-		
-		
 	}
-	//for a second order will be used by the lying agent
+	
+	// for a second order will be used by the lying agent
 	public void secondOrder(TrustAgent trustAgent, Order order) 
 	{
 		// e.g. select Retailer. with customer.procurementAgent
-		if(order!=null){
-			DeliveryAgent deliveryAgent=procurementAgent.chooseSecondSupplier();
-			//the delivery Agent is put into a list where are all at which I want to order
+		if (order != null) {
+			DeliveryAgent deliveryAgent = procurementAgent.chooseSecondSupplier();
+			// the delivery Agent is put into a list where are all at which I want to order
 			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 			TrustSetter s = TrustSetter.getInstance();
-			if(s.getInformationSharingIntegrated())
-			{
-				//if trustvalue > 0.6 immediatly order the last and the actual order
-				if((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent()))>0.6){
+			if (s.getInformationSharingIntegrated()) {
+				// if trustvalue > 0.6 immediatly order the last and the actual order
+				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > 0.6) {
 					deliveryAgent.receiveOrder(order);
-					//return because all orders are send!
+					// return because all orders are send!
 					return;
 				}
 			}
 		}
-		//add the open order
+		// add the open order
 		nextTickOrder.add(order);
-		
-		
 	}
+	
 	public void deliverRawMaterialA(int neededAmount)
 	{
 		
 	}
-	
 	
 	/*
 	 * from the Superagent like customer
 	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
-		//System.out.println("[Order Agent] receiving shipment list");
+		// System.out.println("[Order Agent] receiving shipment list");
 		thisTickReceived = 0;
-		if (!receivedShipments.isEmpty())
-		{
+		if (!receivedShipments.isEmpty()) {
 			for (Order shipment : receivedShipments) 
 			{
-				thisTickReceived+=shipment.getQuantity();
+				thisTickReceived += shipment.getQuantity();
 				inventoryAgent.store(shipment);
-				//if the shipment was not cancelled and if it is finally completely fulfilled it will be inspected
-				if(!shipment.getCancelled() && shipment.getProcessed()){
+				// if the shipment was not cancelled and if it is finally completely fulfilled it will be inspected
+				if (!shipment.getCancelled() && shipment.getProcessed()) {
 					parent.getTrustAgent().inspectShipment(this, shipment);
 				}
-
 			}
 		}
 		receivedShipments.clear();
@@ -155,13 +151,18 @@ public class OrderAgent
 	 */
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
-		//System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
-		//set time of the first received
-		//shipment.received();
-		//information for the procurement agent 
+		// System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
+		// set time of the first received
+		// shipment.received();
+		// information for the procurement agent 
 		
 		receivedShipments.add(shipment);
 //		receivedOrders.add(shipment);
+	}
+	
+	public void clearReceivedShipments() 
+	{
+		receivedShipments.clear();
 	}
 	
 	/*
@@ -172,24 +173,18 @@ public class OrderAgent
 		return parent;
 	}
 	
-	public SupplyChainMember getParent() {
-		return parent;
-	}
-	
-	public void clearReceivedShipments() 
+	public SupplyChainMember getParent() 
 	{
-		receivedShipments.clear();
+		return parent;
 	}
 	
 	public ArrayList<Order> getReceivedShipments() 
 	{
 		return this.receivedShipments;
 	}
-	public int getThisTickReceived(){
+	
+	public int getThisTickReceived()
+	{
 		return thisTickReceived;
 	}
-	
-	/*
-	 * SETTERS
-	 */
 }

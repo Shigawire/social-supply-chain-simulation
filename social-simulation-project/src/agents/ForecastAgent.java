@@ -45,24 +45,21 @@ public class ForecastAgent
 	/**
 	   * This method calculates demand for a supply
 	   * chain member
-	 * @param everReceivedOrders 
+	   * @param everReceivedOrders 
 	   * 
 	   * @return dem random forecast.
 	   */
 	public int calculateDemand(ArrayList<Order> everReceivedOrders)
 	{
-
-		int lastTick=0;
-		int firstOfTick=0;
+		int lastTick = 0;
+		int firstOfTick = 0;
 		for (int i = 0; i < everReceivedOrders.size(); i++)
 		{
-			if (lastTick!=everReceivedOrders.get(i).getOrderedAt())
-			{
-				lastTick=everReceivedOrders.get(i).getOrderedAt();
+			if (lastTick != everReceivedOrders.get(i).getOrderedAt()) {
+				lastTick = everReceivedOrders.get(i).getOrderedAt();
 				firstOfTick = i;
-			}
-			else{
-				everReceivedOrders.get(firstOfTick).setSum(everReceivedOrders.get(firstOfTick).getSum()+everReceivedOrders.get(i).getSum());
+			} else {
+				everReceivedOrders.get(firstOfTick).setSum(everReceivedOrders.get(firstOfTick).getSum() + everReceivedOrders.get(i).getSum());
 				everReceivedOrders.remove(i);
 				i--;
 			}
@@ -72,7 +69,7 @@ public class ForecastAgent
 			orderHistory.add(everReceivedOrders.get(i));
 		}
 		
-		//System.out.println(orderHistory.size());
+		// System.out.println(orderHistory.size());
 		this.observedData = new DataSet();
 		createDataset();
 		int output = getForecast();
@@ -87,27 +84,23 @@ public class ForecastAgent
     {
     	double d;
     	
-    	if (orderHistory.size() <= reviewPeriod)
-    	{
+    	if (orderHistory.size() <= reviewPeriod) {
     		for (int i = 0; i < orderHistory.size(); i++)
     		{
     			Order order = orderHistory.get(i);
     			double b = order.getSum();
-    			if (orderHistory.size() == 1){
+    			if (orderHistory.size() == 1) {
     				dp = new Observation(b);
     				dp.setIndependentValue("ordered at", 0);
     				observedData.add(dp);
     			}
 
-    				dp = new Observation(b);
-	    			dp.setIndependentValue("ordered at", i+1);
-	    			observedData.add(dp);
-
+				dp = new Observation(b);
+    			dp.setIndependentValue("ordered at", i + 1);
+    			observedData.add(dp);
     		}
-    	}
-    	else
-    	{
-    		for (int i = orderHistory.size()-reviewPeriod; i < orderHistory.size(); i++)
+    	} else {
+    		for (int i = orderHistory.size() - reviewPeriod; i < orderHistory.size(); i++)
     		{
     			Order order = orderHistory.get(i);
     			double b = order.getSum();
@@ -122,7 +115,7 @@ public class ForecastAgent
     // forecasts amount for next period:
     public int getForecast()
     {  
-    	//System.out.println(observedData.toString());
+    	// System.out.println(observedData.toString());
     	if (observedData.size() == 0) return lastForecast;
     	double b = 0; // variable for output	
 
@@ -138,13 +131,13 @@ public class ForecastAgent
     	// invoke forecast method, which writes the forecast into nextPeriod
     	fcModel.forecast(nextPeriod);		
     	Iterator it = nextPeriod.iterator();
-		while(it.hasNext())
+		while (it.hasNext())
 		{		
 			DataPoint dp = (DataPoint)it.next();
-			b = dp.getDependentValue(); //write forecast into output variable
+			b = dp.getDependentValue(); // write forecast into output variable
 		}
-		//System.out.println(b);
-		if (b>=0)return (int)b;
+		// System.out.println(b);
+		if (b >= 0)return (int)b;
 		else return 0;
     }
     
@@ -167,7 +160,4 @@ public class ForecastAgent
 	{
 		return (int)b;
 	}
-	/* 
-	 * SETTERS
-	 */
 }

@@ -9,24 +9,27 @@ import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProductionAgent;
 import artefacts.Order;
-//Combination of Interface Sale and class buy
-public abstract class Buy_Sale extends Buy implements Sale
+
+// Combination of Interface Sale and class buy
+public abstract class BuySale extends Buy implements Sale
 {
-	protected int subtractionByTrust=0;//for the subtraction from the order caused by knowing he will not order at me
-	protected int desired_inventory_level;
-	protected int next_demand;//demand of next tick
-	protected int price;//price for our goods
-	protected int order_quantity;//the quantity should be ordered this tick
+	protected int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
+	protected int desiredInventoryLevel;
+	protected int nextDemand; // demand of next tick
+	protected int price; // price for our goods
+	protected int orderQuantity; // the quantity should be ordered this tick
 	protected DeliveryAgent deliveryAgent;
 	protected ProductionAgent productionAgent;
-	protected ArrayList<DeliveryAgent> delivery_agents;
+	protected ArrayList<DeliveryAgent> deliveryAgents;
 	
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
-	public Buy_Sale(ArrayList<Sale> sailor_list,int incoming_inventory_level, int outgoing_inventory_level) 
+	
+	public BuySale(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel) 
 	{
-		super(sailor_list, incoming_inventory_level, outgoing_inventory_level);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
 	}
-	//receiving the shipments that was delivered last tick
+	
+	// receiving the shipments that was delivered last tick
 	public void receiveShipments() 
 	{
 		this.orderAgent.receiveShipments(this.inventoryAgent);
@@ -56,78 +59,77 @@ public abstract class Buy_Sale extends Buy implements Sale
 		// 3. order difference: +shortage-the value I do not need because of information sharing
 
 		// 1.
-		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
-		desired_inventory_level = next_demand*15/10;
+		nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
+		desiredInventoryLevel = nextDemand * 15 / 10;
 		// 2.
-		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
-		//if current bigger than desiredlevel return
-		if(current_outgoing_inventory_level>desired_inventory_level){
+		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
+		// if current bigger than desiredlevel return
+		if (currentOutgoingInventoryLevel > desiredInventoryLevel) {
 			return;
 		}
+		
 		// 3.
 		TrustSetter s = TrustSetter.getInstance();
-		if(s.getInformationSharingIntegrated())
-		{
-		order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+		if (s.getInformationSharingIntegrated()) {
+			orderQuantity = nextDemand - currentOutgoingInventoryLevel + deliveryAgent.getShortage() - subtractionByTrust;
+		} else {
+			orderQuantity = nextDemand - currentOutgoingInventoryLevel + deliveryAgent.getShortage();
 		}
-		else
-		{
-			order_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
-		}
-		subtractionByTrust=0;
+		subtractionByTrust = 0;
 	
 		// If the inventory level is sufficient for the next demand,
 		// do not order
-		if (order_quantity < 0) 
-		{
-			//a order with quantity null has to be made for the process in the orderAgent
+		if (orderQuantity < 0) {
+			// a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick)
-			order_quantity=0;
+			orderQuantity = 0;
 			orderAgent.order(this.trustAgent, null);
-		}
-		else
-		{
-			
-			Order order = new Order(order_quantity, this.orderAgent);
+		} else {
+			Order order = new Order(orderQuantity, this.orderAgent);
 			
 			// Choose seller
 			orderAgent.order(this.trustAgent, order);
-			//if he is lying he will order the same at a second supplier
-			if(lying){
-				Order order2 = new Order(order_quantity, this.orderAgent);
+			// if he is lying he will order the same at a second supplier
+			if (lying) {
+				Order order2 = new Order(orderQuantity, this.orderAgent);
 				orderAgent.secondOrder(this.trustAgent, order2);
 			}
-			
 		}
 	}
+	
 	// just a method used if he is a lying agent 
-	public int desired(){
-		if(lying){
-			next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
-			desired_inventory_level = next_demand*15/10;
-			//System.out.println("desired_inventory_level"+desired_inventory_level);
-			return desired_inventory_level;
+	public int desired()
+	{
+		if (lying) {
+			nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
+			desiredInventoryLevel = nextDemand * 15 / 10;
+			// System.out.println("desiredInventoryLevel" + desiredInventoryLevel);
+			return desiredInventoryLevel;
 		}
 		return 1000;
-		
 	}
+	
 	// if a possible buyer trust this actor enough, but will not order at him, he will tell it
-		public void going2order(OrderAgent noOrderer){
-			if(buyer.containsKey(noOrderer)){
-				subtractionByTrust+=buyer.get(noOrderer);
-			}	
+	public void going2order(OrderAgent noOrderer)
+	{
+		if (buyer.containsKey(noOrderer)) {
+			subtractionByTrust+=buyer.get(noOrderer);
+		}	
+	}
+	
+	public void updateList(OrderAgent orderer, int orderAtYou)
+	{
+		// when the buyer is not already in the map
+		if (!buyer.containsKey(orderer)) {
+			buyer.put(orderer, orderAtYou);
 		}
-		public void updateList(OrderAgent orderer,int orderAtYou){
-			//when the buyer is not already in the map
-			if(!buyer.containsKey(orderer)){
-				buyer.put(orderer, orderAtYou);
-			}
-			//the value is changed by the value he ordered this time
-			int newValue=(buyer.get(orderer)+orderAtYou)/2;
-			//because of RePast the new value has to be put int the map this way
-			buyer.remove(orderer);
-			buyer.put(orderer, newValue);	
-		}
+		// the value is changed by the value he ordered this time
+		int newValue = (buyer.get(orderer) + orderAtYou) / 2;
+		// because of RePast the new value has to be put int the map this way
+		buyer.remove(orderer);
+		buyer.put(orderer, newValue);	
+	}
+	
 	/*
 	 * GETTERS
 	 */
@@ -140,11 +142,14 @@ public abstract class Buy_Sale extends Buy implements Sale
 	{
 		return this.price;
 	}	
-	public int getOrderQuantity(){
-		return this.order_quantity;
-	}
-	public int getThisTickReceived(){
-		return this.orderAgent.getThisTickReceived();
+	
+	public int getOrderQuantity()
+	{
+		return this.orderQuantity;
 	}
 	
+	public int getThisTickReceived()
+	{
+		return this.orderAgent.getThisTickReceived();
+	}
 }
