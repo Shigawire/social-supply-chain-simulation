@@ -9,47 +9,52 @@ import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
 import artefacts.trust.Trust;
-//class for all those who buy
+
+// class for all those who buy
 public abstract class Buy extends SupplyChainMember
 {
 	protected OrderAgent orderAgent;
 	protected ProcurementAgent procurementAgent;
 	protected TrustAgent trustAgent;
-	//boolean if he is a "lying agent"
-	protected boolean lying=false;
-	protected ArrayList<Sale> sailor_list;//list with possible salers
-	private ArrayList<DeliveryAgent> delivery_agents;//list of the delivery agents of the salers
-	public Buy( ArrayList<Sale> sailor,int incoming_inventory_level, int outgoing_inventory_level) 
+	protected boolean lying = false; // boolean if he is a "lying agent"
+	protected ArrayList<Sale> sailorList; // list with possible salers
+	private ArrayList<DeliveryAgent> deliveryAgents; // list of the delivery agents of the salers
+	
+	public Buy(ArrayList<Sale> sailor, int incomingInventoryLevel, int outgoingInventoryLevel) 
 	{	
-		super(incoming_inventory_level, outgoing_inventory_level);
-		delivery_agents=new ArrayList<DeliveryAgent>();
-		//a list will be filled with all the delivery Agents of the sellers
-		//because that is the contact where this buyer will order
+		super(incomingInventoryLevel, outgoingInventoryLevel);
+		deliveryAgents = new ArrayList<DeliveryAgent>();
+		// a list will be filled with all the delivery Agents of the sellers
+		// because that is the contact where this buyer will order
 		for (Sale sailor1 : sailor)
 		{
-			delivery_agents.add(sailor1.getDeliveryAgent());
+			deliveryAgents.add(sailor1.getDeliveryAgent());
 		}
-		//must be in this order, because they need each other to be initialised!
-		this.trustAgent = new TrustAgent(delivery_agents, this.dimensionRatings, this);
-		this.procurementAgent=new ProcurementAgent(delivery_agents, trustAgent);
-		this.orderAgent = new OrderAgent(this, procurementAgent,delivery_agents);	
+		// must be in this order, because they need each other to be initialised!
+		this.trustAgent = new TrustAgent(deliveryAgents, this.dimensionRatings, this);
+		this.procurementAgent = new ProcurementAgent(deliveryAgents, trustAgent);
+		this.orderAgent = new OrderAgent(this, procurementAgent, deliveryAgents);	
 		
 	}
-	//getters
-	public TrustAgent getTrustAgent(){
+	
+	/*
+	 * GETTERS
+	 */
+	public TrustAgent getTrustAgent()
+	{
 		return trustAgent;
 	}
-	public ProcurementAgent getProcurementAgent(){
+	
+	public ProcurementAgent getProcurementAgent()
+	{
 		return procurementAgent;
 	}
-	//setters
-	public void setLying(){
-		lying=true;
+	
+	/*
+	 * SETTERS
+	 */
+	public void setLying()
+	{
+		lying = true;
 	}
 }
-
-
-
-
-
-

@@ -17,19 +17,19 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Current_incoming_inventory_level</string>
+      <string>CurrentIncomingInventoryLevel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current_incoming_inventory_level</id>
+        <id>CurrentIncomingInventoryLevel</id>
         <className>actors.Customer</className>
-        <methodName>getCurrent_incoming_inventory_level</methodName>
+        <methodName>getCurrentIncomingInventoryLevel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>NextDemand</string>
+      <string>CurrentOutgoingInventoryLevel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>NextDemand</id>
+        <id>CurrentOutgoingInventoryLevel</id>
         <className>actors.Customer</className>
-        <methodName>getNextDemand</methodName>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
@@ -38,6 +38,14 @@
         <id>NextOrderQuantity</id>
         <className>actors.Customer</className>
         <methodName>getNextOrderQuantity</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>NextDemand</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>NextDemand</id>
+        <className>actors.Customer</className>
+        <methodName>getNextDemand</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

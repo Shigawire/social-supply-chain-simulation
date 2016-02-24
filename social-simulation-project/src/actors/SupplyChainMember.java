@@ -18,29 +18,30 @@ import artefacts.trust.DimensionType;
 */
 public abstract class SupplyChainMember 
 {
-	protected String id;//id for every member
-	protected int current_incoming_inventory_level;
-	/*inventory with items that has to be used to produce sellable items
-	 respectively for the customer the inventory of items he consumes
-	*/
-	protected int current_outgoing_inventory_level;//inventory with produced and therfore now sellable itmes
-	protected TrustAgent trustAgent;//Agent for the trust to suppliers
+	protected String id; // id for every member
+	protected int currentIncomingInventoryLevel;
+	// inventory with items that has to be used to produce sellable items
+	// respectively for the customer the inventory of items he consumes
+	protected int currentOutgoingInventoryLevel; // inventory with produced and therfore now sellable itmes
+	protected TrustAgent trustAgent; // Agent for the trust to suppliers
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
-	protected Map<DimensionType, Double> dimensionRatings;//Map with dimension ratings gives the importance for
-														//every dimension of trust for every Supply Chain member based on the profiles
 	
+	// Map with dimension ratings gives the importance for every dimension
+	// of trust for every Supply Chain member based on the profiles
+	protected Map<DimensionType, Double> dimensionRatings;
+														
 	/**
 	   * This constructor gives every supply chain member a unique
 	   * id in a hexadecimal format.
 	   * 
 	   */
-	public SupplyChainMember(int incoming_inventory_level, int outgoing_inventory_level) 
+	public SupplyChainMember(int incomingInventoryLevel, int outgoingInventoryLevel) 
 	{
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		
 		// Create inventory agent with inventoryLevels
-		this.inventoryAgent = new InventoryAgent(incoming_inventory_level,outgoing_inventory_level);
+		this.inventoryAgent = new InventoryAgent(incomingInventoryLevel, outgoingInventoryLevel);
 		this.forecastAgent = new ForecastAgent();
 		
 		this.dimensionRatings = new HashMap<DimensionType, Double>();
@@ -52,52 +53,60 @@ public abstract class SupplyChainMember
 	}
 	
 	// Methods every supply chain member must implement
-	public abstract void run();//run method what every supply chain member does in the tick
+	public abstract void run(); // run method what every supply chain member does in the tick
 	public abstract void receiveShipments();
 	
-	//updates the list of buyers needed for information sharing
+	// updates the list of buyers needed for information sharing
 	// is implemented in every subclass except for customer
-	public void updateList(OrderAgent orderAgent, int quantity) {		
-	}
-	// is called by the buyer, if he trust this actor and will not order at this actor
-	// is implemented in every subclass except for customer
-	public void going2order(OrderAgent orderAgent) {
-	}
-	
-	
-	// used if an actor returns deliveries/part deliveries he got	
-	public void returning(int partDelivery) {
-		inventoryAgent.increaseOutgoingInventoryLevel(partDelivery);
+	public void updateList(OrderAgent orderAgent, int quantity)
+	{
 		
 	}
+	
+	// is called by the buyer, if he trust this actor and will not order at this actor
+	// is implemented in every subclass except for customer
+	public void going2order(OrderAgent orderAgent) 
+	{
+		
+	}
+	
+	// used if an actor returns deliveries/part deliveries he got	
+	public void returning(int partDelivery) 
+	{
+		inventoryAgent.increaseOutgoingInventoryLevel(partDelivery);
+	}
 
-	public Object getProcurementAgent() {
+	public Object getProcurementAgent() 
+	{
 		// implemented for relevant actors in Buy
 		return null;
 	}
+	
 	/*
 	 * GETTERS
 	 */
-	public int getCurrent_incoming_inventory_level()
+	public int getCurrentIncomingInventoryLevel()
 	{
 		return this.inventoryAgent.getIncomingInventoryLevel();
 	}
-	public int getCurrent_outgoing_inventory_level()
+	
+	public int getCurrentOutgoingInventoryLevel()
 	{
 		return this.inventoryAgent.getOutgoingInventoryLevel();
 	}
 	
-	public Map<DimensionType, Double> getTrustDimensionRatings() {
+	public Map<DimensionType, Double> getTrustDimensionRatings() 
+	{
 		return this.dimensionRatings;
 	}
 	
-	public TrustAgent getTrustAgent() {
+	public TrustAgent getTrustAgent() 
+	{
 		return this.trustAgent;
 	}
-	public InventoryAgent getInventoryAgent() {
+	
+	public InventoryAgent getInventoryAgent()
+	{
 		return this.inventoryAgent;
 	}
-	/*
-	 * SETTERS
-	 */
 }

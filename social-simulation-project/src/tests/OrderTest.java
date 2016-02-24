@@ -31,21 +31,25 @@ import artefacts.Order;
  * http://repast.sourceforge.net/docs/RepastModelTesting.pdf documentation
  */
 
-public class OrderTest {
+public class OrderTest 
+{
 
 	private Context<Object> context;
 	private Schedule schedule;
 	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception 
+	{
 	}
 
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public static void tearDownAfterClass() throws Exception 
+	{
 	}
 
 	/*
-	public void setUp() throws Exception {
+	public void setUp() throws Exception 
+	{
 		Schedule schedule = new Schedule();
 		RunEnvironment.init(schedule, null, null, true);
 		
@@ -53,48 +57,47 @@ public class OrderTest {
 	}
 	*/
 	@Before
-    public void setUp() throws Exception {
-		
+    public void setUp() throws Exception 
+	{
 		this.schedule = new Schedule();
 		RunEnvironment.init(this.schedule, new DefaultScheduleRunner(), null, false);
 		this.context = new DefaultContext<Object>();
 		//SimulationBuilder builder = new SimulationBuilder();
 		//this.context = builder.build (context);
-		RunState.init().setMasterContext ( this.context );
+		RunState.init().setMasterContext(this.context);
     }
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception 
+	{
 	}
 	
 	@Test
-	public void test() {
-		
+	public void test() 
+	{
 		this.context.add(OrderObserver.giveObserver());
-		
 		OrderObserver.giveObserver().setAmount(0);
 		
-		Manufacturer manufacturer1 = new Manufacturer(10, 0,100);
+		Manufacturer manufacturer1 = new Manufacturer(10, 0, 100);
 		ArrayList<Sale> manufacturerList = new ArrayList<Sale>();
 		manufacturerList.add(manufacturer1);
 		
-
-		Distributor distributor1 = new Distributor(manufacturerList, 15,11, 50);
+		Distributor distributor1 = new Distributor(manufacturerList, 15, 11, 50);
 		
 		ArrayList<Sale> distributorList = new ArrayList<Sale>();
 		distributorList.add(distributor1);
 
-		Wholesaler wholesaler1 = new Wholesaler(distributorList, 12, 11,40);
+		Wholesaler wholesaler1 = new Wholesaler(distributorList, 12, 11, 40);
 
 		ArrayList<Sale> wholesalerList = new ArrayList<Sale>();
 		wholesalerList.add(wholesaler1);	
 		
-		Retailer retailer1 = new Retailer(wholesalerList, 10, 10,10);
+		Retailer retailer1 = new Retailer(wholesalerList, 10, 10, 10);
 		
 		ArrayList<Sale> retailerList = new ArrayList<Sale>();
 		retailerList.add(retailer1);
 		
-		Customer customer1 = new Customer(retailerList, 10,15);
+		Customer customer1 = new Customer(retailerList, 10, 15);
 		ArrayList<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(customer1);
 
@@ -104,14 +107,15 @@ public class OrderTest {
 		this.context.add(retailer1);
 		this.context.add(customer1);
 		
-		//simulation is not initialized yet
+		// simulation is not initialized yet
 		assertEquals(-1, this.schedule.getTickCount(), 0);
 		
 		//------- TICK 1 -------------
 		
-		//double inventory_beginning = customer1.getCurrent_outgoing_inventory_level();
+		// double inventory_beginning = customer1.getCurrent_outgoing_inventory_level();
 		
-		for (int i=1; i<=1; i++) {			
+		for (int i = 1; i <= 1; i++) 
+		{			
 			this.schedule.schedule(customer1);
 			this.schedule.schedule(retailer1);
 			this.schedule.schedule(wholesaler1);
@@ -120,22 +124,23 @@ public class OrderTest {
 	    	this.schedule.execute();
 		}
     	
-		//simulation clock has advanced
+		// simulation clock has advanced
     	assertTrue("Simulation clock has not advanced", this.schedule.getTickCount() > -1);
     			
-    	//Customer demand is within boundaries (initially: 10, 25)
+    	// Customer demand is within boundaries (initially: 10, 25)
     	assertTrue("Demand for next tick is out of range (10..25): " + customer1.getNextDemand(), 10 <= customer1.getNextDemand() && customer1.getNextDemand() <= 25);
     	
-    	//the next order quantity is larger than 0 and smaller than the customer demand
+    	// the next order quantity is larger than 0 and smaller than the customer demand
     	assertTrue("Next order quantity is out of range", customer1.getNextOrderQuantity() >= 0 && customer1.getNextOrderQuantity() <= 25);
   
-    	//Let's do a custom order with qty 1. This order must be received in tick 3.
+    	// Let's do a custom order with qty 1. This order must be received in tick 3.
     	Order order = new Order(1, customer1.getOrderAgent());
     	System.out.println(order.getId());
     	customer1.getOrderAgent().order(customer1.getTrustAgent(), order);
-    	//somewhere in the next 500 Ticks I want my order from the beginning be arrived.
+    	// somewhere in the next 500 Ticks I want my order from the beginning be arrived.
     	
-    	while(true) {			
+    	while(true) 
+    	{			
 			this.schedule.schedule(customer1);
 			this.schedule.schedule(retailer1);
 			this.schedule.schedule(wholesaler1);
@@ -145,16 +150,13 @@ public class OrderTest {
 	    	this.schedule.execute();
 	    	
 	    	if (customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()) != null) {
-	    		//assertEquals("The small order of qty 1 arrives in a later shipment", customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()), order);
+	    		// assertEquals("The small order of qty 1 arrives in a later shipment", customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()), order);
 	    		assertEquals("The small order of qty. 1 arrives in tick 3", 3, schedule.getTickCount(), 0);
 	    		System.out.println("Our order that was sent in tick 1 was received as shipment in tick " + schedule.getTickCount());
 	    		break;
 	    	}
 		}
     	    	
-		
-		fail("Not yet implemented");		
-
+		fail("Not yet implemented");
 	}
-
 }

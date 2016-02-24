@@ -9,20 +9,20 @@ package artefacts;
 */
 public class ProductionBatch 
 {
-	private int total_production_time;
-	private int time_in_production;
+	private int totalProductionTime;
+	private int timeInProduction;
 	private int quantity;
 	
-	public ProductionBatch(int total_production_time, int quantity) 
+	public ProductionBatch(int totalProductionTime, int quantity) 
 	{
-		this.total_production_time = total_production_time;
+		this.totalProductionTime = totalProductionTime;
 		this.quantity = quantity;
-		this.time_in_production = 0;
+		this.timeInProduction = 0;
 	}
 	
 	public void incrementTimeInProduction()
 	{
-		this.time_in_production++;
+		this.timeInProduction++;
 	}
 	
 	/*
@@ -30,15 +30,11 @@ public class ProductionBatch
 	 */
 	public int getTimeInProduction() 
 	{
-		return this.time_in_production;
+		return this.timeInProduction;
 	}
 	
 	public int getQuantity() 
 	{
 		return this.quantity;
 	}
-	
-	/*
-	 * SETTERS
-	 */
 }

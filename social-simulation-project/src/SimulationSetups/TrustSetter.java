@@ -1,40 +1,54 @@
 package SimulationSetups;
 
-public class TrustSetter { 
-    private static final TrustSetter OBJ = new TrustSetter(); 
+public class TrustSetter 
+{ 
+    private static final TrustSetter obj = new TrustSetter(); 
     private boolean trustIntegrated;
     private boolean indirectTrustIntegrated;
     private boolean informationSharingIntegrated;
     
-      private TrustSetter() { 
-
-      } 
+    private TrustSetter() 
+    { 
+    } 
     
   	/*
   	 * GETTERS
   	 */
-    public static TrustSetter getInstance() { 
-      return OBJ; 
+    public static TrustSetter getInstance() 
+    { 
+      return obj; 
     } 
-  	public boolean getTrustIntegrated(){
+    
+  	public boolean getTrustIntegrated()
+  	{
 		return trustIntegrated;
 	}
-	public boolean getIndirectTrustIndegrated(){
+  	
+	public boolean getIndirectTrustIndegrated()
+	{
 		return indirectTrustIntegrated;
 	}
-	public boolean getInformationSharingIntegrated(){
+	
+	public boolean getInformationSharingIntegrated()
+	{
 		return informationSharingIntegrated;
 	}
+	
 	/*
 	 * SETTERS
 	 */
-	public void setTrustIntegrated(boolean trust){
-		trustIntegrated=trust;
+	public void setTrustIntegrated(boolean trust)
+	{
+		trustIntegrated = trust;
 	}
-	public void setIndirectTrustIntegrated(boolean indirectTrust){
-		indirectTrustIntegrated=indirectTrust;
+	
+	public void setIndirectTrustIntegrated(boolean indirectTrust)
+	{
+		indirectTrustIntegrated = indirectTrust;
 	}
-	public void setInformationSharingIntegrated(boolean informationSharing){
-		informationSharingIntegrated=informationSharing;
+	
+	public void setInformationSharingIntegrated(boolean informationSharing)
+	{
+		informationSharingIntegrated = informationSharing;
 	}
 }

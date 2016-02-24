@@ -9,118 +9,114 @@ import artefacts.ProductionBatch;
 
 public class ProductionAgent 
 {
-	private int machine_number;
-	private int machine_productivity;
-	private int production_quantity;
-	private int lead_time;
+	private int machineNumber;
+	private int machineProductivity;
+	private int productionQuantity;
+	private int leadTime;
 	private InventoryAgent inventoryAgent;
-	private ArrayList<ProductionBatch> Production;
+	private ArrayList<ProductionBatch> production;
 	private ArrayList<ProductionBatch> toProduce;
 	
-	public ProductionAgent(int lead_time, int machines, InventoryAgent inventoryAgent)
+	public ProductionAgent(int leadTime, int machines, InventoryAgent inventoryAgent)
 	{
 		this.inventoryAgent=inventoryAgent;
-		machine_number = machines;
-		machine_productivity = 50;
+		machineNumber = machines;
+		machineProductivity = 50;
 		toProduce = new ArrayList<ProductionBatch>();
-		Production = new ArrayList<ProductionBatch>();
-		this.lead_time = lead_time;
+		production = new ArrayList<ProductionBatch>();
+		this.leadTime = leadTime;
 	}
 	// 1. figures out how many machines to run, which defines the production quantity
 	// 2. if enough rawmaterial is in the inventory, the production starts with 10% loss in 5% of the cases
 	// 3. else the rawmaterial gets ordered
 	public void produce(int nextDemand)
 	{ 
-		//1.
-		if(nextDemand % machine_productivity==0){
-			if (nextDemand/machine_productivity<=machine_number)
-			{
-			production_quantity = (nextDemand/machine_productivity)*machine_productivity;
+		// 1.
+		if (nextDemand % machineProductivity == 0) {
+			if (nextDemand/machineProductivity <= machineNumber) {
+				productionQuantity = (nextDemand / machineProductivity) * machineProductivity;
 			}
-			else production_quantity = machine_number*machine_productivity;
-		}
-		else{
-			if (nextDemand/machine_productivity<machine_number)
-			{
-			production_quantity = ((nextDemand/machine_productivity)+1)*machine_productivity;
+			else productionQuantity = machineNumber * machineProductivity;
+		} else {
+			if (nextDemand / machineProductivity < machineNumber) {
+				productionQuantity = ((nextDemand / machineProductivity) + 1) * machineProductivity;
 			}
-			else production_quantity = machine_number*machine_productivity;
+			else productionQuantity = machineNumber * machineProductivity;
 
 		}
-		//2.
-		if (inventoryAgent.getAInventoryLevel()>=production_quantity*2 && inventoryAgent.getBInventoryLevel()>=production_quantity) 
-		{
+		
+		// 2.
+		if (inventoryAgent.getAInventoryLevel() >= productionQuantity * 2 && inventoryAgent.getBInventoryLevel() >= productionQuantity)  {
 //			int dem = RandomHelper.nextIntFromTo(1, 20);
-//			if (dem==1)production_quantity=production_quantity*90/100;
-			ProductionBatch new_production_order = new ProductionBatch(this.lead_time, production_quantity);
-			Production.add(new_production_order);
-			inventoryAgent.reduceAInventoryLevel(production_quantity*2);
-			inventoryAgent.reduceBInventoryLevel(production_quantity);
+//			if (dem==1)productionQuantity=productionQuantity*90/100;
+			ProductionBatch new_production_order = new ProductionBatch(this.leadTime, productionQuantity);
+			production.add(new_production_order);
+			inventoryAgent.reduceAInventoryLevel(productionQuantity * 2);
+			inventoryAgent.reduceBInventoryLevel(productionQuantity);
 		}
 		//3.
-		else{
-			if (inventoryAgent.getAInventoryLevel()<production_quantity*2)
-			{	
-				deliverRawMaterialA(production_quantity*2);
+		else {
+			if (inventoryAgent.getAInventoryLevel() < productionQuantity * 2) {	
+				deliverRawMaterialA(productionQuantity * 2);
 			}
-			if (inventoryAgent.getBInventoryLevel()<production_quantity)
-			{
-				deliverRawMaterialB(production_quantity);
+			if (inventoryAgent.getBInventoryLevel()<productionQuantity) {
+				deliverRawMaterialB(productionQuantity);
 			}
 		}
 	}
 	
-	//production method for Retailer and Distributor
+	// production method for Retailer and Distributor
 	public void label()
 	{
-		production_quantity = this.inventoryAgent.getIncomingInventoryLevel();
-		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, this.inventoryAgent.getIncomingInventoryLevel());
-		Production.add(new_production_order);
-		inventoryAgent.reduceIncomingInventoryLevel(production_quantity);
+		productionQuantity = this.inventoryAgent.getIncomingInventoryLevel();
+		ProductionBatch new_production_order = new ProductionBatch(this.leadTime, this.inventoryAgent.getIncomingInventoryLevel());
+		production.add(new_production_order);
+		inventoryAgent.reduceIncomingInventoryLevel(productionQuantity);
 	}
-	//production method for Wholesaler, produces products out of 2 materials from incoming_inventory
+	
+	// production method for Wholesaler, produces products out of 2 materials from incoming_inventory
 	public void process()
 	{
-		production_quantity = this.inventoryAgent.getIncomingInventoryLevel()/2;
-		ProductionBatch new_production_order = new ProductionBatch(this.lead_time, this.inventoryAgent.getIncomingInventoryLevel());
-		Production.add(new_production_order);
-		inventoryAgent.reduceIncomingInventoryLevel(production_quantity*2);
+		productionQuantity = this.inventoryAgent.getIncomingInventoryLevel() / 2;
+		ProductionBatch new_production_order = new ProductionBatch(this.leadTime, this.inventoryAgent.getIncomingInventoryLevel());
+		production.add(new_production_order);
+		inventoryAgent.reduceIncomingInventoryLevel(productionQuantity * 2);
 	}
+	
 	// put finally produced products into outgoing inventory
 	public void harvest ()
 	{
-		for (ProductionBatch current_batch : Production) 
+		for (ProductionBatch current_batch : production) 
 		{
 			current_batch.incrementTimeInProduction();
-			if (current_batch.getTimeInProduction() >= this.lead_time) 
-			{
-				//This batch is ready to be added to inventory
+			if (current_batch.getTimeInProduction() >= this.leadTime) {
+				// This batch is ready to be added to inventory
 				this.inventoryAgent.increaseOutgoingInventoryLevel(current_batch.getQuantity());
-			} 
-			else
-			{
+			} else {
 				toProduce.add(current_batch);
 			}
 		}
 		
-		Production.clear();
-		Production.addAll(toProduce);
+		production.clear();
+		production.addAll(toProduce);
 		toProduce.clear();
 	}
 
-	//delivers RawMaterial A with a failure-percentage
-	public void deliverRawMaterialA(int amount){
+	// delivers RawMaterial A with a failure-percentage
+	public void deliverRawMaterialA(int amount)
+	{
 		RandomHelper.createNormal(97, 2);
 		int var = RandomHelper.getNormal().nextInt();
-		amount= amount*var/100;
+		amount = amount * var / 100;
 		inventoryAgent.increaseAInventoryLevel(amount);
 	}
 	
-	//delivers RawMaterial B with a failure-percentage
-	public void deliverRawMaterialB(int amount){
+	//  delivers RawMaterial B with a failure-percentage
+	public void deliverRawMaterialB(int amount)
+	{
 		RandomHelper.createNormal(97, 2);
 		int var = RandomHelper.getNormal().nextInt();
-		amount= amount*var/100;
+		amount = amount * var / 100;
 		inventoryAgent.increaseBInventoryLevel(amount);
 	}
 }

@@ -44,45 +44,52 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// Add everything to the simulation's context
 		context.add(IndirectTrustAgent.getIndirectTrustAgent());
 		context.add(s);
-		for(Sale manufacturer : setup.getManufacturerList()){
+		for (Sale manufacturer : setup.getManufacturerList())
+		{
 			context.add(manufacturer);
 		}
 		
-		ArrayList<Manufacturer> manufacturerList_indirectTrust = new ArrayList<Manufacturer>();
-		manufacturerList_indirectTrust.addAll((Collection<? extends Manufacturer>) setup.getManufacturerList());
-		IndirectTrustAgent.getIndirectTrustAgent().setManufacturerList(manufacturerList_indirectTrust);
+		ArrayList<Manufacturer> manufacturerListIndirectTrust = new ArrayList<Manufacturer>();
+		manufacturerListIndirectTrust.addAll((Collection<? extends Manufacturer>) setup.getManufacturerList());
+		IndirectTrustAgent.getIndirectTrustAgent().setManufacturerList(manufacturerListIndirectTrust);
 		
-		for(Sale distributor : setup.getDistributorList()){
+		for (Sale distributor : setup.getDistributorList())
+		{
 			context.add(distributor);
 		}
 		
-		ArrayList<Distributor> distributorList_indirectTrust = new ArrayList<Distributor>();
-		distributorList_indirectTrust.addAll((Collection<? extends Distributor>) setup.getDistributorList());
-		IndirectTrustAgent.getIndirectTrustAgent().setDistributorList(distributorList_indirectTrust);
+		ArrayList<Distributor> distributorListIndirectTrust = new ArrayList<Distributor>();
+		distributorListIndirectTrust.addAll((Collection<? extends Distributor>) setup.getDistributorList());
+		IndirectTrustAgent.getIndirectTrustAgent().setDistributorList(distributorListIndirectTrust);
 		
-		for(Sale wholesaler : setup.getWholesalerList()){
+		for (Sale wholesaler : setup.getWholesalerList())
+		{
 			context.add(wholesaler);
 		}
 		
-		ArrayList<Wholesaler> wholesalerList_indirectTrust = new ArrayList<Wholesaler>();
-		wholesalerList_indirectTrust.addAll((Collection<? extends Wholesaler>) setup.getWholesalerList());	
-		IndirectTrustAgent.getIndirectTrustAgent().setWholesalerList(wholesalerList_indirectTrust);
+		ArrayList<Wholesaler> wholesalerListIndirectTrust = new ArrayList<Wholesaler>();
+		wholesalerListIndirectTrust.addAll((Collection<? extends Wholesaler>) setup.getWholesalerList());	
+		IndirectTrustAgent.getIndirectTrustAgent().setWholesalerList(wholesalerListIndirectTrust);
 		
-		for(Sale retailer : setup.getRetailerList()){
+		for (Sale retailer : setup.getRetailerList())
+		{
 			context.add(retailer);
 		}
 		
-		ArrayList<Retailer> retailerList_indirectTrust = new ArrayList<Retailer>();
-		retailerList_indirectTrust.addAll((Collection<? extends Retailer>) setup.getRetailerList());
-		IndirectTrustAgent.getIndirectTrustAgent().setRetailerList(retailerList_indirectTrust);
+		ArrayList<Retailer> retailerListIndirectTrust = new ArrayList<Retailer>();
+		retailerListIndirectTrust.addAll((Collection<? extends Retailer>) setup.getRetailerList());
+		IndirectTrustAgent.getIndirectTrustAgent().setRetailerList(retailerListIndirectTrust);
 		
-		for(Customer customer : setup.getCustomerList()){
+		for (Customer customer : setup.getCustomerList())
+		{
 			context.add(customer);
 		}
 		
 		IndirectTrustAgent.getIndirectTrustAgent().setCustomerList(setup.getCustomerList());
-		BWeffectMeasurer.getMeasurer().setTheDummys(setup.getCustomerList().get(0),retailerList_indirectTrust.get(0) , 
-				wholesalerList_indirectTrust.get(0), distributorList_indirectTrust.get(0));
+		BWeffectMeasurer.getMeasurer().setTheDummys(setup.getCustomerList().get(0),
+													retailerListIndirectTrust.get(0), 
+													wholesalerListIndirectTrust.get(0), 
+													distributorListIndirectTrust.get(0));
 		context.add(BWeffectMeasurer.getMeasurer());
 		return context;
 	}

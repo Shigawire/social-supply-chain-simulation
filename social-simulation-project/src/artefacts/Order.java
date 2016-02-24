@@ -21,27 +21,27 @@ import artefacts.trust.Trust;
 */
 public class Order 
 {
-	//quantity that has to be completly fullfilled
+	// quantity that has to be completly fullfilled
 	private final int quantity;
 	private double failurePercentage;	
-	private int ordered_at; // tick it is orderd
-	private int received_at;//tick it is received
-	private int oftenProcessed=0;//how often has parts of the order been processed
-	private int firstDelivery; //how much was fullfilled in the first fullfillment
+	private int orderedAt; // tick it is orderd
+	private int receivedAt; // tick it is received
+	private int oftenProcessed = 0; // how often has parts of the order been processed
+	private int firstDelivery; // how much was fullfilled in the first fullfillment
 	private int firstTick;
 	boolean cancelled = false;
 	private String id;
 	// Who ordered?
-	private OrderAgent orderAgent;//who ordered
-	private DeliveryAgent deliveryAgent;//who delivered
+	private OrderAgent orderAgent; // who ordered
+	private DeliveryAgent deliveryAgent; // who delivered
 	
-	private double expectedDelivery;//expected time the delivery will need
+	private double expectedDelivery; //expected time the delivery will need
 	
 	// Order received and sent
-	private boolean processed;//is completly processed --> done
+	private boolean processed; // is completly processed --> done
 	private int sum;
-	private int fullfilledQuantity;//till now fullfilled quantity
-	private int partDelivery=0;//partdelivery at the moment
+	private int fullfilledQuantity; // till now fullfilled quantity
+	private int partDelivery = 0; // partdelivery at the moment
 	
 	private double shipmentQuality;
 	
@@ -52,13 +52,13 @@ public class Order
 		OrderObserver.giveObserver().addAmount(quantity);
 		
 		this.quantity = quantity;
-		//generate an ID, so it is easier to track the Order through the system :)
+		// generate an ID, so it is easier to track the Order through the system :)
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
-		this.ordered_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		this.orderedAt = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 		this.orderAgent = orderAgent;
-		fullfilledQuantity=0;
+		fullfilledQuantity = 0;
 		this.processed = false;
-		sum=quantity;
+		sum = quantity;
 		BWeffectMeasurer.getMeasurer().update(this);
 	}
 	
@@ -69,32 +69,35 @@ public class Order
 	
 	private void received() 
 	{
-		this.received_at = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		this.receivedAt = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
 	
-	//a part or the whole delivery
-	public void partDelivery(int delivery){
-		
-		if(oftenProcessed==0){
-			firstDelivery=delivery;
-			firstTick=(int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+	// a part or the whole delivery
+	public void partDelivery(int delivery)
+	{	
+		if (oftenProcessed == 0) {
+			firstDelivery = delivery;
+			firstTick = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 		}
 		oftenProcessed++;
-		this.partDelivery=delivery;
+		this.partDelivery = delivery;
 		OrderObserver.giveObserver().subAmount(delivery);
-		fullfilledQuantity+=delivery;
+		fullfilledQuantity += delivery;
 		if (this.fullfilledQuantity == this.quantity) {
 			this.received();
 		}
 		
 		this.partialDeliveryHistory.put((int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount(), fullfilledQuantity);
 	}
+	
 	/*
 	 * GETTERS
 	 */
-	public int getPartDelivery(){
+	public int getPartDelivery()
+	{
 		return partDelivery;
 	}
+	
 	public OrderAgent getOrderAgent() 
 	{
 		return this.orderAgent;	
@@ -107,7 +110,7 @@ public class Order
 	
 	public int getOrderedAt() 
 	{
-		return this.ordered_at;
+		return this.orderedAt;
 	}
 	
 	public SupplyChainMember getOrderer() 
@@ -119,15 +122,22 @@ public class Order
 	{
 		return this.quantity;
 	}
-	public double getfailurePercentage(){
+	
+	public double getfailurePercentage()
+	{
 		return this.failurePercentage;
 	}
-	public int getUnfullfilledQuantity(){
+	
+	public int getUnfullfilledQuantity()
+	{
 		return this.quantity-this.fullfilledQuantity;
 	}
-	public int getFullfilledQuantity(){
+	
+	public int getFullfilledQuantity()
+	{
 		return this.fullfilledQuantity;
 	}
+	
 	public boolean getProcessed() 
 	{
 		// TODO Auto-generated method stub
@@ -136,15 +146,32 @@ public class Order
 	
 	public int getReceivedAt() 
 	{
-		return this.received_at;
+		return this.receivedAt;
 	}
 	
-	public DeliveryAgent getDeliveryAgent() {
+	public DeliveryAgent getDeliveryAgent() 
+	{
 		return this.deliveryAgent;
 	}
 	
-	public double getExpectedDeliveryDate(){
+	public double getExpectedDeliveryDate()
+	{
 		return this.expectedDelivery;
+	}
+	
+	public double getShipmentQuality() 
+	{
+		return this.shipmentQuality;
+	}
+	
+	public int getSum()
+	{
+		return sum;
+	}
+	
+	public boolean getCancelled() 
+	{
+		return cancelled;	
 	}
 
 	/*
@@ -152,57 +179,53 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		//set the time it needed to deliver
-		if(!cancelled){
-			ProcurementAgent receiver=(ProcurementAgent) orderAgent.getParent().getProcurementAgent();
-			receiver.updateTime(this.getOrderedAt()-this.getReceivedAt(),deliveryAgent);
+		// set the time it needed to deliver
+		if (!cancelled) {
+			ProcurementAgent receiver = (ProcurementAgent) orderAgent.getParent().getProcurementAgent();
+			receiver.updateTime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
 		}
-		//System.out.println(id+" " +quantity+" "+oftenProcessed);
+		// System.out.println(id + " " + quantity +" " + oftenProcessed);
 		this.processed = processed;	
 	}
 	
-	public void setExpectedDeliveryDuration(double duration) {
+	public void setExpectedDeliveryDuration(double duration) 
+	{
 		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
 	}
-	public void setCancelled() {
+	
+	public void setCancelled() 
+	{
 		cancelled = true;
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+	
 //	public void setQuantity(int quantity) 
 //	{
 //		this.quantity = quantity;
 //	}
-	public void setfailurePercentage(double failure){
-		this.failurePercentage=failure;
-	}
-	public void setSum(int quantity){
-		this.sum = quantity;
-	}
-	public int getSum(){
-		return sum;
+	
+	public void setfailurePercentage(double failure)
+	{
+		this.failurePercentage = failure;
 	}
 	
-	public void setDeliveryAgent(DeliveryAgent deliveryAgent) {
+	public void setSum(int quantity) 
+	{
+		this.sum = quantity;
+	}
+	
+	public void setDeliveryAgent(DeliveryAgent deliveryAgent) 
+	{
 		this.deliveryAgent = deliveryAgent;
 	}
 	
-	public double getShipmentQuality() {
-		return this.shipmentQuality;
-	}
-	
-	public void setShipmentQuality(double shipmentQuality) {
+	public void setShipmentQuality(double shipmentQuality) 
+	{
 		this.shipmentQuality = shipmentQuality;
 	}
 	
-	public Map<Integer, Integer> getPartialDeliveryHistory() {
+	public Map<Integer, Integer> getPartialDeliveryHistory() 
+	{
 		return this.partialDeliveryHistory;
-	}
-
-	
-
-	public boolean getCancelled() {
-		return cancelled;
-		
 	}
 }

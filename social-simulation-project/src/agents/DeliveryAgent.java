@@ -21,18 +21,18 @@ import artefacts.Order;
 */
 public class DeliveryAgent 
 {
-	//price for the goods
+	// price for the goods
 	private int price;
-	private int current_outgoing_inventory_level;
+	private int currentOutgoingInventoryLevel;
 	private double failurePercentage;
 	private ArrayList<Order> receivedOrders; // list for all received orders
-	private ArrayList<Order> everReceivedOrders;//all orders ever received
-	private ArrayList<Order> openOrders;//list to transfer open orders
-	private int shortage = 0;//gives the shortage of the last tick, will be used for the forecast
-	private SupplyChainMember parent;//to which SupplyChainMember it belongs
+	private ArrayList<Order> everReceivedOrders; // all orders ever received
+	private ArrayList<Order> openOrders; // list to transfer open orders
+	private int shortage = 0; // gives the shortage of the last tick, will be used for the forecast
+	private SupplyChainMember parent; // to which SupplyChainMember it belongs
 	
-	private double failure_mean;
-	private double failure_deviation;
+	private double failureMean;
+	private double failureDeviation;
 	
 	public DeliveryAgent(int price, SupplyChainMember parent, int mean, int deviation) 
 	{
@@ -41,8 +41,8 @@ public class DeliveryAgent
 		this.openOrders = new ArrayList<Order>();
 		this.price = price;
 		this.parent = parent;
-		this.failure_mean = mean;
-		this.failure_deviation = deviation;
+		this.failureMean = mean;
+		this.failureDeviation = deviation;
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class DeliveryAgent
 		everReceivedOrders.add(order);
 		parent.updateList(order.getOrderAgent(), order.getQuantity());
 	}
-	//? wer auch immer das geschrieben hat hä :D
+	//? wer auch immer das geschrieben hat hï¿½ :D
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 
@@ -67,51 +67,49 @@ public class DeliveryAgent
 	   */
 	public void deliver(InventoryAgent inventoryAgent)
 	{
-		current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
-		shortage=0;
+		currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
+		shortage = 0;
 		for (Order order : receivedOrders) 
 		{	
-			//if the order is already processed, it will just disapper (when set e.g. by the
-			//inventory Agent after cancellation
-			if(order.getProcessed()){
+			// if the order is already processed, it will just disapper (when set e.g. by the
+			// inventory Agent after cancellation
+			if (order.getProcessed()) {
 				
 			}
-			//if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8(he will not deliver just 7 goods)
-			else if (order.getUnfullfilledQuantity() > current_outgoing_inventory_level && current_outgoing_inventory_level > 8) 
-			{
-				//if the needed rest quantity of the order is higher then the inventory
-				//part of the order will be delivered
-				order.partDelivery(current_outgoing_inventory_level);
-				order.setfailurePercentage((failure_mean +RandomHelper.nextDoubleFromTo(+failure_deviation, -failure_deviation))/100);
+			// if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8(he will not deliver just 7 goods)
+			else if (order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel && currentOutgoingInventoryLevel > 8) {
+				// if the needed rest quantity of the order is higher then the inventory
+				// part of the order will be delivered
+				order.partDelivery(currentOutgoingInventoryLevel);
+				order.setfailurePercentage((failureMean + RandomHelper.nextDoubleFromTo(+failureDeviation, -failureDeviation))/100);
 				openOrders.add(order);
-				//shortage will be increased by the higher need
-				shortage=+order.getUnfullfilledQuantity();
-				//what was delivered will be taken out of the inventory
-				inventoryAgent.reduceOutgoingInventoryLevel(current_outgoing_inventory_level);
+				// shortage will be increased by the higher need
+				shortage =+ order.getUnfullfilledQuantity();
+				// what was delivered will be taken out of the inventory
+				inventoryAgent.reduceOutgoingInventoryLevel(currentOutgoingInventoryLevel);
 				order.getOrderAgent().receiveShipment(order,this);
-				current_outgoing_inventory_level=0;
+				currentOutgoingInventoryLevel = 0;
 			}
-			//if <=8 no delivery will be made
-			else if(order.getUnfullfilledQuantity() > current_outgoing_inventory_level){
-				shortage=+order.getUnfullfilledQuantity();
+			// if <=8 no delivery will be made
+			else if(order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel) {
+				shortage =+ order.getUnfullfilledQuantity();
 				openOrders.add(order);
 			}
-			//if the order can be completly fullfilled, it will be
-			else 
-			{
-				//just a buffer of the unfullfilled
-				int buffer=order.getUnfullfilledQuantity();
+			// if the order can be completly fullfilled, it will be
+			else {
+				// just a buffer of the unfullfilled
+				int buffer = order.getUnfullfilledQuantity();
 				order.setProcessed(true);
 				order.partDelivery(buffer);
-				//sub the amount because the order is not open anymore
+				// sub the amount because the order is not open anymore
 				order.getOrderAgent().receiveShipment(order,this);
-				//System.out.println(order.getQuantity());
+				// System.out.println(order.getQuantity());
 				inventoryAgent.reduceOutgoingInventoryLevel(buffer);
-				current_outgoing_inventory_level = inventoryAgent.getOutgoingInventoryLevel();
+				currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
 			}
 		}
-		//the received list must be deleted completly and filled with the openOrder list
-		//otherwise RePast has a problem
+		// the received list must be deleted completly and filled with the openOrder list
+		// otherwise RePast has a problem
 		receivedOrders.clear();
 		receivedOrders.addAll(openOrders);
 		openOrders.clear();
@@ -128,32 +126,31 @@ public class DeliveryAgent
 
 	public int getShortage() 
 	{
-		//gives half of the shortage
-		return (shortage/2);
+		// gives half of the shortage
+		return (shortage / 2);
 	}
 	
 	public ArrayList<Order> getAllOrders()
 	{	
 		return this.everReceivedOrders;
-	
 	}
 	
-	public double getExpectedDeliveryTime() {
+	public double getExpectedDeliveryTime() 
+	{
 		//TODO implement?
 		return 2;
 	}
 	
-	public SupplyChainMember getParent() {
+	public SupplyChainMember getParent() 
+	{
 		return this.parent;
 	}
 
-	
-	
 	/*
 	 * SETTERS
 	 */
-	public void setShortage(int i) {
-		shortage=0;
-		
+	public void setShortage(int i) 
+	{
+		shortage = 0;	
 	}
 }
