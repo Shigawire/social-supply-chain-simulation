@@ -26,7 +26,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	private int nextDemand;
 	private int desiredInventoryLevel;
 	private int price; // price for the good
-	private int orderQuantity;
+	private int produceQuantity;
 	private int machineQuantity;
 	private int amountToProduce;
 	private DeliveryAgent deliveryAgent;
@@ -43,11 +43,11 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		super(currentIncomingInventoryLevel, currentOutgoingInventoryLevel);
 		this.price = price;	
 		deliveryAgent = new DeliveryAgent(price, this,10,5);
-		this.machine_quantity = 5;
-		productionAgent = new ProductionAgent(lead_time,machine_quantity, this.inventoryAgent);
-		Production = new ArrayList<ProductionBatch>();
+		this.machineQuantity = 5;
+		productionAgent = new ProductionAgent(leadTime,machineQuantity, this.inventoryAgent);
+		production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
-		produce_quantity = 0;
+		produceQuantity = 0;
 	}
 	
 	// method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)
@@ -131,15 +131,15 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		// 3. order difference: +shortage-the value I do not need because of information sharing
 
 		// 1.
-		next_demand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
-		desired_inventory_level = next_demand*15/10;
+		nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
+		desiredInventoryLevel = nextDemand*15/10;
 		// 2.
-		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
+		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		//if current bigger than desiredlevel return
 
 		
-		if(current_outgoing_inventory_level > desired_inventory_level){
+		if(currentOutgoingInventoryLevel > desiredInventoryLevel){
 //			deliveryAgent.setShortage(0);
 			return;
 		}
@@ -148,27 +148,27 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		TrustSetter s = TrustSetter.getInstance();
 		
 		if(s.getInformationSharingIntegrated()) {
-			produce_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage()-subtractionByTrust;
+			produceQuantity = nextDemand - currentOutgoingInventoryLevel+ deliveryAgent.getShortage()-subtractionByTrust;
 		}
 		else
 		{
-			produce_quantity = next_demand - current_outgoing_inventory_level+ deliveryAgent.getShortage();
+			produceQuantity = nextDemand - currentOutgoingInventoryLevel+ deliveryAgent.getShortage();
 		}
 		
 		subtractionByTrust=0;
 	
 		// If the inventory level is sufficient for the next demand,
 		// do not order
-		if (produce_quantity < 0) 
+		if (produceQuantity < 0) 
 		{
 			//a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick)
-			produce_quantity = 0;
+			produceQuantity = 0;
 
 		}
 		else
 		{
-			this.productionAgent.produce(produce_quantity);
+			this.productionAgent.produce(produceQuantity);
 		}
 	}
 	

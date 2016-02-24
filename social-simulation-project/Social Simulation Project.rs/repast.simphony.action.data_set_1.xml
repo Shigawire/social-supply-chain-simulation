@@ -5,16 +5,34 @@
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>0.0</start>
+    <start>1.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>833629256</hashCode>
+    <hashCode>450465887</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>Open Orders</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Open Orders</id>
+        <className>social_simulation_project.OrderObserver</className>
+        <methodName>getAmount</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Customer Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Customer Inv</id>
+        <className>actors.Customer</className>
+        <methodName>getCurrentIncomingInventoryLevel</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
     <entry>
       <string>Retailer Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -48,15 +66,6 @@
         <id>Manufacturer Inv</id>
         <className>actors.Manufacturer</className>
         <methodName>getCurrentOutgoingInventoryLevel</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Customer Inv</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Customer Inv</id>
-        <className>actors.Customer</className>
-        <methodName>getCurrentIncomingInventoryLevel</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

@@ -20,8 +20,8 @@ public class ProductionAgent
 	public ProductionAgent(int leadTime, int machines, InventoryAgent inventoryAgent)
 	{
 		this.inventoryAgent=inventoryAgent;
-		machine_number = machines;
-		machine_productivity = 100;
+		machineNumber = machines;
+		machineProductivity = 100;
 		toProduce = new ArrayList<ProductionBatch>();
 		production = new ArrayList<ProductionBatch>();
 		this.leadTime = leadTime;
