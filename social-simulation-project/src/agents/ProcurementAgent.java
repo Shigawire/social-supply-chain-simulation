@@ -18,7 +18,7 @@ public class ProcurementAgent
 	private double trustRelevance = 1;
 	private double averageDeliveryTimeRelevance = 1;
 	private double priceRelevance = 1;
-	private double[] best = { 1.0, 1.0, 1.0 };
+	private double[] bestPossibleDimensionValues = { 1.0, 1.0, 1.0 };
 	private int[] oftenUpdated; // how often was delivery time updated
 	private double[][] values; // store the values for the dimensions (1. trust, 2. averageDeliveryTime, 3. price)
 	
@@ -55,16 +55,16 @@ public class ProcurementAgent
 		// best values for every dimension is needed because ot the formula
 		for (int i = 0; i < deliveryAgents.size(); i++)
 		{
-			if (best[0] <= values[0][i]) { 
-				best[0] = values[0][i];
+			if (bestPossibleDimensionValues[0] <= values[0][i]) { 
+				bestPossibleDimensionValues[0] = values[0][i];
 			} 
 			// best trust value
-			if (best[1] >= values[1][i]) {
-				best[1] = values[1][i];
+			if (bestPossibleDimensionValues[1] >= values[1][i]) {
+				bestPossibleDimensionValues[1] = values[1][i];
 			} 
 			// best average delivery time
-			if (best[2] >= values[2][i]) {
-				best[2] = values[2][i];
+			if (bestPossibleDimensionValues[2] >= values[2][i]) {
+				bestPossibleDimensionValues[2] = values[2][i];
 			} // best price
 		}
 	}
@@ -77,27 +77,31 @@ public class ProcurementAgent
 			fillBest();
 			double highest = 0;
 			double moment;
-			int highestPoint = 0;
+			int highestPoint = 0; // mit Index benennen
+			System.out.println("---------Supplier Selection----------");
 			for (int i = 0; i < deliveryAgents.size(); i++)
 			{
 				// calculation according to concept team
-				moment = values[0][i] / best[0] * trustRelevance + best[1] / values[1][i] * averageDeliveryTimeRelevance + best[2] / values[2][i] * priceRelevance;
+				moment = values[0][i] / bestPossibleDimensionValues[0] * trustRelevance + bestPossibleDimensionValues[1] / values[1][i] * averageDeliveryTimeRelevance + bestPossibleDimensionValues[2] / values[2][i] * priceRelevance;
+				System.out.println("Delivery Agent: " + deliveryAgents.get(i));
+				System.out.println("Dimensions: [Trust: " + values[0][i] + "; Average Delivery Time: " + values[1][i] + "; Price: " + values[2][i] + "]");
+				System.out.println("Moment: " + moment);
 				if (moment >= highest) {	
 					highestPoint = i;
 					highest = moment;
 				}
 			}
+			System.out.println("Most suitable: " + deliveryAgents.get(highestPoint));
 			return deliveryAgents.get(highestPoint);
 		} else {
-
+			//choose cheapest supplier
 			DeliveryAgent cheapestSupplier = deliveryAgents.get(0);
-			
+	
 			for (int i = 0; i < deliveryAgents.size() - 1; i++)
 			{
-				if (deliveryAgents.get(i).getPrice() < deliveryAgents.get(i + 1).getPrice()) {
+				if (deliveryAgents.get(i).getPrice() < cheapestSupplier.getPrice()) {
 					cheapestSupplier = deliveryAgents.get(i);					
 				} else {
-					cheapestSupplier = deliveryAgents.get(i + 1);
 				}
 			}
 			return cheapestSupplier;
@@ -106,29 +110,46 @@ public class ProcurementAgent
 	// method for choosing the second best supplier
 	public DeliveryAgent chooseSecondSupplier() 
 	{
-		updateTrust();
-		fillBest();
-		double highest = 0;
-		double moment;
-		double secondMoment = 0;
-		int secondPoint = 0;
-		int highestPoint = 0;
-		for (int i = 0; i < deliveryAgents.size(); i++)
-		{
-			// calculation according to concept team
-			moment = values[0][i] / best[0] * trustRelevance + best[1] / values[1][i] * averageDeliveryTimeRelevance + best[2] / values[2][i] * priceRelevance;
-			if (moment >= highest) {
-				highestPoint = i;
-				highest = moment;
+		TrustSetter s = TrustSetter.getInstance();
+		if (s.getTrustIntegrated()) {
+			updateTrust();
+			fillBest();
+			double highest = 0;
+			double moment;
+			double secondMoment = 0;
+			int secondPoint = 0;
+			int highestPoint = 0;
+			for (int i = 0; i < deliveryAgents.size(); i++)
+			{
+				// calculation according to concept team
+				moment = values[0][i] / bestPossibleDimensionValues[0] * trustRelevance + bestPossibleDimensionValues[1] / values[1][i] * averageDeliveryTimeRelevance + bestPossibleDimensionValues[2] / values[2][i] * priceRelevance;
+				if (moment >= highest) {
+					highestPoint = i;
+					highest = moment;
+				}
+				// if the moment is higher than the second moment but not lower than the highest
+				// it is the second highest
+				if (moment >= secondMoment && moment < highest) {
+					secondMoment = moment;
+					secondPoint = i;
+				}
 			}
-			// if the moment is higher than the second moment but not lower than the highest
-			// it is the second highest
-			if (moment >= secondMoment && moment < highest) {
-				secondMoment = moment;
-				secondPoint = i;
-			}
+			return deliveryAgents.get(secondPoint);
 		}
-		return deliveryAgents.get(secondPoint);
+		else {
+			//choose cheapest supplier
+			DeliveryAgent cheapestSupplier = deliveryAgents.get(0);
+			DeliveryAgent secondCheapestSupplier = deliveryAgents.get(0);
+			for (int i = 0; i < deliveryAgents.size() - 1; i++)
+			{
+				if (deliveryAgents.get(i).getPrice() < cheapestSupplier.getPrice()) {
+					secondCheapestSupplier=cheapestSupplier;
+					cheapestSupplier = deliveryAgents.get(i);			
+				} else{
+				}
+			}
+			return secondCheapestSupplier;
+		}
 	}
 	
 	private void updateTrust() 
@@ -146,7 +167,7 @@ public class ProcurementAgent
 	public void updateTime(int ticksTillDelivery, DeliveryAgent deliverer) 
 	{
 		int update = deliveryAgents.indexOf(deliverer);
-		values[2][update] = (values[2][update] * oftenUpdated[update] + ticksTillDelivery) / (oftenUpdated[update] + 1);
+		values[1][update] = (values[1][update] * oftenUpdated[update] + ticksTillDelivery) / (oftenUpdated[update] + 1);
 		oftenUpdated[update]++;
 	}
 	

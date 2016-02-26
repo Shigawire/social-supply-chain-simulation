@@ -13,7 +13,7 @@ public class SimSetup2 extends SimSetup
 		super();
 		trustIntegrated = true;
 		indirectTrustIntegrated = true;
-		informationSharingIntegrated = false;
+		informationSharingIntegrated = true;
 		manufacturerList.add(new Manufacturer(0, 0, 200));
 		manufacturerList.add(new Manufacturer(0, 0, 150));
 		distributorList.add(new Distributor(manufacturerList, 0, 0, 55));
