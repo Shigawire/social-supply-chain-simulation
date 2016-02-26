@@ -1,11 +1,15 @@
 package agents;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import SimulationSetups.TrustSetter;
 import actors.Sale;
 import actors.SupplyChainMember;
 import artefacts.Order;
+import artefacts.trust.DimensionType;
+import artefacts.trust.TrustDimension;
 import social_simulation_project.OrderObserver;
 
 /**
@@ -21,6 +25,8 @@ import social_simulation_project.OrderObserver;
 */
 public class OrderAgent 
 {
+	//map open orders at every deliveryAgent
+	private Map<DeliveryAgent, Integer> numberOfOpenOrders = new HashMap<DeliveryAgent, Integer>();
 	private SupplyChainMember parent;
 	// list of received Orders
 	private ArrayList<Order> receivedShipments;
@@ -74,7 +80,17 @@ public class OrderAgent
 	{
 		// e.g. select Retailer. with customer.procurementAgent
 		if (order != null) {
-			DeliveryAgent deliveryAgent = procurementAgent.chooseSupplier();
+			
+			DeliveryAgent deliveryAgent = procurementAgent.chooseSupplier(numberOfOpenOrders);
+			
+			//add a new order to the global number of open orders mapped to the suppliers
+			int _no_open_orders = 0;
+			if(numberOfOpenOrders.containsKey(deliveryAgent)){
+				_no_open_orders = (int)numberOfOpenOrders.get(deliveryAgent);
+			}
+			
+			numberOfOpenOrders.put(deliveryAgent, _no_open_orders + 1);
+			
 			// the delivery Agent is put into a list where are all at which I want to order
 			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
@@ -99,7 +115,7 @@ public class OrderAgent
 	{
 		// e.g. select Retailer. with customer.procurementAgent
 		if (order != null) {
-			DeliveryAgent deliveryAgent = procurementAgent.chooseSecondSupplier();
+			DeliveryAgent deliveryAgent = procurementAgent.chooseSecondSupplier(numberOfOpenOrders);
 			// the delivery Agent is put into a list where are all at which I want to order
 			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
@@ -157,6 +173,13 @@ public class OrderAgent
 		// information for the procurement agent 
 		
 		receivedShipments.add(shipment);
+		
+		//remove a shipment from the global mapping to the suppliers
+		
+		if (shipment.getProcessed()) {
+			numberOfOpenOrders.put(deliverer, numberOfOpenOrders.get(deliverer) -1);
+
+		}
 //		receivedOrders.add(shipment);
 	}
 	

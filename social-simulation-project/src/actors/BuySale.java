@@ -21,6 +21,8 @@ public abstract class BuySale extends Buy implements Sale
 	protected DeliveryAgent deliveryAgent;
 	protected ProductionAgent productionAgent;
 	protected ArrayList<DeliveryAgent> deliveryAgents;
+	protected int lastOrderUpToLevel = -1;
+	protected int lastDemand = 0;
 	
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
@@ -60,7 +62,15 @@ public abstract class BuySale extends Buy implements Sale
 
 		// 1.
 		nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
-		desiredInventoryLevel = nextDemand * 15 / 10;
+		//desiredInventoryLevel = nextDemand * 15 / 10;
+		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
+		
+		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
+		
+		desiredInventoryLevel = orderUpToLevel;
+		lastDemand = nextDemand;
+		lastOrderUpToLevel = orderUpToLevel;
+		
 		// 2.
 		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		// if current bigger than desiredlevel return
@@ -83,7 +93,7 @@ public abstract class BuySale extends Buy implements Sale
 			// a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick)
 			orderQuantity = 0;
-			orderAgent.order(this.trustAgent, null);
+			//orderAgent.order(this.trustAgent, null);
 		} else {
 			Order order = new Order(orderQuantity, this.orderAgent);
 			
@@ -106,7 +116,8 @@ public abstract class BuySale extends Buy implements Sale
 			// System.out.println("desiredInventoryLevel" + desiredInventoryLevel);
 			return desiredInventoryLevel;
 		}
-		return 1000;
+		return 0;
+		//return 1000;
 	}
 	
 	// if a possible buyer trust this actor enough, but will not order at him, he will tell it

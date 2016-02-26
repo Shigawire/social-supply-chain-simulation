@@ -20,6 +20,9 @@ public class Wholesaler extends BuySale
 {
 	protected int almostFinished;
 	
+	protected int lastOrderUpToLevel = -1;
+	protected int lastDemand = 0;
+	
 	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price) 
 	{
 		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
@@ -71,7 +74,18 @@ public class Wholesaler extends BuySale
 		
 		// 1. multiplied with 2 because he need twice of the outgoing because ot the production process
 		nextDemand = 2 * (this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
-		desiredInventoryLevel = nextDemand * 15 / 10;
+		
+		//desiredInventoryLevel = nextDemand * 15 / 10;
+		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
+		
+		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
+		
+		desiredInventoryLevel = orderUpToLevel;
+		lastDemand = nextDemand;
+		lastOrderUpToLevel = orderUpToLevel;
+		
+		
+		
 		// 2.
 		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		// if current bigger than desiredlevel return
