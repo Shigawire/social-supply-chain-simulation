@@ -37,6 +37,7 @@ public class ProcurementAgent
 			oftenUpdated[i] = 0; // oftenUpdated with 0 initialized
 		}
 		valueFill();
+		//get profilerelavances
 		trustRelevance = myProfile.getTrustRelevance();
 		averageDeliveryTimeRelevance = myProfile.getDeliveryTimeRelevance();
 		priceRelevance = myProfile.getPriceRelevance();
