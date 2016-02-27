@@ -7,6 +7,7 @@ import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.ProductionAgent;
 import agents.TrustAgent;
+import artefacts.Profile;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 /**
@@ -19,9 +20,9 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Retailer extends BuySale
 {
-	public Retailer(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price) 
+	public Retailer(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price,Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel, p);
 		
 		this.price = price;
 		deliveryAgent = new DeliveryAgent(price, this, 1, 1);

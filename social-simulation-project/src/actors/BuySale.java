@@ -9,6 +9,7 @@ import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProductionAgent;
 import artefacts.Order;
+import artefacts.Profile;
 
 // Combination of Interface Sale and class buy
 public abstract class BuySale extends Buy implements Sale
@@ -26,9 +27,9 @@ public abstract class BuySale extends Buy implements Sale
 	
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
-	public BuySale(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel) 
+	public BuySale(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel,Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel, p);
 	}
 	
 	// receiving the shipments that was delivered last tick

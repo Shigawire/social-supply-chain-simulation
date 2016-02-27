@@ -10,8 +10,10 @@ import agents.OrderAgent;
 import agents.ProductionAgent;
 import artefacts.Order;
 import artefacts.ProductionBatch;
+import artefacts.Profile;
 import artefacts.trust.Trust;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import social_simulation_project.BWeffectMeasurer;
 
 /**
 * This class represents the manufacturer. The manufacturer
@@ -38,9 +40,9 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	private ArrayList<ProductionBatch> toProduce;
 	private int leadTime = 2; //the time needed to produce
 	
-	public Manufacturer(int currentIncomingInventoryLevel, int currentOutgoingInventoryLevel, int price)
+	public Manufacturer(int currentIncomingInventoryLevel, int currentOutgoingInventoryLevel, int price,Profile p)
 	{
-		super(currentIncomingInventoryLevel, currentOutgoingInventoryLevel);
+		super(currentIncomingInventoryLevel, currentOutgoingInventoryLevel,p);
 		this.price = price;	
 		deliveryAgent = new DeliveryAgent(price, this,10,5);
 		this.machineQuantity = 5;
@@ -59,7 +61,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		// 2. deliver() all previously harvested goods that can be delivered to customers
 		this.deliver(); 
 		
-		System.out.println(inventoryAgent.getOutgoingInventoryLevel());
+		//System.out.println(inventoryAgent.getOutgoingInventoryLevel());
 		//3. calculateDemand() = calculate own demand
 		this.calculateDemand();
 		// 4. produce() = produce new goods()
@@ -169,6 +171,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 			produceQuantity = 0;
 
 		}		
+			BWeffectMeasurer.getMeasurer().updateManufacturer(produceQuantity);
 			this.productionAgent.produce(produceQuantity);	
 	}
 	

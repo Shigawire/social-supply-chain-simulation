@@ -29,7 +29,8 @@ public class BWeffectMeasurer
 	private int tickWholesaler = 0;
 	private ArrayList<Integer> distributor = new ArrayList<Integer>();
 	private int tickDistributor = 0;
-	
+	private ArrayList<Integer> manufacturer = new ArrayList<Integer>();
+	private int tickManufacturer = 0;
 	//attributes to save the BWEValues in and put them into an excel-sheet
 	private double customerValue;
 	private double retailerValue;
@@ -62,13 +63,20 @@ public class BWeffectMeasurer
 	{
 		measurer.setTickDistributor(measurer.getTickDistributor() + order_amount);
 	}
+	//special update for manufacturer as he does not order
+	public void updateManufacturer(int produceQuantity) {
+		measurer.setTickManufacturer(measurer.getTickManufacturer()+ produceQuantity);
+			
+	}	
 	
+	
+
 	// enter the orders every whole tier made in every step to the list
 	@ScheduledMethod(start = 2, interval = 1, priority = 6)
 	public void run()
 	{
 		// append value of customer for the last tick
-		if (measurer.getCustomer().size() < 30) {
+		if (measurer.getCustomer().size() < 52) {
 			measurer.getCustomer().add(measurer.getTickCustomer());
 		} else {
 			measurer.getCustomer().remove(0);
@@ -76,7 +84,7 @@ public class BWeffectMeasurer
 		}
 		
 		// append value of Retailer for the last tick
-		if (measurer.getRetailer().size() < 30) {
+		if (measurer.getRetailer().size() < 52) {
 			measurer.getRetailer().add(measurer.getTickRetailer());
 		} else {
 			measurer.getRetailer().remove(0);
@@ -84,7 +92,7 @@ public class BWeffectMeasurer
 		}
 		
 		// append value of Wholesaler for the last tick
-		if (measurer.getWholesaler().size() < 30) {
+		if (measurer.getWholesaler().size() < 52) {
 			measurer.getWholesaler().add(measurer.getTickWholesaler());
 		} else {
 			measurer.getWholesaler().remove(0);
@@ -92,11 +100,17 @@ public class BWeffectMeasurer
 		}
 		
 		// append value of Distributor for the last tick
-		if (measurer.getDistributor().size() < 30) {
+		if (measurer.getDistributor().size() < 52) {
 			measurer.getDistributor().add(measurer.getTickDistributor());
 		} else {
 			measurer.getDistributor().remove(0);
 			measurer.getDistributor().add(measurer.getTickDistributor());
+		}
+		if (measurer.getManufacturer().size() < 52) {
+			measurer.getManufacturer().add(measurer.getTickManufacturer());
+		} else {
+			measurer.getManufacturer().remove(0);
+			measurer.getManufacturer().add(measurer.getTickManufacturer());
 		}
 		
 		// set the counters for the next tick =0
@@ -104,6 +118,7 @@ public class BWeffectMeasurer
 		measurer.setTickRetailer(0);
 		measurer.setTickWholesaler(0);
 		measurer.setTickDistributor(0);
+		measurer.setTickManufacturer(0);
 		
 		// System.out.println();
 		// compute the variances
@@ -111,15 +126,23 @@ public class BWeffectMeasurer
 		 double retailerVar = variance(measurer.getRetailer());
 		 double wholesalerVar = variance(measurer.getWholesaler());
 		 double distributorVar = variance(measurer.getDistributor());
+		 double manufacturerVar = variance(measurer.getManufacturer());
 		 //bullwhip meaurements:
 		 retailerValue = retailerVar/customerVar;
-		 System.out.println(retailerVar/customerVar);
+		 //System.out.println(retailerVar/customerVar);
 		 wholesalerValue = wholesalerVar/customerVar;
-		 System.out.println(wholesalerVar/customerVar);
+		 //System.out.println(wholesalerVar/customerVar);
 		 distributorValue = distributorVar/customerVar;
-		 System.out.println(distributorVar/customerVar);
+		 //System.out.println(distributorVar/customerVar);
+		 manufacturerValue = manufacturerVar/customerVar;
+		 //System.out.println(manufacturerVar/customerVar);
 	}
 	
+	private ArrayList<Integer> getManufacturer() {
+		// TODO Auto-generated method stub
+		return manufacturer;
+	}
+
 	// computes the variance for list of integers
 	public double variance(ArrayList<Integer> toCompute)
 	{
@@ -162,6 +185,7 @@ public class BWeffectMeasurer
 		}
 	}
 	
+	
 	/*
 	 * GETTERS
 	 */
@@ -170,6 +194,10 @@ public class BWeffectMeasurer
 		return tickCustomer;
 	}
 
+	private int getTickManufacturer() {
+		// TODO Auto-generated method stub
+		return tickManufacturer;
+	}
 	public int getTickWholesaler() 
 	{
 		return tickWholesaler;
@@ -219,6 +247,10 @@ public class BWeffectMeasurer
 	public double getDistributorBWEValue(){
 		return distributorValue;
 	}
+	public double getManufacturerBWEValue(){
+		return manufacturerValue;
+	}
+	
 	
 	/*
 	 * SETTERS
@@ -227,7 +259,10 @@ public class BWeffectMeasurer
 	{
 		this.tickRetailer = tickRetailer;
 	}
-	
+	private void setTickManufacturer(int tickManufacturer) {
+		this.tickManufacturer=tickManufacturer;
+		
+	}
 	public void setTickCustomer(int tickCustomer) 
 	{
 		this.tickCustomer = tickCustomer;
@@ -270,4 +305,6 @@ public class BWeffectMeasurer
 		this.w = w;
 		this.d = d;
 	}
+
+	
 }

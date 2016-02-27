@@ -8,6 +8,7 @@ import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
+import artefacts.Profile;
 import artefacts.trust.Trust;
 
 // class for all those who buy
@@ -20,9 +21,9 @@ public abstract class Buy extends SupplyChainMember
 	protected ArrayList<Sale> sailorList; // list with possible salers
 	private ArrayList<DeliveryAgent> deliveryAgents; // list of the delivery agents of the salers
 	
-	public Buy(ArrayList<Sale> sailor, int incomingInventoryLevel, int outgoingInventoryLevel) 
+	public Buy(ArrayList<Sale> sailor, int incomingInventoryLevel, int outgoingInventoryLevel, Profile p) 
 	{	
-		super(incomingInventoryLevel, outgoingInventoryLevel);
+		super(incomingInventoryLevel, outgoingInventoryLevel, p);
 		deliveryAgents = new ArrayList<DeliveryAgent>();
 		// a list will be filled with all the delivery Agents of the sellers
 		// because that is the contact where this buyer will order
@@ -32,7 +33,7 @@ public abstract class Buy extends SupplyChainMember
 		}
 		// must be in this order, because they need each other to be initialised!
 		this.trustAgent = new TrustAgent(deliveryAgents, this.dimensionRatings, this);
-		this.procurementAgent = new ProcurementAgent(deliveryAgents, trustAgent);
+		this.procurementAgent = new ProcurementAgent(deliveryAgents, trustAgent,myProfile);
 		this.orderAgent = new OrderAgent(this, procurementAgent, deliveryAgents);	
 		
 	}

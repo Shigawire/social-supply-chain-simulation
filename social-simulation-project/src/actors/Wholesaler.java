@@ -7,6 +7,7 @@ import SimulationSetups.TrustSetter;
 import agents.DeliveryAgent;
 import agents.ProductionAgent;
 import artefacts.Order;
+import artefacts.Profile;
 
 /**
 * This class represents a wholesaler. Wholesalers do not
@@ -23,9 +24,9 @@ public class Wholesaler extends BuySale
 	protected int lastOrderUpToLevel = -1;
 	protected int lastDemand = 0;
 	
-	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price) 
+	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
 		
 		this.price = price;
 		deliveryAgent = new DeliveryAgent(price, this, 3, 4);

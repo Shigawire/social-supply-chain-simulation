@@ -3,6 +3,8 @@ package agents;
 import java.util.ArrayList;
 import java.util.Map;
 
+import actors.SupplyChainMember;
+import artefacts.Profile;
 import SimulationSetups.TrustSetter;
 
 /**
@@ -23,7 +25,7 @@ public class ProcurementAgent
 	private int[] oftenUpdated; // how often was delivery time updated
 	private double[][] values; // store the values for the dimensions (1. trust, 2. averageDeliveryTime, 3. price)
 	
-	public ProcurementAgent(ArrayList<DeliveryAgent> deliveryAgents, TrustAgent trustAgent) 
+	public ProcurementAgent(ArrayList<DeliveryAgent> deliveryAgents, TrustAgent trustAgent, Profile myProfile) 
 	{
 		this.trustAgent = trustAgent;
 		this.deliveryAgents = deliveryAgents;
@@ -35,6 +37,9 @@ public class ProcurementAgent
 			oftenUpdated[i] = 0; // oftenUpdated with 0 initialized
 		}
 		valueFill();
+		trustRelevance = myProfile.getTrustRelevance();
+		averageDeliveryTimeRelevance = myProfile.getDeliveryTimeRelevance();
+		priceRelevance = myProfile.getPriceRelevance();
 	}
 	
 	private void valueFill() 

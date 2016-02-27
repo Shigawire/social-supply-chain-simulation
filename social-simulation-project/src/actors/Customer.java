@@ -7,6 +7,7 @@ import agents.OrderAgent;
 import agents.ProcurementAgent;
 import agents.TrustAgent;
 import artefacts.Order;
+import artefacts.Profile;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.essentials.RepastEssentials;
@@ -43,9 +44,9 @@ public class Customer extends Buy
 	   * agent and order agent.
 	   * 
 	   */
-	public Customer(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel) 
+	public Customer(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel,Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
 	}
 	
 	/**
@@ -63,9 +64,9 @@ public class Customer extends Buy
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
-		if ((int)RepastEssentials.GetTickCount() == 1) {
+		/*if ((int)RepastEssentials.GetTickCount() == 1) {
 			RunEnvironment.getInstance().setScheduleTickDelay(30);
-		}
+		}*/
 		// set the inventory agents desired level
 		inventoryAgent.desiredLevel(lying, desired());
 		// 1. processShipments()
