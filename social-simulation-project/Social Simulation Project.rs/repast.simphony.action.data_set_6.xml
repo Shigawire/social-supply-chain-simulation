@@ -17,35 +17,27 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>TickCustomer</string>
+      <string>RetailerBWEValue</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>TickCustomer</id>
+        <id>RetailerBWEValue</id>
         <className>social_simulation_project.BWeffectMeasurer</className>
-        <methodName>getTickCustomer</methodName>
+        <methodName>getRetailerBWEValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>TickRetailer</string>
+      <string>WholesalerBWEValue</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>TickRetailer</id>
+        <id>WholesalerBWEValue</id>
         <className>social_simulation_project.BWeffectMeasurer</className>
-        <methodName>getTickRetailer</methodName>
+        <methodName>getWholesalerBWEValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>TickWholesaler</string>
+      <string>DistributorBWEValue</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>TickWholesaler</id>
+        <id>DistributorBWEValue</id>
         <className>social_simulation_project.BWeffectMeasurer</className>
-        <methodName>getTickWholesaler</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>TickDistributor</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>TickDistributor</id>
-        <className>social_simulation_project.BWeffectMeasurer</className>
-        <methodName>getTickDistributor</methodName>
+        <methodName>getDistributorBWEValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

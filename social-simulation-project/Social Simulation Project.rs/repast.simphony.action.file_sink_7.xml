@@ -5,10 +5,9 @@
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>TickCustomer</string>
-    <string>TickRetailer</string>
-    <string>TickWholesaler</string>
-    <string>TickDistributor</string>
+    <string>RetailerBWEValue</string>
+    <string>WholesalerBWEValue</string>
+    <string>DistributorBWEValue</string>
   </sourceIds>
   <fileName>ModelOutput.txt</fileName>
   <addTimeStamp>true</addTimeStamp>
