@@ -59,6 +59,6 @@ public class Retailer extends BuySale
 	
 	private void produce() 
 	{
-		this.productionAgent.label();
+		this.productionAgent.produce1();
 	}
 }

@@ -79,14 +79,14 @@ public class ProcurementAgent
 			double highest = 0;
 			double moment;
 			int highestPoint = 0; // mit Index benennen
-			System.out.println("---------Supplier Selection----------");
+//			System.out.println("---------Supplier Selection----------");
 			for (int i = 0; i < deliveryAgents.size(); i++)
 			{
 				// calculation according to concept team
 				moment = values[0][i] / bestPossibleDimensionValues[0] * trustRelevance + bestPossibleDimensionValues[1] / values[1][i] * averageDeliveryTimeRelevance + bestPossibleDimensionValues[2] / values[2][i] * priceRelevance;
-				System.out.println("Delivery Agent: " + deliveryAgents.get(i));
-				System.out.println("Dimensions: [Trust: " + values[0][i] + "; Average Delivery Time: " + values[1][i] + "; Price: " + values[2][i] + "]");
-				System.out.println("Moment: " + moment);
+//				System.out.println("Delivery Agent: " + deliveryAgents.get(i));
+//				System.out.println("Dimensions: [Trust: " + values[0][i] + "; Average Delivery Time: " + values[1][i] + "; Price: " + values[2][i] + "]");
+//				System.out.println("Moment: " + moment);
 				boolean has_many_open_orders= false;
 				if(numberOfOpenOrders.containsKey(deliveryAgents.get(i))){
 					if(numberOfOpenOrders.get(deliveryAgents.get(i)) > 4){
@@ -106,7 +106,7 @@ public class ProcurementAgent
 				//}
 						
 			}
-			System.out.println("Most suitable: " + deliveryAgents.get(highestPoint));
+//			System.out.println("Most suitable: " + deliveryAgents.get(highestPoint));
 			return deliveryAgents.get(highestPoint);
 		} else {
 			//choose cheapest supplier

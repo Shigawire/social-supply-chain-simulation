@@ -1,0 +1,55 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>BweEffekt</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>social_simulation_project.BWeffectMeasurer</sourceType>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-398626285</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>TickCustomer</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>TickCustomer</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getTickCustomer</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>TickRetailer</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>TickRetailer</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getTickRetailer</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>TickWholesaler</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>TickWholesaler</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getTickWholesaler</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>TickDistributor</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>TickDistributor</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getTickDistributor</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

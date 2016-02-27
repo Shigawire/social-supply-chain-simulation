@@ -63,7 +63,7 @@ public class Wholesaler extends BuySale
 	
 	private void produce()
 	{
-		this.productionAgent.process();
+		this.productionAgent.produce2();
 	}
 	
 	public void order() 

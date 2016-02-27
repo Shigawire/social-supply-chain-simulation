@@ -28,12 +28,12 @@ public class Manufacturer extends SupplyChainMember implements Sale
 	private int price; // price for the good
 	private int produceQuantity;
 	private int machineQuantity;
-	private int amountToProduce;
 	private DeliveryAgent deliveryAgent;
-	private OrderAgent orderAgent;
 	private ProductionAgent productionAgent;
 	private ArrayList<ProductionBatch> production;
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
+	protected int lastOrderUpToLevel = -1;
+	protected int lastDemand = 0;
 	
 	private ArrayList<ProductionBatch> toProduce;
 	private int leadTime = 2; //the time needed to produce
@@ -132,15 +132,18 @@ public class Manufacturer extends SupplyChainMember implements Sale
 
 		// 1.
 		nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
-		desiredInventoryLevel = nextDemand*15/10;
+		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
+		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
+		
+		desiredInventoryLevel = orderUpToLevel;
+		lastDemand = nextDemand;
+		lastOrderUpToLevel = orderUpToLevel;
 		// 2.
 		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		
-		//if current bigger than desiredlevel return
-
-		
+		//if current bigger than desiredlevel return		
 		if(currentOutgoingInventoryLevel > desiredInventoryLevel){
-//			deliveryAgent.setShortage(0);
+
 			return;
 		}
 		
@@ -165,37 +168,10 @@ public class Manufacturer extends SupplyChainMember implements Sale
 			// (realize the order of the last tick)
 			produceQuantity = 0;
 
-		}
-		else
-		{
-			this.productionAgent.produce(produceQuantity);
-		}
+		}		
+			this.productionAgent.produce(produceQuantity);	
 	}
 	
-	
-	
-	
-	//TODO collaborative commenting
-//	private void produce() 
-//	{	
-//		// Produce if inventory insufficient for next demand
-//		// 
-//		current_outgoing_inventory_level = this.inventoryAgent.getOutgoingInventoryLevel();
-//		desired_inventory_level = next_demand*15/10;
-//		
-//		
-//		if(next_demand - inventoryAgent.getOutgoingInventoryLevel() + deliveryAgent.getShortage() >= 0)
-//		{
-//			if(current_outgoing_inventory_level > desired_inventory_level){
-//				deliveryAgent.setShortage(0);
-//				return;
-//			}
-//		//shortage at the current orders will be produced to
-//		//TODO in which far did he already include this by FABIAN, because he wrote the class
-//			this.productionAgent.produce(next_demand-inventoryAgent.getOutgoingInventoryLevel()+ deliveryAgent.getShortage()-subtractionByTrust);
-//			subtractionByTrust=0;
-//		}
-//	}
 	
 	public DeliveryAgent getDeliveryAgent() 
 	{	

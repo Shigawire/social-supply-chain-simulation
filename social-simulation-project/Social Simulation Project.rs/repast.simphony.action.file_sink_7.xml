@@ -1,0 +1,15 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>BWEEffektOutput</name>
+  <dataSet>BweEffekt</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>TickCustomer</string>
+    <string>TickRetailer</string>
+    <string>TickWholesaler</string>
+    <string>TickDistributor</string>
+  </sourceIds>
+  <fileName>ModelOutput.txt</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

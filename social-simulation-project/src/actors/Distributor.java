@@ -61,6 +61,6 @@ public class Distributor extends BuySale
 	
 	private void produce()
 	{
-		this.productionAgent.label();
+		this.productionAgent.produce1();
 	}	
 }
