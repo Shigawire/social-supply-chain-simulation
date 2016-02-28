@@ -30,6 +30,14 @@ public class BWeffectMeasurer
 	private ArrayList<Integer> distributor = new ArrayList<Integer>();
 	private int tickDistributor = 0;
 	
+	//attributes to save the BWEValues in and put them into an excel-sheet
+	private double customerValue;
+	private double retailerValue;
+	private double wholesalerValue;
+	private double distributorValue;
+	private double manufacturerValue;
+	
+	
 	private BWeffectMeasurer()
 	{
 	}
@@ -104,9 +112,12 @@ public class BWeffectMeasurer
 		 double wholesalerVar = variance(measurer.getWholesaler());
 		 double distributorVar = variance(measurer.getDistributor());
 		 //bullwhip meaurements:
-		//  System.out.println(retailerVar/customerVar);
-		// System.out.println(wholesalerVar/retailerVar);
-		// System.out.println(distributorVar/wholesalerVar);
+		 retailerValue = retailerVar/customerVar;
+		 System.out.println(retailerVar/customerVar);
+		 wholesalerValue = wholesalerVar/customerVar;
+		 System.out.println(wholesalerVar/customerVar);
+		 distributorValue = distributorVar/customerVar;
+		 System.out.println(distributorVar/customerVar);
 	}
 	
 	// computes the variance for list of integers
@@ -197,6 +208,16 @@ public class BWeffectMeasurer
 	public ArrayList<Integer> getDistributor() 
 	{
 		return distributor;
+	}
+	
+	public double getRetailerBWEValue(){
+		return retailerValue;
+	}
+	public double getWholesalerBWEValue(){
+		return wholesalerValue;
+	}
+	public double getDistributorBWEValue(){
+		return distributorValue;
 	}
 	
 	/*

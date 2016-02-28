@@ -1,0 +1,47 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Customer</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>actors.Customer</sourceType>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>1105492807</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>CurrentIncomingInventoryLevel</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CurrentIncomingInventoryLevel</id>
+        <className>actors.Customer</className>
+        <methodName>getCurrentIncomingInventoryLevel</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>NextDemand</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>NextDemand</id>
+        <className>actors.Customer</className>
+        <methodName>getNextDemand</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>NextOrderQuantity</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>NextOrderQuantity</id>
+        <className>actors.Customer</className>
+        <methodName>getNextOrderQuantity</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

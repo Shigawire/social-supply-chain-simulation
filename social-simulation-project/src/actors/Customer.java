@@ -35,6 +35,9 @@ public class Customer extends Buy
 	// on next_demand and current_inventory_level
 	private int orderQuantity;
 	
+	protected int lastOrderUpToLevel = -1;
+	protected int lastDemand = 0;
+	
 	/**
 	   * This constructor gives the customer its own inventory
 	   * agent and order agent.
@@ -81,8 +84,15 @@ public class Customer extends Buy
 	private int desired() 
 	{
 		nextDemand = this.forecastAgent.customerDemand();
-		desiredInventoryLevel = nextDemand * 15 / 10;
-		return desiredInventoryLevel;
+		//desiredInventoryLevel = nextDemand * 15 / 10;
+		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
+		
+		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
+		
+		desiredInventoryLevel = orderUpToLevel;
+		lastDemand = nextDemand;
+		
+		return orderUpToLevel;
 	}
 
 	/**
