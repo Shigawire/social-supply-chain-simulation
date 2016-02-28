@@ -14,6 +14,8 @@ public class SimSetup2 extends SimSetup
 		
 		super();
 		Profile a=new Profile(0.44,0.415,0.145,0.22,0.31,0.31,0.16,0.67,0.53,0.35);
+		Profile b=new Profile(0.63,0.225,0.145,0.1,0.455,0.305,0.14,0.7125,0.45,0.2625);
+		Profile c=new Profile(0.34,0.34,0.32,0.25,0.31,0.31,0.13,0.625,0.585,0.42);
 		trustIntegrated = true;
 		indirectTrustIntegrated = true;
 		informationSharingIntegrated = false;

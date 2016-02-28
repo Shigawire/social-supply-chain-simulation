@@ -85,7 +85,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 	}
 	
-	private void deliver() 
+	public void deliver() 
 	{
 		// delegate delivery of produced goods the delivery Agent
 		this.deliveryAgent.deliver(this.inventoryAgent);
