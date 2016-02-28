@@ -30,7 +30,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 	@Override
 	public Context<Object> build(Context<Object> context) 
 	{	
-		RunEnvironment.getInstance().endAt(52);
+		RunEnvironment.getInstance().endAt(109);
 		IndirectTrustAgent.reset();
 		context.setId("Social Simulation Project");
 		context.add(OrderObserver.giveObserver());

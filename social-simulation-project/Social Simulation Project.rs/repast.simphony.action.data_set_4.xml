@@ -1,7 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Wholesaler</name>
+  <name>Distributor</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>actors.Wholesaler</sourceType>
+  <sourceType>actors.Distributor</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -20,7 +20,7 @@
       <string>CurrentOutgoingInventoryLevel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>CurrentOutgoingInventoryLevel</id>
-        <className>actors.Wholesaler</className>
+        <className>actors.Distributor</className>
         <methodName>getCurrentOutgoingInventoryLevel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -28,7 +28,7 @@
       <string>OrderQuantity</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>OrderQuantity</id>
-        <className>actors.Wholesaler</className>
+        <className>actors.Distributor</className>
         <methodName>getOrderQuantity</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -36,7 +36,7 @@
       <string>ThisTickReceived</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>ThisTickReceived</id>
-        <className>actors.Wholesaler</className>
+        <className>actors.Distributor</className>
         <methodName>getThisTickReceived</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

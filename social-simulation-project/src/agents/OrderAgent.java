@@ -26,8 +26,8 @@ import social_simulation_project.OrderObserver;
 public class OrderAgent 
 {
 	//based on profiles
-	private double borderLargeTrust;
-	private double borderMediumTrust;
+	private double borderLargeTrust=0;
+	private double borderMediumTrust=0;
 	//map open orders at every deliveryAgent
 	private Map<DeliveryAgent, Integer> numberOfOpenOrders = new HashMap<DeliveryAgent, Integer>();
 	private SupplyChainMember parent;
@@ -46,8 +46,8 @@ public class OrderAgent
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent = procurementAgent;
 		this.deliveryAgents = deliveryAgents;
-		borderLargeTrust=parent.getProfile().getOrderTickEarlier();
-		borderMediumTrust=parent.getProfile().getWillNotOrder();
+//		borderLargeTrust=parent.getProfile().getOrderTickEarlier();
+//		borderMediumTrust=parent.getProfile().getWillNotOrder();
 	}
 	
 	public void trustWhereIOrder()
@@ -122,6 +122,15 @@ public class OrderAgent
 		if (order != null) {
 			DeliveryAgent deliveryAgent = procurementAgent.chooseSecondSupplier(numberOfOpenOrders);
 			// the delivery Agent is put into a list where are all at which I want to order
+			
+			//add a new order to the global number of open orders mapped to the suppliers
+			int _no_open_orders = 0;
+			if(numberOfOpenOrders.containsKey(deliveryAgent)){
+				_no_open_orders = (int)numberOfOpenOrders.get(deliveryAgent);
+			}
+			
+			numberOfOpenOrders.put(deliveryAgent, _no_open_orders + 1);
+			
 			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
@@ -182,6 +191,7 @@ public class OrderAgent
 		//remove a shipment from the global mapping to the suppliers
 		
 		if (shipment.getProcessed()) {
+
 			numberOfOpenOrders.put(deliverer, numberOfOpenOrders.get(deliverer) -1);
 
 		}

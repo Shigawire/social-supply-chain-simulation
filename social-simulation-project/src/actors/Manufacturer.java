@@ -45,7 +45,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		super(currentIncomingInventoryLevel, currentOutgoingInventoryLevel,p);
 		this.price = price;	
 		deliveryAgent = new DeliveryAgent(price, this,10,5);
-		this.machineQuantity = 5;
+		this.machineQuantity = 6;
 		productionAgent = new ProductionAgent(leadTime,machineQuantity, this.inventoryAgent);
 		production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();
@@ -171,7 +171,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 			produceQuantity = 0;
 
 		}		
-			BWeffectMeasurer.getMeasurer().updateManufacturer(produceQuantity);
+			
 			this.productionAgent.produce(produceQuantity);	
 	}
 	

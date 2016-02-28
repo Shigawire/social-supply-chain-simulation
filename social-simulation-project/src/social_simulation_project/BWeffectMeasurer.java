@@ -76,7 +76,7 @@ public class BWeffectMeasurer
 	public void run()
 	{
 		// append value of customer for the last tick
-		if (measurer.getCustomer().size() < 52) {
+		if (measurer.getCustomer().size() < 104) {
 			measurer.getCustomer().add(measurer.getTickCustomer());
 		} else {
 			measurer.getCustomer().remove(0);
@@ -84,7 +84,7 @@ public class BWeffectMeasurer
 		}
 		
 		// append value of Retailer for the last tick
-		if (measurer.getRetailer().size() < 52) {
+		if (measurer.getRetailer().size() < 104) {
 			measurer.getRetailer().add(measurer.getTickRetailer());
 		} else {
 			measurer.getRetailer().remove(0);
@@ -92,7 +92,7 @@ public class BWeffectMeasurer
 		}
 		
 		// append value of Wholesaler for the last tick
-		if (measurer.getWholesaler().size() < 52) {
+		if (measurer.getWholesaler().size() < 104) {
 			measurer.getWholesaler().add(measurer.getTickWholesaler());
 		} else {
 			measurer.getWholesaler().remove(0);
@@ -100,13 +100,13 @@ public class BWeffectMeasurer
 		}
 		
 		// append value of Distributor for the last tick
-		if (measurer.getDistributor().size() < 52) {
+		if (measurer.getDistributor().size() < 104) {
 			measurer.getDistributor().add(measurer.getTickDistributor());
 		} else {
 			measurer.getDistributor().remove(0);
 			measurer.getDistributor().add(measurer.getTickDistributor());
 		}
-		if (measurer.getManufacturer().size() < 52) {
+		if (measurer.getManufacturer().size() < 104) {
 			measurer.getManufacturer().add(measurer.getTickManufacturer());
 		} else {
 			measurer.getManufacturer().remove(0);

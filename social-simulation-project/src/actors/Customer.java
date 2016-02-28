@@ -150,7 +150,7 @@ public class Customer extends Buy
 			// a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
 			orderQuantity = 0;
-			orderAgent.order(this.trustAgent, null);
+			//orderAgent.order(this.trustAgent, null);
 		} else {
 			// System.out.println("[Customer] order_quantity is  " + order_quantity);
 			Order order = new Order(orderQuantity, this.orderAgent);

@@ -1,43 +1,51 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Distributor</name>
+  <name>BweEffekt</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>actors.Distributor</sourceType>
+  <sourceType>social_simulation_project.BWeffectMeasurer</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>1.0</start>
+    <start>109.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1105492807</hashCode>
+    <hashCode>-1292143549</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>CurrentOutgoingInventoryLevel</string>
+      <string>DistributorBWEValue</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>CurrentOutgoingInventoryLevel</id>
-        <className>actors.Distributor</className>
-        <methodName>getCurrentOutgoingInventoryLevel</methodName>
+        <id>DistributorBWEValue</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getDistributorBWEValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>OrderQuantity</string>
+      <string>ManufacturerBWEValue</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>OrderQuantity</id>
-        <className>actors.Distributor</className>
-        <methodName>getOrderQuantity</methodName>
+        <id>ManufacturerBWEValue</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getManufacturerBWEValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>ThisTickReceived</string>
+      <string>RetailerBWEValue</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>ThisTickReceived</id>
-        <className>actors.Distributor</className>
-        <methodName>getThisTickReceived</methodName>
+        <id>RetailerBWEValue</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getRetailerBWEValue</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>WholesalerBWEValue</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>WholesalerBWEValue</id>
+        <className>social_simulation_project.BWeffectMeasurer</className>
+        <methodName>getWholesalerBWEValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>
