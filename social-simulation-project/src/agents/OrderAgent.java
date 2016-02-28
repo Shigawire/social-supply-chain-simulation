@@ -26,8 +26,8 @@ import social_simulation_project.OrderObserver;
 public class OrderAgent 
 {
 	//based on profiles
-	private double borderLargeTrust=0;
-	private double borderMediumTrust=0;
+	private double borderLargeTrust;
+	private double borderMediumTrust;
 	//map open orders at every deliveryAgent
 	private Map<DeliveryAgent, Integer> numberOfOpenOrders = new HashMap<DeliveryAgent, Integer>();
 	private SupplyChainMember parent;
@@ -46,8 +46,8 @@ public class OrderAgent
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent = procurementAgent;
 		this.deliveryAgents = deliveryAgents;
-//		borderLargeTrust=parent.getProfile().getOrderTickEarlier();
-//		borderMediumTrust=parent.getProfile().getWillNotOrder();
+		borderLargeTrust=parent.getProfile().getOrderTickEarlier();
+		borderMediumTrust=parent.getProfile().getWillNotOrder();
 	}
 	
 	public void trustWhereIOrder()

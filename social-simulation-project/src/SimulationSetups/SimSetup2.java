@@ -20,34 +20,37 @@ public class SimSetup2 extends SimSetup
 		indirectTrustIntegrated = true;
 		informationSharingIntegrated = true;
 		
-		//manufacturerList.add(new Manufacturer(25, 2*50, 5,a));
-		//manufacturerList.add(new Manufacturer(25, 2*50, 15,a));
-		manufacturerList.add(new Manufacturer(40, 50, 10,a));
+		manufacturerList.add(new Manufacturer(20, 20, 9,a));
+		manufacturerList.add(new Manufacturer(20, 20, 11,a));
+		manufacturerList.add(new Manufacturer(20, 20, 10,a));
 		
-//		Distributor d1=new Distributor(manufacturerList, 20, 2*40, 5,c);
-//		d1.setLying();
-//		distributorList.add(new Distributor(manufacturerList, 20, 2*40, 15,a));
-//		distributorList.add(new Distributor(manufacturerList, 20, 2*40, 10,a));
-		distributorList.add(new Distributor(manufacturerList, 40,50, 10,b));
-//		distributorList.add(d1);
+		Distributor d1=new Distributor(manufacturerList, 20, 20, 8,c);
+		d1.setLying();
+		distributorList.add(new Distributor(manufacturerList, 20, 20, 11,a));
+		distributorList.add(new Distributor(manufacturerList, 20, 20, 10,a));
+		distributorList.add(new Distributor(manufacturerList, 20, 20, 10,b));
+		distributorList.add(d1);
 		
-//		Wholesaler w1=new Wholesaler(distributorList, 15, 2*30, 10,b);
-//		w1.setLying();
-		wholesalerList.add(new Wholesaler(distributorList,40, 50, 10,a));
-//		wholesalerList.add(w1);
-//		Retailer r1=new Retailer(wholesalerList, 30, 2*30, 15,a);
-//		r1.setLying();
-//		retailerList.add(new Retailer(wholesalerList, 30, 2*30, 5,a));
-//		retailerList.add(r1);
-//		retailerList.add(new Retailer(wholesalerList, 30, 2*30, 15,b));
-//		retailerList.add(new Retailer(wholesalerList, 30, 2*30, 15,a));
-		retailerList.add(new Retailer(wholesalerList, 30, 40, 10,c));
-//		Customer c1=new Customer(retailerList, 0, 0,a);
-//		c1.setLying();
-//		Customer c2=new Customer(retailerList, 0, 0,b);
-//		c2.setLying();
-//		customerList.add(c1);
-//		customerList.add(c2);
+		Wholesaler w1=new Wholesaler(distributorList, 15, 15, 10,b);
+		w1.setLying();
+		wholesalerList.add(new Wholesaler(distributorList,15, 15, 10,a));
+		wholesalerList.add(new Wholesaler(distributorList,15, 15, 10,c));
+		wholesalerList.add(w1);
+		
+		
+		retailerList.add(new Retailer(wholesalerList, 10, 10, 10,a));
+		Retailer r1=new Retailer(wholesalerList, 10, 10, 11,a);
+		r1.setLying();
+		retailerList.add(r1);
+		retailerList.add(new Retailer(wholesalerList, 10, 10, 11,b));
+		retailerList.add(new Retailer(wholesalerList, 10, 10, 11,a));
+		retailerList.add(new Retailer(wholesalerList, 10, 10, 10,c));
+		
+		Customer c1=new Customer(retailerList, 0, 0,a);
+		Customer c2=new Customer(retailerList, 0, 0,b);
+		c2.setLying();
+		customerList.add(c1);
+		customerList.add(c2);
 		customerList.add(new Customer(retailerList, 0, 0,c));
 	}
 }

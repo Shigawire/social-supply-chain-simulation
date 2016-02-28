@@ -78,8 +78,7 @@ public class ProcurementAgent
 	
 	public DeliveryAgent chooseSupplier(Map<DeliveryAgent, Integer> numberOfOpenOrders) 
 	{
-		TrustSetter s = TrustSetter.getInstance();
-		if (s.getTrustIntegrated()) {
+
 			updateTrust();
 			fillBest();
 			double highest = 0;
@@ -114,31 +113,10 @@ public class ProcurementAgent
 			}
 //			System.out.println("Most suitable: " + deliveryAgents.get(highestPoint));
 			return deliveryAgents.get(highestPoint);
-		} else {
-			//choose cheapest supplier
-			DeliveryAgent cheapestSupplier = deliveryAgents.get(0);
-	
-			for (int i = 0; i < deliveryAgents.size() - 1; i++)
-			{	
-				boolean has_many_open_orders= false;
-				if(numberOfOpenOrders.containsKey(deliveryAgents.get(i))){
-					if(numberOfOpenOrders.get(deliveryAgents.get(i)) > 4){
-						has_many_open_orders=true;
-					}
-				}
-				if (deliveryAgents.get(i).getPrice() < cheapestSupplier.getPrice() && !has_many_open_orders) {
-					cheapestSupplier = deliveryAgents.get(i);					
-				} else {
-				}
-			}
-			return cheapestSupplier;
-		}
 	}
 	// method for choosing the second best supplier
 	public DeliveryAgent chooseSecondSupplier(Map<DeliveryAgent, Integer> numberOfOpenOrders) 
 	{
-		TrustSetter s = TrustSetter.getInstance();
-		if (s.getTrustIntegrated()) {
 			updateTrust();
 			fillBest();
 			double highest = 0;
@@ -150,7 +128,7 @@ public class ProcurementAgent
 			{
 				boolean has_many_open_orders= false;
 				if(numberOfOpenOrders.containsKey(deliveryAgents.get(i))){
-					if(numberOfOpenOrders.get(deliveryAgents.get(i)) > 4){
+					if(numberOfOpenOrders.get(deliveryAgents.get(i)) > 1){
 						has_many_open_orders=true;
 					}
 				}
@@ -168,36 +146,22 @@ public class ProcurementAgent
 				}
 			}
 			return deliveryAgents.get(secondPoint);
-		}
-		else {
-			//choose cheapest supplier
-			
-			DeliveryAgent cheapestSupplier = deliveryAgents.get(0);
-			DeliveryAgent secondCheapestSupplier = deliveryAgents.get(0);
-			for (int i = 0; i < deliveryAgents.size() - 1; i++)
-			{
-				boolean has_many_open_orders= false;
-				if(numberOfOpenOrders.containsKey(deliveryAgents.get(i))){
-					if(numberOfOpenOrders.get(deliveryAgents.get(i)) > 4){
-						has_many_open_orders=true;
-					}
-				}
-				if (deliveryAgents.get(i).getPrice() < cheapestSupplier.getPrice()&& !has_many_open_orders) {
-					secondCheapestSupplier=cheapestSupplier;
-					cheapestSupplier = deliveryAgents.get(i);			
-				} else{
-				}
-			}
-			return secondCheapestSupplier;
-		}
+		
 	}
 	
 	private void updateTrust() 
 	{
+		TrustSetter s = TrustSetter.getInstance();
 		for (int i = 0; i < deliveryAgents.size(); i++)
 		{
 			// procurement fragt beim trust nur dummy
-			values[0][i] = trustAgent.getTrustValue(deliveryAgents.get(i));
+			if (s.getTrustIntegrated()){
+				values[0][i] = trustAgent.getTrustValue(deliveryAgents.get(i));
+			}
+			else{
+				values[0][i]=0;
+			}
+			
 			// System.out.println("Current Trust Value: " + values[0][i]);
 			values[2][i] = deliveryAgents.get(i).getPrice();
 		}
