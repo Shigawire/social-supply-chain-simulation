@@ -1,7 +1,6 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Customer</name>
-  <type>NON_AGGREGATE</type>
-  <sourceType>actors.Customer</sourceType>
+  <name>A Data Set</name>
+  <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -12,32 +11,62 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1105492807</hashCode>
+    <hashCode>450465887</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>CurrentIncomingInventoryLevel</string>
+      <string>Open Orders</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>CurrentIncomingInventoryLevel</id>
+        <id>Open Orders</id>
+        <className>social_simulation_project.OrderObserver</className>
+        <methodName>getAmount</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Customer Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Customer Inv</id>
         <className>actors.Customer</className>
         <methodName>getCurrentIncomingInventoryLevel</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>NextDemand</string>
+      <string>Retailer Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>NextDemand</id>
-        <className>actors.Customer</className>
-        <methodName>getNextDemand</methodName>
+        <id>Retailer Inv</id>
+        <className>actors.Retailer</className>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>NextOrderQuantity</string>
+      <string>Wholesaler Inv</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>NextOrderQuantity</id>
-        <className>actors.Customer</className>
-        <methodName>getNextOrderQuantity</methodName>
+        <id>Wholesaler Inv</id>
+        <className>actors.Wholesaler</className>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Distributor Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Distributor Inv</id>
+        <className>actors.Distributor</className>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Manufacturer Inv</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Manufacturer Inv</id>
+        <className>actors.Manufacturer</className>
+        <methodName>getCurrentOutgoingInventoryLevel</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

@@ -45,7 +45,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		super(currentIncomingInventoryLevel, currentOutgoingInventoryLevel,p);
 		this.price = price;	
 		deliveryAgent = new DeliveryAgent(price, this,10,5);
-		this.machineQuantity = 6;
+		this.machineQuantity = 10;
 		productionAgent = new ProductionAgent(leadTime,machineQuantity, this.inventoryAgent);
 		production = new ArrayList<ProductionBatch>();
 		toProduce = new ArrayList<ProductionBatch>();

@@ -1,0 +1,189 @@
+INFO  [AWT-EventQueue-0] 2016-02-28 20:00:25,266 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:00:25,438 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,501 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost5938025256047778310.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,564 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,564 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0983
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,564 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664\Jakob_localhost5938025256047778310.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:45,090 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:01:45,091 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,091 repast.simphony.batch.ssh.SessionsDriver - Run Time: 1,0421
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,153 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,169 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,185 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,185 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 1,1423
+INFO  [AWT-EventQueue-0] 2016-02-28 20:03:44,836 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:03:45,008 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,118 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost8139282719916974011.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,181 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,181 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0965
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,181 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389\Jakob_localhost8139282719916974011.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:05,472 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:05:05,493 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:06:05,502 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,502 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0554
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,564 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,595 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,611 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0018
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,611 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 2,1537
+INFO  [AWT-EventQueue-0] 2016-02-28 20:10:28,681 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:10:28,869 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,044 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost492077414103739787.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,153 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,153 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1090
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,153 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615\Jakob_localhost492077414103739787.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:51,903 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:11:51,921 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:12:51,922 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:13:51,929 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:51,929 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0463
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:51,991 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:52,007 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:52,023 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:52,023 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1571
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:28,203 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:28,359 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:29,015 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:29,015 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,150 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost773906498342857741.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,212 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,212 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1237
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,212 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789\Jakob_localhost773906498342857741.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:55,186 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:15:55,219 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:16:55,233 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:17:55,237 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,237 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0504
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,409 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,456 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,471 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0039
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,471 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1786
+INFO  [AWT-EventQueue-0] 2016-02-28 20:23:29,126 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:23:29,298 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,919 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost1291505943000119006.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,985 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,985 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1157
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,985 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043\Jakob_localhost1291505943000119006.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:54,632 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:24:54,654 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,654 repast.simphony.batch.ssh.SessionsDriver - Run Time: 1,0445
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,685 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,701 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,717 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0010
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,717 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 1,1615
+INFO  [AWT-EventQueue-0] 2016-02-28 20:31:12,212 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:31:12,384 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,010 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost7853454186697068934.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,064 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,064 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1035
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,064 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855\Jakob_localhost7853454186697068934.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:35,106 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:32:35,141 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:33:35,148 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:34:35,160 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,160 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0516
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,253 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,300 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,316 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0026
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,316 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1577
+INFO  [AWT-EventQueue-0] 2016-02-28 20:39:41,978 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:39:42,233 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,794 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost6666793548779466350.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,857 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,857 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1059
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,857 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504\Jakob_localhost6666793548779466350.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:07,560 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:41:07,577 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:42:07,579 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:43:07,579 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,579 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0454
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,639 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,667 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,683 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0017
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,683 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1532
+INFO  [AWT-EventQueue-0] 2016-02-28 20:43:56,200 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:43:56,372 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,668 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost4112898796315073869.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,731 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,747 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1210
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,747 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470\Jakob_localhost4112898796315073869.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:22,122 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:45:22,148 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:46:22,149 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:47:22,156 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,156 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0401
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,202 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,234 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,234 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0013
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,234 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1627
+INFO  [AWT-EventQueue-0] 2016-02-28 20:48:02,196 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:48:02,368 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,097 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost3968101126612122811.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,143 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,159 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1028
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,159 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974\Jakob_localhost3968101126612122811.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:24,865 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:49:24,894 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:50:24,905 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:51:24,914 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:24,914 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0459
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:24,976 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:24,992 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:25,007 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:25,007 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1508
+INFO  [AWT-EventQueue-0] 2016-02-28 20:51:59,579 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:51:59,751 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,683 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost1361214621387249828.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,746 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,746 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,746 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648\Jakob_localhost1361214621387249828.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:20,484 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:53:20,523 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:54:20,528 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:55:20,534 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,534 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0465
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,612 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,627 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,643 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0018
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,643 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1502

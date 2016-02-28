@@ -79,12 +79,10 @@ public class ProductionAgent
 	// production method for Wholesaler, produces products out of 2 materials from incoming_inventory
 	public void produce2()
 	{
-		//productionQuantity = this.inventoryAgent.getIncomingInventoryLevel() / 2;
-		productionQuantity = this.inventoryAgent.getIncomingInventoryLevel();
+		productionQuantity = this.inventoryAgent.getIncomingInventoryLevel() / 2;
 		ProductionBatch new_production_order = new ProductionBatch(this.leadTime, this.inventoryAgent.getIncomingInventoryLevel());
 		production.add(new_production_order);
-		//inventoryAgent.reduceIncomingInventoryLevel(productionQuantity * 2);
-		inventoryAgent.reduceIncomingInventoryLevel(productionQuantity );
+		inventoryAgent.reduceIncomingInventoryLevel(productionQuantity * 2);
 	}
 	
 	// put finally produced products into outgoing inventory
