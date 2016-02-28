@@ -74,7 +74,7 @@ public class Wholesaler extends BuySale
 		// 3. order difference: +shortage-the value I do not need because of information sharing
 		
 		// 1. multiplied with 2 because he need twice of the outgoing because ot the production process
-		nextDemand = 2 * (this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
+		nextDemand = (this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
 		
 		//desiredInventoryLevel = nextDemand * 15 / 10;
 		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;

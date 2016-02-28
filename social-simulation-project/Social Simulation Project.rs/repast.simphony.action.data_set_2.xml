@@ -1,7 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Customer</name>
+  <name>Retailer</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>actors.Customer</sourceType>
+  <sourceType>actors.Retailer</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -17,27 +17,19 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>CurrentIncomingInventoryLevel</string>
+      <string>OrderQuantity</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>CurrentIncomingInventoryLevel</id>
-        <className>actors.Customer</className>
-        <methodName>getCurrentIncomingInventoryLevel</methodName>
+        <id>OrderQuantity</id>
+        <className>actors.Retailer</className>
+        <methodName>getOrderQuantity</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>NextDemand</string>
+      <string>ThisTickReceived</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>NextDemand</id>
-        <className>actors.Customer</className>
-        <methodName>getNextDemand</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>NextOrderQuantity</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>NextOrderQuantity</id>
-        <className>actors.Customer</className>
-        <methodName>getNextOrderQuantity</methodName>
+        <id>ThisTickReceived</id>
+        <className>actors.Retailer</className>
+        <methodName>getThisTickReceived</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>
