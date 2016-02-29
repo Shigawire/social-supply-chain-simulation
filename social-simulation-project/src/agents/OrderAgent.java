@@ -25,6 +25,9 @@ import social_simulation_project.OrderObserver;
 */
 public class OrderAgent 
 {
+	//based on profiles
+	private double borderLargeTrust;
+	private double borderMediumTrust;
 	//map open orders at every deliveryAgent
 	private Map<DeliveryAgent, Integer> numberOfOpenOrders = new HashMap<DeliveryAgent, Integer>();
 	private SupplyChainMember parent;
@@ -43,14 +46,16 @@ public class OrderAgent
 		this.receivedShipments = new ArrayList<Order>();
 		this.procurementAgent = procurementAgent;
 		this.deliveryAgents = deliveryAgents;
+		borderLargeTrust=parent.getProfile().getOrderTickEarlier();
+		borderMediumTrust=parent.getProfile().getWillNotOrder();
 	}
 	
 	public void trustWhereIOrder()
 	{
-		// for every supplier he trust more then 0.3 he tells if he will not order at him 
+		// for every supplier he trust at least medium he tells if he will not order at him 
 		for (DeliveryAgent deliverer : deliveryAgents)
 		{
-			if ((parent.getTrustAgent().getTrustValue(deliverer)) > 0.3 && !willOrder.contains(deliverer)) {	
+			if ((parent.getTrustAgent().getTrustValue(deliverer)) > borderMediumTrust && !willOrder.contains(deliverer)) {	
 				deliverer.getParent().going2order(this);
 			}
 		}
@@ -98,8 +103,8 @@ public class OrderAgent
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 			TrustSetter s = TrustSetter.getInstance();
 			if (s.getInformationSharingIntegrated()) {	
-				// if trustvalue > 0.6 immediatly order the last and the actual order
-				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > 0.6) {
+				// if trusted very good (profile)immediatly order the last and the actual order
+				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > borderLargeTrust) {
 					deliveryAgent.receiveOrder(order);
 					// return because all orders are send!
 					return;
@@ -117,14 +122,23 @@ public class OrderAgent
 		if (order != null) {
 			DeliveryAgent deliveryAgent = procurementAgent.chooseSecondSupplier(numberOfOpenOrders);
 			// the delivery Agent is put into a list where are all at which I want to order
+			
+			//add a new order to the global number of open orders mapped to the suppliers
+			int _no_open_orders = 0;
+			if(numberOfOpenOrders.containsKey(deliveryAgent)){
+				_no_open_orders = (int)numberOfOpenOrders.get(deliveryAgent);
+			}
+			
+			numberOfOpenOrders.put(deliveryAgent, _no_open_orders + 1);
+			
 			willOrder.add(deliveryAgent);
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 			TrustSetter s = TrustSetter.getInstance();
 			if (s.getInformationSharingIntegrated()) {
-				// if trustvalue > 0.6 immediatly order the last and the actual order
-				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > 0.6) {
+				// if trusted very good (profile)immediatly order the last and the actual order
+				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > borderLargeTrust) {
 					deliveryAgent.receiveOrder(order);
 					// return because all orders are send!
 					return;
@@ -177,6 +191,7 @@ public class OrderAgent
 		//remove a shipment from the global mapping to the suppliers
 		
 		if (shipment.getProcessed()) {
+
 			numberOfOpenOrders.put(deliverer, numberOfOpenOrders.get(deliverer) -1);
 
 		}

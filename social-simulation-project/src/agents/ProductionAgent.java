@@ -6,6 +6,7 @@ import net.sf.jasperreports.engine.xml.JRPenFactory.Left;
 import cern.jet.random.engine.MersenneTwister;
 import repast.simphony.essentials.RepastEssentials;
 import repast.simphony.random.RandomHelper;
+import social_simulation_project.BWeffectMeasurer;
 import artefacts.ProductionBatch;
 
 public class ProductionAgent 
@@ -23,7 +24,7 @@ public class ProductionAgent
 	{
 		this.inventoryAgent=inventoryAgent;
 		machineNumber = machines;
-		machineProductivity = 50;
+		machineProductivity = 35;
 		toProduce = new ArrayList<ProductionBatch>();
 		production = new ArrayList<ProductionBatch>();
 		waitingForProduction = new ArrayList<Integer>();
@@ -117,6 +118,7 @@ public class ProductionAgent
 			}
 			else i = machineNumber * machineProductivity;
 		}
+		BWeffectMeasurer.getMeasurer().updateManufacturer(i);
 		return i;
 	}
 	

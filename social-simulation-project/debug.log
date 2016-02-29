@@ -1,982 +1,189 @@
-ERROR [AWT-EventQueue-0] 2016-01-18 16:25:20,007 repast.simphony.ui.RSApplication - Error while initializing simulation
-java.lang.NullPointerException
-	at agents.TrustAgent.getTrustValue(TrustAgent.java:113)
-	at agents.ProcurementAgent.valueFill(ProcurementAgent.java:42)
-	at agents.ProcurementAgent.<init>(ProcurementAgent.java:33)
-	at actors.Buy.<init>(Buy.java:28)
-	at actors.Buy_Sale.<init>(Buy_Sale.java:19)
-	at actors.Distributor.<init>(Distributor.java:23)
-	at social_simulation_project.SimulationBuilder.build(SimulationBuilder.java:42)
-	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
-	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:157)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-FATAL [Thread-5] 2016-01-18 16:27:30,032 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (2.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Distributor$$FastClassByCGLIB$$a7b2cef7.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.NullPointerException
-	at agents.TrustAgent.inspectShipment(TrustAgent.java:91)
-	at agents.TrustAgent.inspectNewArrivals(TrustAgent.java:67)
-	at actors.Buy_Sale.updateTrust(Buy_Sale.java:29)
-	at actors.Distributor.run(Distributor.java:37)
-	... 10 more
-FATAL [Thread-5] 2016-01-19 13:52:48,959 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Retailer$$FastClassByCGLIB$$6ddf6be0.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.ClassCastException: artefacts.Order cannot be cast to artefacts.Order_forecast
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:89)
-	at actors.Buy_Sale.order(Buy_Sale.java:56)
-	at actors.Retailer.run(Retailer.java:45)
-	... 10 more
-ERROR [AWT-EventQueue-0] 2016-01-25 15:13:01,477 repast.simphony.ui.RSApplication - Error while initializing simulation
-java.lang.NullPointerException
-	at actors.Buy.<init>(Buy.java:24)
-	at actors.Buy_Sale.<init>(Buy_Sale.java:19)
-	at actors.Distributor.<init>(Distributor.java:24)
-	at social_simulation_project.SimulationBuilder.build(SimulationBuilder.java:44)
-	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
-	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:157)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-ERROR [AWT-EventQueue-0] 2016-01-25 15:13:02,047 repast.simphony.ui.RSApplication - Error while initializing simulation
-java.lang.NullPointerException
-	at actors.Buy.<init>(Buy.java:24)
-	at actors.Buy_Sale.<init>(Buy_Sale.java:19)
-	at actors.Distributor.<init>(Distributor.java:24)
-	at social_simulation_project.SimulationBuilder.build(SimulationBuilder.java:44)
-	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
-	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:157)
-	at repast.simphony.ui.RSApplication.start(RSApplication.java:189)
-	at repast.simphony.ui.action.StartRun.actionPerformed(StartRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-FATAL [Thread-5] 2016-01-28 10:11:05,243 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Customer$$FastClassByCGLIB$$a56b22ce.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.NullPointerException
-	at agents.TrustAgent.getTrustValue(TrustAgent.java:142)
-	at agents.OrderAgent.order(OrderAgent.java:48)
-	at actors.Customer.order(Customer.java:152)
-	at actors.Customer.run(Customer.java:78)
-	... 10 more
-FATAL [Thread-5] 2016-01-28 10:12:44,349 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Customer$$FastClassByCGLIB$$a56b22ce.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.NullPointerException
-	at actors.Buy_Sale.going2order(Buy_Sale.java:89)
-	at agents.OrderAgent.order(OrderAgent.java:49)
-	at actors.Customer.order(Customer.java:152)
-	at actors.Customer.run(Customer.java:78)
-	... 10 more
-FATAL [Thread-5] 2016-01-28 10:24:07,778 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Customer$$FastClassByCGLIB$$a56b22ce.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.NullPointerException
-	at actors.Buy_Sale.going2order(Buy_Sale.java:91)
-	at agents.OrderAgent.order(OrderAgent.java:49)
-	at actors.Customer.order(Customer.java:152)
-	at actors.Customer.run(Customer.java:78)
-	... 10 more
-FATAL [Thread-5] 2016-02-08 04:09:13,110 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (17.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Wholesaler$$FastClassByCGLIB$$2dfc88a4.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.IllegalArgumentException: Time value (17.0) invalid for Time Based forecasting model. Valid values are in the range 18.0-27.0 in increments of 1.0.
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.getForecastValue(AbstractTimeBasedModel.java:369)
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.forecast(AbstractTimeBasedModel.java:306)
-	at net.sourceforge.openforecast.models.AbstractForecastingModel.forecast(AbstractForecastingModel.java:188)
-	at agents.ForecastAgent.getForecast(ForecastAgent.java:139)
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:78)
-	at actors.Buy_Sale.order(Buy_Sale.java:67)
-	at actors.Wholesaler.run(Wholesaler.java:49)
-	... 10 more
-FATAL [Thread-5] 2016-02-08 04:10:58,329 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (15.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Wholesaler$$FastClassByCGLIB$$2dfc88a4.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.IllegalArgumentException: Time value (15.0) invalid for Time Based forecasting model. Valid values are in the range 17.0-26.0 in increments of 1.0.
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.getForecastValue(AbstractTimeBasedModel.java:369)
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.forecast(AbstractTimeBasedModel.java:306)
-	at net.sourceforge.openforecast.models.AbstractForecastingModel.forecast(AbstractForecastingModel.java:188)
-	at agents.ForecastAgent.getForecast(ForecastAgent.java:139)
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:78)
-	at actors.Buy_Sale.order(Buy_Sale.java:67)
-	at actors.Wholesaler.run(Wholesaler.java:49)
-	... 10 more
-FATAL [Thread-5] 2016-02-08 04:17:10,001 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (14.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Manufacturer$$FastClassByCGLIB$$377ccec1.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.IllegalArgumentException: Time value (14.0) invalid for Time Based forecasting model. Valid values are in the range 16.0-25.0 in increments of 1.0.
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.getForecastValue(AbstractTimeBasedModel.java:369)
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.forecast(AbstractTimeBasedModel.java:306)
-	at net.sourceforge.openforecast.models.AbstractForecastingModel.forecast(AbstractForecastingModel.java:188)
-	at agents.ForecastAgent.getForecast(ForecastAgent.java:139)
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:78)
-	at actors.Manufacturer.calculateDemand(Manufacturer.java:75)
-	at actors.Manufacturer.run(Manufacturer.java:57)
-	... 10 more
-FATAL [Thread-5] 2016-02-08 04:18:39,099 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (15.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Manufacturer$$FastClassByCGLIB$$377ccec1.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.IllegalArgumentException: Time value (15.0) invalid for Time Based forecasting model. Valid values are in the range 17.0-26.0 in increments of 1.0.
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.getForecastValue(AbstractTimeBasedModel.java:369)
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.forecast(AbstractTimeBasedModel.java:306)
-	at net.sourceforge.openforecast.models.AbstractForecastingModel.forecast(AbstractForecastingModel.java:188)
-	at agents.ForecastAgent.getForecast(ForecastAgent.java:139)
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:78)
-	at actors.Manufacturer.calculateDemand(Manufacturer.java:75)
-	at actors.Manufacturer.run(Manufacturer.java:57)
-	... 10 more
-FATAL [Thread-5] 2016-02-08 04:20:35,688 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (15.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Manufacturer$$FastClassByCGLIB$$377ccec1.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.IllegalArgumentException: Time value (15.0) invalid for Time Based forecasting model. Valid values are in the range 16.0-25.0 in increments of 1.0.
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.getForecastValue(AbstractTimeBasedModel.java:369)
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.forecast(AbstractTimeBasedModel.java:306)
-	at net.sourceforge.openforecast.models.AbstractForecastingModel.forecast(AbstractForecastingModel.java:188)
-	at agents.ForecastAgent.getForecast(ForecastAgent.java:139)
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:78)
-	at actors.Manufacturer.calculateDemand(Manufacturer.java:75)
-	at actors.Manufacturer.run(Manufacturer.java:57)
-	... 10 more
-FATAL [Thread-5] 2016-02-08 04:21:59,411 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (11.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Manufacturer$$FastClassByCGLIB$$377ccec1.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.IllegalArgumentException: Time value (11.0) invalid for Time Based forecasting model. Valid values are in the range 13.0-22.0 in increments of 1.0.
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.getForecastValue(AbstractTimeBasedModel.java:369)
-	at net.sourceforge.openforecast.models.AbstractTimeBasedModel.forecast(AbstractTimeBasedModel.java:306)
-	at net.sourceforge.openforecast.models.AbstractForecastingModel.forecast(AbstractForecastingModel.java:188)
-	at agents.ForecastAgent.getForecast(ForecastAgent.java:139)
-	at agents.ForecastAgent.calculateDemand(ForecastAgent.java:78)
-	at actors.Manufacturer.calculateDemand(Manufacturer.java:75)
-	at actors.Manufacturer.run(Manufacturer.java:57)
-	... 10 more
-ERROR [AWT-EventQueue-0] 2016-02-08 09:42:51,077 repast.simphony.ui.plugin.editor.OptionsDialog - Error ok'ing content in Options Dialog
-repast.simphony.ui.plugin.editor.InvalidStateException: org.pietschy.wizard.InvalidStateException: Duplicate data source ids ('Current_incoming_inventory_level') are not not allowed.
-	at repast.simphony.ui.plugin.editor.OptionsContentWizardStepAdapter.ok(OptionsContentWizardStepAdapter.java:68)
-	at repast.simphony.ui.plugin.editor.OptionsDialog.ok(OptionsDialog.java:156)
-	at repast.simphony.ui.plugin.editor.OptionsEditorDialog.ok(OptionsEditorDialog.java:107)
-	at repast.simphony.ui.plugin.editor.OptionsDialog$1.actionPerformed(OptionsDialog.java:111)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
-	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
-	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.awt.WaitDispatchSupport.enter(Unknown Source)
-	at java.awt.Dialog.show(Unknown Source)
-	at java.awt.Component.show(Unknown Source)
-	at java.awt.Component.setVisible(Unknown Source)
-	at java.awt.Window.setVisible(Unknown Source)
-	at java.awt.Dialog.setVisible(Unknown Source)
-	at repast.simphony.ui.plugin.editor.OptionsDialog.showDialog(OptionsDialog.java:251)
-	at repast.simphony.ui.plugin.editor.OptionsEditorDialog.display(OptionsEditorDialog.java:59)
-	at repast.simphony.ui.tree.ScenarioTree.showDialog(ScenarioTree.java:251)
-	at repast.simphony.ui.tree.ScenarioTree.access$1(ScenarioTree.java:242)
-	at repast.simphony.ui.tree.ScenarioTree$1.mouseClicked(ScenarioTree.java:51)
-	at java.awt.AWTEventMulticaster.mouseClicked(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-Caused by: org.pietschy.wizard.InvalidStateException: Duplicate data source ids ('Current_incoming_inventory_level') are not not allowed.
-	at repast.simphony.data2.wizard.MethodSourcePanel.apply(MethodSourcePanel.java:244)
-	at repast.simphony.data2.wizard.NonAggregateSourceStep.applyState(NonAggregateSourceStep.java:67)
-	at repast.simphony.ui.plugin.editor.OptionsContentWizardStepAdapter.ok(OptionsContentWizardStepAdapter.java:66)
-	... 83 more
-ERROR [AWT-EventQueue-0] 2016-02-08 09:44:02,948 repast.simphony.ui.plugin.editor.OptionsDialog - Error ok'ing content in Options Dialog
-repast.simphony.ui.plugin.editor.InvalidStateException: org.pietschy.wizard.InvalidStateException: Duplicate data source ids ('Current_incoming_inventory_level') are not not allowed.
-	at repast.simphony.ui.plugin.editor.OptionsContentWizardStepAdapter.ok(OptionsContentWizardStepAdapter.java:68)
-	at repast.simphony.ui.plugin.editor.OptionsDialog.ok(OptionsDialog.java:156)
-	at repast.simphony.ui.plugin.editor.OptionsEditorDialog.ok(OptionsEditorDialog.java:107)
-	at repast.simphony.ui.plugin.editor.OptionsDialog$1.actionPerformed(OptionsDialog.java:111)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
-	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
-	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.awt.WaitDispatchSupport.enter(Unknown Source)
-	at java.awt.Dialog.show(Unknown Source)
-	at java.awt.Component.show(Unknown Source)
-	at java.awt.Component.setVisible(Unknown Source)
-	at java.awt.Window.setVisible(Unknown Source)
-	at java.awt.Dialog.setVisible(Unknown Source)
-	at repast.simphony.ui.plugin.editor.OptionsDialog.showDialog(OptionsDialog.java:251)
-	at repast.simphony.ui.plugin.editor.OptionsEditorDialog.display(OptionsEditorDialog.java:59)
-	at repast.simphony.ui.tree.ScenarioTree.showDialog(ScenarioTree.java:251)
-	at repast.simphony.ui.tree.ScenarioTree.access$1(ScenarioTree.java:242)
-	at repast.simphony.ui.tree.ScenarioTree$1.mouseClicked(ScenarioTree.java:51)
-	at java.awt.AWTEventMulticaster.mouseClicked(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$500(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-Caused by: org.pietschy.wizard.InvalidStateException: Duplicate data source ids ('Current_incoming_inventory_level') are not not allowed.
-	at repast.simphony.data2.wizard.MethodSourcePanel.apply(MethodSourcePanel.java:244)
-	at repast.simphony.data2.wizard.NonAggregateSourceStep.applyState(NonAggregateSourceStep.java:67)
-	at repast.simphony.ui.plugin.editor.OptionsContentWizardStepAdapter.ok(OptionsContentWizardStepAdapter.java:66)
-	... 83 more
-FATAL [Thread-4] 2016-02-21 14:14:29,291 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Customer$$FastClassByCGLIB$$a56b22ce.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.Error: Unresolved compilation problems: 
-	current_incoming_inventory_level cannot be resolved to a variable
-	current_incoming_inventory_level cannot be resolved to a variable
-	current_incoming_inventory_level cannot be resolved to a variable
-
-	at actors.Customer.consume(Customer.java:101)
-	at actors.Customer.run(Customer.java:72)
-	... 10 more
-FATAL [Thread-4] 2016-02-21 14:16:05,444 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Wholesaler$$FastClassByCGLIB$$2dfc88a4.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.Error: Unresolved compilation problems: 
-	next_demand cannot be resolved to a variable
-	desired_inventory_level cannot be resolved to a variable
-	next_demand cannot be resolved to a variable
-	current_outgoing_inventory_level cannot be resolved to a variable
-	current_outgoing_inventory_level cannot be resolved to a variable
-	desired_inventory_level cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-	next_demand cannot be resolved to a variable
-	current_outgoing_inventory_level cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-	next_demand cannot be resolved to a variable
-	current_outgoing_inventory_level cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-	next_demand cannot be resolved to a variable
-	current_outgoing_inventory_level cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-	order_quantity cannot be resolved to a variable
-
-	at actors.Wholesaler.order(Wholesaler.java:73)
-	at actors.Wholesaler.run(Wholesaler.java:51)
-	... 10 more
-FATAL [Thread-4] 2016-02-21 14:17:56,169 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.reflect.InvocationTargetException
-	at actors.Manufacturer$$FastClassByCGLIB$$377ccec1.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: java.lang.Error: Unresolved compilation problems: 
-	current_outgoing_inventory_level cannot be resolved to a variable
-	current_outgoing_inventory_level cannot be resolved to a variable
-
-	at actors.Manufacturer.produce(Manufacturer.java:124)
-	at actors.Manufacturer.run(Manufacturer.java:61)
-	... 10 more
-ERROR [AWT-EventQueue-0] 2016-02-21 14:39:34,488 repast.simphony.ui.RSApplication - Error while initializing simulation
-repast.simphony.data2.DataException: Error creating MethodDataSource
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:60)
-	at repast.simphony.data2.builder.NonAggregateDataSetBuilder.defineMethodDataSource(NonAggregateDataSetBuilder.java:85)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.createNABuilder(DataSetComponentControllerAction.java:134)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.batchInitialize(DataSetComponentControllerAction.java:65)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:192)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:190)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:349)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:155)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6527)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3321)
-	at java.awt.Component.processEvent(Component.java:6292)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4883)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2739)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:746)
-	at java.awt.EventQueue.access$400(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:697)
-	at java.awt.EventQueue$3.run(EventQueue.java:691)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:719)
-	at java.awt.EventQueue$4.run(EventQueue.java:717)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:716)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-Caused by: java.lang.NoSuchMethodException: actors.Customer.getCurrent_incoming_inventory_level()
-	at java.lang.Class.getMethod(Class.java:1773)
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:43)
-	... 50 more
-ERROR [AWT-EventQueue-0] 2016-02-21 14:49:10,107 repast.simphony.ui.RSApplication - Error while initializing simulation
-repast.simphony.data2.DataException: Error creating MethodDataSource
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:60)
-	at repast.simphony.data2.builder.NonAggregateDataSetBuilder.defineMethodDataSource(NonAggregateDataSetBuilder.java:85)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.createNABuilder(DataSetComponentControllerAction.java:134)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.batchInitialize(DataSetComponentControllerAction.java:65)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:192)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:190)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:349)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:155)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6527)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3321)
-	at java.awt.Component.processEvent(Component.java:6292)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4883)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2739)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:746)
-	at java.awt.EventQueue.access$400(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:697)
-	at java.awt.EventQueue$3.run(EventQueue.java:691)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:719)
-	at java.awt.EventQueue$4.run(EventQueue.java:717)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:716)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-Caused by: java.lang.NoSuchMethodException: actors.Customer.getCurrent_incoming_inventory_level()
-	at java.lang.Class.getMethod(Class.java:1773)
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:43)
-	... 50 more
-ERROR [AWT-EventQueue-0] 2016-02-21 15:04:35,155 repast.simphony.ui.RSApplication - Error while initializing simulation
-repast.simphony.data2.DataException: Error creating MethodDataSource
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:60)
-	at repast.simphony.data2.builder.NonAggregateDataSetBuilder.defineMethodDataSource(NonAggregateDataSetBuilder.java:85)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.createNABuilder(DataSetComponentControllerAction.java:134)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.batchInitialize(DataSetComponentControllerAction.java:65)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:192)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:190)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:349)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:155)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6527)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3321)
-	at java.awt.Component.processEvent(Component.java:6292)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4883)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2739)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:746)
-	at java.awt.EventQueue.access$400(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:697)
-	at java.awt.EventQueue$3.run(EventQueue.java:691)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:719)
-	at java.awt.EventQueue$4.run(EventQueue.java:717)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:716)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-Caused by: java.lang.NoSuchMethodException: actors.Customer.getCurrent_incoming_inventory_level()
-	at java.lang.Class.getMethod(Class.java:1773)
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:43)
-	... 50 more
-ERROR [AWT-EventQueue-0] 2016-02-21 15:08:35,856 repast.simphony.ui.RSApplication - Error while initializing simulation
-repast.simphony.data2.DataException: Error creating MethodDataSource
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:60)
-	at repast.simphony.data2.builder.NonAggregateDataSetBuilder.defineMethodDataSource(NonAggregateDataSetBuilder.java:85)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.createNABuilder(DataSetComponentControllerAction.java:134)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.batchInitialize(DataSetComponentControllerAction.java:65)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:192)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:190)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:349)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:155)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6527)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3321)
-	at java.awt.Component.processEvent(Component.java:6292)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4883)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2739)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:746)
-	at java.awt.EventQueue.access$400(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:697)
-	at java.awt.EventQueue$3.run(EventQueue.java:691)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:719)
-	at java.awt.EventQueue$4.run(EventQueue.java:717)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:716)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-Caused by: java.lang.NoSuchMethodException: actors.Customer.getCurrent_incoming_inventory_level()
-	at java.lang.Class.getMethod(Class.java:1773)
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:43)
-	... 50 more
-ERROR [AWT-EventQueue-0] 2016-02-21 15:10:33,260 repast.simphony.ui.RSApplication - Error while initializing simulation
-repast.simphony.data2.DataException: Error creating MethodDataSource
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:60)
-	at repast.simphony.data2.builder.NonAggregateDataSetBuilder.defineMethodDataSource(NonAggregateDataSetBuilder.java:85)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.createNABuilder(DataSetComponentControllerAction.java:134)
-	at repast.simphony.data2.engine.DataSetComponentControllerAction.batchInitialize(DataSetComponentControllerAction.java:65)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:192)
-	at repast.simphony.engine.controller.DefaultController$1.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:292)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:295)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:288)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:190)
-	at repast.simphony.engine.controller.DefaultController.batchInitialize(DefaultController.java:349)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:155)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6527)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3321)
-	at java.awt.Component.processEvent(Component.java:6292)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4883)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2739)
-	at java.awt.Component.dispatchEvent(Component.java:4705)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:746)
-	at java.awt.EventQueue.access$400(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:697)
-	at java.awt.EventQueue$3.run(EventQueue.java:691)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:719)
-	at java.awt.EventQueue$4.run(EventQueue.java:717)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:716)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-Caused by: java.lang.NoSuchMethodException: actors.Customer.getCurrent_incoming_inventory_level()
-	at java.lang.Class.getMethod(Class.java:1773)
-	at repast.simphony.data2.MethodDataSource.<init>(MethodDataSource.java:43)
-	... 50 more
+INFO  [AWT-EventQueue-0] 2016-02-28 20:00:25,266 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:00:25,438 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,501 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost5938025256047778310.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,564 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,564 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0983
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:42,564 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664\Jakob_localhost5938025256047778310.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:00:45,090 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:01:45,091 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,091 repast.simphony.batch.ssh.SessionsDriver - Run Time: 1,0421
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,153 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686036664
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,169 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,185 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:01:45,185 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 1,1423
+INFO  [AWT-EventQueue-0] 2016-02-28 20:03:44,836 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:03:45,008 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,118 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost8139282719916974011.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,181 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,181 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0965
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:02,181 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389\Jakob_localhost8139282719916974011.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:04:05,472 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:05:05,493 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:06:05,502 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,502 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0554
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,564 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686236389
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,595 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,611 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0018
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:06:05,611 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 2,1537
+INFO  [AWT-EventQueue-0] 2016-02-28 20:10:28,681 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:10:28,869 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,044 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost492077414103739787.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,153 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,153 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1090
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:49,153 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615\Jakob_localhost492077414103739787.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:10:51,903 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:11:51,921 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:12:51,922 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:13:51,929 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:51,929 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0463
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:51,991 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686642615
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:52,007 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:52,023 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:13:52,023 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1571
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:28,203 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:28,359 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:29,015 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:14:29,015 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,150 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost773906498342857741.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,212 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,212 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1237
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:52,212 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789\Jakob_localhost773906498342857741.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:14:55,186 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:15:55,219 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:16:55,233 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:17:55,237 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,237 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0504
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,409 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456686884789
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,456 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,471 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0039
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:17:55,471 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1786
+INFO  [AWT-EventQueue-0] 2016-02-28 20:23:29,126 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:23:29,298 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,919 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost1291505943000119006.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,985 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,985 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1157
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:51,985 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043\Jakob_localhost1291505943000119006.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:23:54,632 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:24:54,654 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,654 repast.simphony.batch.ssh.SessionsDriver - Run Time: 1,0445
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,685 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687425043
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,701 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,717 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0010
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:24:54,717 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 1,1615
+INFO  [AWT-EventQueue-0] 2016-02-28 20:31:12,212 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:31:12,384 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,010 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost7853454186697068934.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,064 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,064 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1035
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:32,064 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855\Jakob_localhost7853454186697068934.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:31:35,106 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:32:35,141 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:33:35,148 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:34:35,160 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,160 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0516
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,253 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456687885855
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,300 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,316 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0026
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:34:35,316 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1577
+INFO  [AWT-EventQueue-0] 2016-02-28 20:39:41,978 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:39:42,233 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,794 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost6666793548779466350.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,857 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,857 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1059
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:04,857 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504\Jakob_localhost6666793548779466350.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:40:07,560 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:41:07,577 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:42:07,579 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:43:07,579 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,579 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0454
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,639 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688398504
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,667 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,683 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0017
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:43:07,683 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1532
+INFO  [AWT-EventQueue-0] 2016-02-28 20:43:56,200 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:43:56,372 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,668 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost4112898796315073869.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,731 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,747 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1210
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:19,747 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470\Jakob_localhost4112898796315073869.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:44:22,122 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:45:22,148 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:46:22,149 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:47:22,156 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,156 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0401
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,202 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688652470
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,234 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,234 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0013
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:47:22,234 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1627
+INFO  [AWT-EventQueue-0] 2016-02-28 20:48:02,196 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:48:02,368 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,097 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost3968101126612122811.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,143 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,159 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1028
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:22,159 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974\Jakob_localhost3968101126612122811.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:48:24,865 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:49:24,894 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:50:24,905 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:51:24,914 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:24,914 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0459
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:24,976 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456688895974
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:24,992 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:25,007 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:51:25,007 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1508
+INFO  [AWT-EventQueue-0] 2016-02-28 20:51:59,579 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-28 20:51:59,751 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Jakob\workspace\Social_Simulation\social-supply-chain-simulation\social-simulation-project\batch\batch_params.xml to
+	C:\Users\Jakob\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,683 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Jakob\AppData\Local\Temp\Jakob_localhost1361214621387249828.zip to 
+C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,746 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,746 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1016
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:17,746 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648\Jakob_localhost1361214621387249828.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:52:20,484 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-28 20:53:20,523 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:54:20,528 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-28 20:55:20,534 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,534 repast.simphony.batch.ssh.SessionsDriver - Run Time: 3,0465
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,612 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Jakob\AppData\Local\Temp\simphony_model_1456689131648
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,627 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Jakob/workspace/Social_Simulation/social-supply-chain-simulation/social-simulation-project/output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,643 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0018
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-28 20:55:20,643 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 3,1502

@@ -61,7 +61,7 @@ public class TrustAssessment
 		assertEquals(schedule.getTickCount(), 3, 0);
 		//assertEquals(admissions.getFacility().getOccupancy(),3);
 		
-		System.out.println(schedule.getTickCount());
+		//System.out.println(schedule.getTickCount());
 	}
 	
 	@Test

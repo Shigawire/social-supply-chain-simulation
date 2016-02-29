@@ -7,6 +7,7 @@ import SimulationSetups.TrustSetter;
 import agents.DeliveryAgent;
 import agents.ProductionAgent;
 import artefacts.Order;
+import artefacts.Profile;
 
 /**
 * This class represents a wholesaler. Wholesalers do not
@@ -23,9 +24,9 @@ public class Wholesaler extends BuySale
 	protected int lastOrderUpToLevel = -1;
 	protected int lastDemand = 0;
 	
-	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price) 
+	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel);
+		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
 		
 		this.price = price;
 		deliveryAgent = new DeliveryAgent(price, this, 3, 4);
@@ -61,7 +62,7 @@ public class Wholesaler extends BuySale
 		this.productionAgent.harvest();
 	}
 	
-	private void produce()
+	public void produce()
 	{
 		this.productionAgent.produce2();
 	}
@@ -73,7 +74,7 @@ public class Wholesaler extends BuySale
 		// 3. order difference: +shortage-the value I do not need because of information sharing
 		
 		// 1. multiplied with 2 because he need twice of the outgoing because ot the production process
-		nextDemand = 2 * (this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
+		nextDemand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
 		
 		//desiredInventoryLevel = nextDemand * 15 / 10;
 		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;

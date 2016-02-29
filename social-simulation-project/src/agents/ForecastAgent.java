@@ -6,6 +6,7 @@ import repast.simphony.random.RandomHelper;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import cern.jet.random.Normal;
 import artefacts.Order;
 import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.DataPoint;
@@ -148,7 +149,9 @@ public class ForecastAgent
     
 	public int customerDemand() 
 	{
-		int dem = RandomHelper.nextIntFromTo(10, 25);
+		//int dem = RandomHelper.nextIntFromTo(10, 25);
+		Normal normaldistribution= RandomHelper.createNormal(10,1);
+		int dem= normaldistribution.nextInt();
 		// System.out.println(dem);
 		return dem;
 	}

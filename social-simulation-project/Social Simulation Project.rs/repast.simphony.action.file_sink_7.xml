@@ -8,6 +8,7 @@
     <string>RetailerBWEValue</string>
     <string>WholesalerBWEValue</string>
     <string>DistributorBWEValue</string>
+    <string>ManufacturerBWEValue</string>
   </sourceIds>
   <fileName>ModelOutput.txt</fileName>
   <addTimeStamp>true</addTimeStamp>
