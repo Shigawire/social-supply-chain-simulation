@@ -26,6 +26,7 @@ import actors.Retailer;
 import actors.Sale;
 import actors.Wholesaler;
 import artefacts.Order;
+import artefacts.Profile;
 
 /*
  * http://repast.sourceforge.net/docs/RepastModelTesting.pdf documentation
@@ -75,29 +76,30 @@ public class OrderTest
 	@Test
 	public void test() 
 	{
+		Profile a=new Profile(0.44,0.415,0.145,0.22,0.31,0.31,0.16,0.67,0.53,0.35);
 		this.context.add(OrderObserver.giveObserver());
 		OrderObserver.giveObserver().setAmount(0);
 		
-		Manufacturer manufacturer1 = new Manufacturer(10, 0, 100);
+		Manufacturer manufacturer1 = new Manufacturer(10, 0, 100,a);
 		ArrayList<Sale> manufacturerList = new ArrayList<Sale>();
 		manufacturerList.add(manufacturer1);
 		
-		Distributor distributor1 = new Distributor(manufacturerList, 15, 11, 50);
+		Distributor distributor1 = new Distributor(manufacturerList, 15, 11, 50,a);
 		
 		ArrayList<Sale> distributorList = new ArrayList<Sale>();
 		distributorList.add(distributor1);
 
-		Wholesaler wholesaler1 = new Wholesaler(distributorList, 12, 11, 40);
+		Wholesaler wholesaler1 = new Wholesaler(distributorList, 12, 11, 40,a);
 
 		ArrayList<Sale> wholesalerList = new ArrayList<Sale>();
 		wholesalerList.add(wholesaler1);	
 		
-		Retailer retailer1 = new Retailer(wholesalerList, 10, 10, 10);
+		Retailer retailer1 = new Retailer(wholesalerList, 10, 10, 10,a);
 		
 		ArrayList<Sale> retailerList = new ArrayList<Sale>();
 		retailerList.add(retailer1);
 		
-		Customer customer1 = new Customer(retailerList, 10, 15);
+		Customer customer1 = new Customer(retailerList, 10, 15,a);
 		ArrayList<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(customer1);
 
@@ -135,7 +137,7 @@ public class OrderTest
   
     	// Let's do a custom order with qty 1. This order must be received in tick 3.
     	Order order = new Order(1, customer1.getOrderAgent());
-    	System.out.println(order.getId());
+    	//System.out.println(order.getId());
     	customer1.getOrderAgent().order(customer1.getTrustAgent(), order);
     	// somewhere in the next 500 Ticks I want my order from the beginning be arrived.
     	
@@ -152,7 +154,7 @@ public class OrderTest
 	    	if (customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()) != null) {
 	    		// assertEquals("The small order of qty 1 arrives in a later shipment", customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()), order);
 	    		assertEquals("The small order of qty. 1 arrives in tick 3", 3, schedule.getTickCount(), 0);
-	    		System.out.println("Our order that was sent in tick 1 was received as shipment in tick " + schedule.getTickCount());
+	    		//System.out.println("Our order that was sent in tick 1 was received as shipment in tick " + schedule.getTickCount());
 	    		break;
 	    	}
 		}

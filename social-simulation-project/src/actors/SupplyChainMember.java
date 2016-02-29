@@ -7,6 +7,7 @@ import agents.ForecastAgent;
 import agents.InventoryAgent;
 import agents.OrderAgent;
 import agents.TrustAgent;
+import artefacts.Profile;
 import artefacts.trust.DimensionType;
 
 /**
@@ -18,6 +19,7 @@ import artefacts.trust.DimensionType;
 */
 public abstract class SupplyChainMember 
 {
+	protected Profile myProfile; // give the profile of the actor (--> 1=A,2=B,3=C)
 	protected String id; // id for every member
 	protected int currentIncomingInventoryLevel;
 	// inventory with items that has to be used to produce sellable items
@@ -36,20 +38,20 @@ public abstract class SupplyChainMember
 	   * id in a hexadecimal format.
 	   * 
 	   */
-	public SupplyChainMember(int incomingInventoryLevel, int outgoingInventoryLevel) 
+	public SupplyChainMember(int incomingInventoryLevel, int outgoingInventoryLevel,Profile p) 
 	{
 		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
-		
+		this.myProfile=p;
 		// Create inventory agent with inventoryLevels
 		this.inventoryAgent = new InventoryAgent(incomingInventoryLevel, outgoingInventoryLevel);
 		this.forecastAgent = new ForecastAgent();
 		
 		this.dimensionRatings = new HashMap<DimensionType, Double>();
 		
-		dimensionRatings.put(DimensionType.RELIABILITY, 0.25);
-		dimensionRatings.put(DimensionType.COMPETENCE, 0.25);
-		dimensionRatings.put(DimensionType.SHARED_VALUES, 0.25);
-		dimensionRatings.put(DimensionType.QUALITY, 0.25);
+		dimensionRatings.put(DimensionType.RELIABILITY, myProfile.getReliabilityRelevance());
+		dimensionRatings.put(DimensionType.COMPETENCE, myProfile.getCompetenceRelevance());
+		dimensionRatings.put(DimensionType.SHARED_VALUES, myProfile.getSharedValuesRelevance());
+		dimensionRatings.put(DimensionType.QUALITY, myProfile.getQualityRelevance());
 	}
 	
 	// Methods every supply chain member must implement
@@ -81,6 +83,9 @@ public abstract class SupplyChainMember
 		// implemented for relevant actors in Buy
 		return null;
 	}
+	public void setProfile(Profile p){
+		myProfile=p;
+	}
 	
 	/*
 	 * GETTERS
@@ -108,5 +113,8 @@ public abstract class SupplyChainMember
 	public InventoryAgent getInventoryAgent()
 	{
 		return this.inventoryAgent;
+	}
+	public Profile getProfile(){
+		return myProfile;
 	}
 }

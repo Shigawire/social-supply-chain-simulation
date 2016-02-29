@@ -149,7 +149,6 @@ public class TrustAgent
 	 */
 	public double getTrustValue(DeliveryAgent deliveryAgent) 
 	{	
-		// TODO Jakob's code...
 		TrustSetter s = TrustSetter.getInstance();
 		if (s.getIndirectTrustIndegrated()) {
 			//indirect trust
@@ -163,7 +162,7 @@ public class TrustAgent
 			
 			if (runs > 0) {
 				trustValue = trustValue / runs;
-				return (this.trustStorage.get(deliveryAgent).getUnifiedTrustValue() * 0.5 + trustValue * 0.5);		
+				return (this.trustStorage.get(deliveryAgent).getUnifiedTrustValue() *(1-supplyChainMember.getProfile().getIndirectTrust()) + trustValue *supplyChainMember.getProfile().getIndirectTrust() );		
 			} else {
 				// whole trust value
 				return this.trustStorage.get(deliveryAgent).getUnifiedTrustValue();
