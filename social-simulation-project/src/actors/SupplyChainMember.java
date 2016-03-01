@@ -19,43 +19,52 @@ import artefacts.trust.DimensionType;
 */
 public abstract class SupplyChainMember 
 {
-	protected Profile myProfile; // give the profile of the actor (--> 1=A,2=B,3=C)
-	protected String id; // id for every member
-	protected int currentIncomingInventoryLevel;
-	// inventory with items that has to be used to produce sellable items
-	// respectively for the customer the inventory of items he consumes
-	protected int currentOutgoingInventoryLevel; // inventory with produced and therfore now sellable itmes
-	protected TrustAgent trustAgent; // Agent for the trust to suppliers
+	// give the profile of the actor (--> 1=A,2=B,3=C)
+	protected Profile ActorProfile;
+	
+	//the Actor's Agents
+	protected TrustAgent trustAgent;
 	protected InventoryAgent inventoryAgent;
 	protected ForecastAgent forecastAgent;
 	
+	
 	// Map with dimension ratings gives the importance for every dimension
 	// of trust for every Supply Chain member based on the profiles
+	/**
+	 * This variable maps the trust-dimensions (reliability, competence, shared values, quality) to the agent-specific ratings.
+	 */
+	
 	protected Map<DimensionType, Double> dimensionRatings;
 														
-	/**
-	   * This constructor gives every supply chain member a unique
-	   * id in a hexadecimal format.
-	   * 
-	   */
-	public SupplyChainMember(int incomingInventoryLevel, int outgoingInventoryLevel,Profile p) 
+	//The constructor is usually called from a sub-class with the super() method.
+	public SupplyChainMember(int incomingInventoryLevel, int outgoingInventoryLevel, Profile profile) 
 	{
-		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
-		this.myProfile=p;
-		// Create inventory agent with inventoryLevels
+		//assign a specific profile to this actor. Read more about these profiles in the documentation.
+		this.ActorProfile = profile;
+
+		//create and assign necessary agents to this member.
+		
+		//initialize the inventory agent with the pre-defined inventory levels as set in the simulation builders
 		this.inventoryAgent = new InventoryAgent(incomingInventoryLevel, outgoingInventoryLevel);
 		this.forecastAgent = new ForecastAgent();
 		
+		//fill the dimension-rating map with specific values
+		
 		this.dimensionRatings = new HashMap<DimensionType, Double>();
 		
-		dimensionRatings.put(DimensionType.RELIABILITY, myProfile.getReliabilityRelevance());
-		dimensionRatings.put(DimensionType.COMPETENCE, myProfile.getCompetenceRelevance());
-		dimensionRatings.put(DimensionType.SHARED_VALUES, myProfile.getSharedValuesRelevance());
-		dimensionRatings.put(DimensionType.QUALITY, myProfile.getQualityRelevance());
+		dimensionRatings.put(DimensionType.RELIABILITY, profile.getReliabilityRelevance());
+		dimensionRatings.put(DimensionType.COMPETENCE, profile.getCompetenceRelevance());
+		dimensionRatings.put(DimensionType.SHARED_VALUES, profile.getSharedValuesRelevance());
+		dimensionRatings.put(DimensionType.QUALITY, profile.getQualityRelevance());
 	}
 	
-	// Methods every supply chain member must implement
-	public abstract void run(); // run method what every supply chain member does in the tick
+	//Methods every supply chain member must implement
+	
+	//run method what every supply chain actor does in the tick
+	public abstract void run(); 
+	
+	//This method requires every supply chain actor to receive and process their incoming shipments. 
+	//Imagine it's like a postbox...
 	public abstract void receiveShipments();
 	
 	// updates the list of buyers needed for information sharing
@@ -83,8 +92,8 @@ public abstract class SupplyChainMember
 		// implemented for relevant actors in Buy
 		return null;
 	}
-	public void setProfile(Profile p){
-		myProfile=p;
+	public void setProfile(Profile profile){
+		ActorProfile = profile;
 	}
 	
 	/*
@@ -115,6 +124,6 @@ public abstract class SupplyChainMember
 		return this.inventoryAgent;
 	}
 	public Profile getProfile(){
-		return myProfile;
+		return ActorProfile;
 	}
 }
