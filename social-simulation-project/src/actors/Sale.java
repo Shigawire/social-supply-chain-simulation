@@ -13,7 +13,7 @@ public interface Sale
 	
 	int price=0;
 	// a map with all buyers and the value they ordered last for information sharing
-	Map<Buy, Integer> buyer = null;
+	Map<BuyingActor, Integer> buyer = null;
 	DeliveryAgent deliveryAgent = null;
 	ProductionAgent productionAgent=null;
 	

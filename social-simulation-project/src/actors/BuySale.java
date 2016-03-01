@@ -12,7 +12,7 @@ import artefacts.Order;
 import artefacts.Profile;
 
 // Combination of Interface Sale and class buy
-public abstract class BuySale extends Buy implements Sale
+public abstract class BuySale extends BuyingActor implements Sale
 {
 	protected int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
 	protected int desiredInventoryLevel;
@@ -27,9 +27,10 @@ public abstract class BuySale extends Buy implements Sale
 	
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
-	public BuySale(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel,Profile p) 
+
+	public BuySale(ArrayList<Sale> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel, p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, p);
 	}
 	
 	// receiving the shipments that was delivered last tick
@@ -72,8 +73,7 @@ public abstract class BuySale extends Buy implements Sale
 		lastDemand = nextDemand;
 		lastOrderUpToLevel = orderUpToLevel;
 		
-		// 2.
-		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
+		int currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		// if current bigger than desiredlevel return
 		if (currentOutgoingInventoryLevel > desiredInventoryLevel) {
 			return;

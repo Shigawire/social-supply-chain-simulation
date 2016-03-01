@@ -141,7 +141,7 @@ public class Manufacturer extends SupplyChainMember implements Sale
 		lastDemand = nextDemand;
 		lastOrderUpToLevel = orderUpToLevel;
 		// 2.
-		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
+		int currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		
 		//if current bigger than desiredlevel return		
 		if(currentOutgoingInventoryLevel > desiredInventoryLevel){
