@@ -151,7 +151,7 @@ public class OrderTest
 			
 	    	this.schedule.execute();
 	    	
-	    	if (customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()) != null) {
+	    	if (customer1.getInventoryAgent().getEverReceivedShipments().get(order.toString()) != null) {
 	    		// assertEquals("The small order of qty 1 arrives in a later shipment", customer1.getInventoryAgent().getEverReceivedShipments().get(order.getId()), order);
 	    		assertEquals("The small order of qty. 1 arrives in tick 3", 3, schedule.getTickCount(), 0);
 	    		//System.out.println("Our order that was sent in tick 1 was received as shipment in tick " + schedule.getTickCount());

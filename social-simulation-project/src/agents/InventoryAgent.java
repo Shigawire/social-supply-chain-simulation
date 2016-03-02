@@ -85,7 +85,7 @@ public class InventoryAgent
 		}
 		
 		//add this shipment to our infinite history list
-		this.everReceivedShipments.put(shipment.getId(), shipment);
+		this.everReceivedShipments.put(shipment.toString(), shipment);
 		
 		//calculate how many items survived the deep abyss of the DHL delivery truck.
 		int undamagedQuantity = (int)(shipment.getPartDelivery() * (1 - shipment.getfailurePercentage()));
