@@ -168,6 +168,9 @@ public class BWeffectMeasurer
 	// update the with new order
 	public void update(Order order) 
 	{
+		System.out.println(c.getClass());
+		System.out.println(order.getOrderAgent().getParent().getClass().equals("a"));
+		
 		if (order.getOrderAgent().getParent().getClass().equals(c.getClass())) {
 			measurer.updateCustomer(order.getQuantity());
 		}

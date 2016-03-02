@@ -8,7 +8,7 @@ import agents.OrderAgent;
 import agents.ProductionAgent;
 
 // Interface for all actors who sell
-public interface Sale 
+public interface SellingActor 
 {
 	
 	int price=0;

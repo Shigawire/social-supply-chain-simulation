@@ -18,12 +18,13 @@ import repast.simphony.engine.environment.DefaultScheduleRunner;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.schedule.Schedule;
+import social_simulation_project.BWeffectMeasurer;
 import social_simulation_project.OrderObserver;
 import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
-import actors.Sale;
+import actors.SellingActor;
 import actors.Wholesaler;
 import artefacts.Order;
 import artefacts.Profile;
@@ -81,27 +82,34 @@ public class OrderTest
 		OrderObserver.giveObserver().setAmount(0);
 		
 		Manufacturer manufacturer1 = new Manufacturer(10, 0, 100,a);
-		ArrayList<Sale> manufacturerList = new ArrayList<Sale>();
+		ArrayList<SellingActor> manufacturerList = new ArrayList<SellingActor>();
 		manufacturerList.add(manufacturer1);
 		
 		Distributor distributor1 = new Distributor(manufacturerList, 15, 11, 50,a);
 		
-		ArrayList<Sale> distributorList = new ArrayList<Sale>();
+		ArrayList<SellingActor> distributorList = new ArrayList<SellingActor>();
 		distributorList.add(distributor1);
 
 		Wholesaler wholesaler1 = new Wholesaler(distributorList, 12, 11, 40,a);
 
-		ArrayList<Sale> wholesalerList = new ArrayList<Sale>();
+		ArrayList<SellingActor> wholesalerList = new ArrayList<SellingActor>();
 		wholesalerList.add(wholesaler1);	
 		
-		Retailer retailer1 = new Retailer(wholesalerList, 10, 10, 10,a);
+		//Give the retailer an initial inventory of 200 - this ensures there is enough stock to fulfill any upcoming demand instantly.
+		Retailer retailer1 = new Retailer(wholesalerList, 200, 10, 10, a);
 		
-		ArrayList<Sale> retailerList = new ArrayList<Sale>();
+		ArrayList<SellingActor> retailerList = new ArrayList<SellingActor>();
 		retailerList.add(retailer1);
 		
-		Customer customer1 = new Customer(retailerList, 10, 15,a);
+		Customer customer1 = new Customer(retailerList, 10, 15, a);
 		ArrayList<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(customer1);
+		
+		BWeffectMeasurer.getMeasurer().setTheDummys(customer1,
+				retailer1, 
+				wholesaler1, 
+				distributor1);
+		
 
 		this.context.add(manufacturer1);
 		this.context.add(distributor1);
@@ -130,7 +138,10 @@ public class OrderTest
     	assertTrue("Simulation clock has not advanced", this.schedule.getTickCount() > -1);
     			
     	// Customer demand is within boundaries (initially: 10, 25)
-    	assertTrue("Demand for next tick is out of range (10..25): " + customer1.getNextDemand(), 10 <= customer1.getNextDemand() && customer1.getNextDemand() <= 25);
+    	System.out.println(customer1.getNextDemand());
+    	System.out.println(customer1.getNextDemand());
+    	
+    	assertTrue("Demand for next tick is out of range (9..11): " + customer1.getNextDemand(), (9 <= customer1.getNextDemand()) && (customer1.getNextDemand() <= 11));
     	
     	// the next order quantity is larger than 0 and smaller than the customer demand
     	assertTrue("Next order quantity is out of range", customer1.getNextOrderQuantity() >= 0 && customer1.getNextOrderQuantity() <= 25);
@@ -159,6 +170,6 @@ public class OrderTest
 	    	}
 		}
     	    	
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 }

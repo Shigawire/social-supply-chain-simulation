@@ -11,7 +11,7 @@ import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
-import actors.Sale;
+import actors.SellingActor;
 import actors.Wholesaler;
 import agents.IndirectTrustAgent;
 import repast.simphony.context.Context;
@@ -45,7 +45,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		// Add everything to the simulation's context
 		context.add(IndirectTrustAgent.getIndirectTrustAgent());
 		context.add(s);
-		for (Sale manufacturer : setup.getManufacturerList())
+		for (SellingActor manufacturer : setup.getManufacturerList())
 		{
 			context.add(manufacturer);
 		}
@@ -54,7 +54,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		manufacturerListIndirectTrust.addAll((Collection<? extends Manufacturer>) setup.getManufacturerList());
 		IndirectTrustAgent.getIndirectTrustAgent().setManufacturerList(manufacturerListIndirectTrust);
 		
-		for (Sale distributor : setup.getDistributorList())
+		for (SellingActor distributor : setup.getDistributorList())
 		{
 			context.add(distributor);
 		}
@@ -63,7 +63,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		distributorListIndirectTrust.addAll((Collection<? extends Distributor>) setup.getDistributorList());
 		IndirectTrustAgent.getIndirectTrustAgent().setDistributorList(distributorListIndirectTrust);
 		
-		for (Sale wholesaler : setup.getWholesalerList())
+		for (SellingActor wholesaler : setup.getWholesalerList())
 		{
 			context.add(wholesaler);
 		}
@@ -72,7 +72,7 @@ public class SimulationBuilder implements ContextBuilder<Object>
 		wholesalerListIndirectTrust.addAll((Collection<? extends Wholesaler>) setup.getWholesalerList());	
 		IndirectTrustAgent.getIndirectTrustAgent().setWholesalerList(wholesalerListIndirectTrust);
 		
-		for (Sale retailer : setup.getRetailerList())
+		for (SellingActor retailer : setup.getRetailerList())
 		{
 			context.add(retailer);
 		}

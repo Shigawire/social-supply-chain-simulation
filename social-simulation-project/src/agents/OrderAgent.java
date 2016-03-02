@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import SimulationSetups.TrustSetter;
-import actors.Sale;
+import actors.SellingActor;
 import actors.SupplyChainMember;
 import artefacts.Order;
 import artefacts.trust.DimensionType;
