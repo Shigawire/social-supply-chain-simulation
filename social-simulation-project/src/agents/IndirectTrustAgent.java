@@ -6,7 +6,7 @@ import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
-import actors.Sale;
+import actors.SellingActor;
 import actors.SupplyChainMember;
 import actors.Wholesaler;
 import artefacts.trust.Trust;

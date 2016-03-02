@@ -12,7 +12,7 @@ import artefacts.Order;
 import artefacts.Profile;
 
 // Combination of Interface Sale and class buy
-public abstract class BuySale extends BuyingActor implements Sale
+public abstract class BuySale extends BuyingActor implements SellingActor
 {
 	protected int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
 	protected int desiredInventoryLevel;
@@ -28,7 +28,7 @@ public abstract class BuySale extends BuyingActor implements Sale
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
 
-	public BuySale(ArrayList<Sale> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile p) 
+	public BuySale(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile p) 
 	{
 		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, p);
 	}

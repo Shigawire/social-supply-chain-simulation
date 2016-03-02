@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
 import social_simulation_project.OrderObserver;
-import actors.Sale;
+import actors.SellingActor;
 import actors.SupplyChainMember;
 import artefacts.Order;
 

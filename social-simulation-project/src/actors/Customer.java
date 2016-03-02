@@ -25,16 +25,15 @@ import social_simulation_project.BWeffectMeasurer;
 public class Customer extends BuyingActor 
 {
 	
-	protected int lastOrderUpToLevel = -1;
-	protected int lastDemand = 0;
-	
+	private int lastOrderUpToLevel = -1;
+	private int lastDemand = 0;
+	private int nextDemand = 0;
 	/**
 	   * This constructor gives the customer its own inventory
 	   * agent and order agent.
-	   * 
 	   */
 
-	public Customer(ArrayList<Sale> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile profile) 
+	public Customer(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile profile) 
 	{
 		//call BuyingActor with the parameters
 		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, profile);
@@ -54,16 +53,18 @@ public class Customer extends BuyingActor
 	@ScheduledMethod(start = 1, interval = 1, priority = 5)
 	public void run() 
 	{	
-		/*if ((int)RepastEssentials.GetTickCount() == 1) {
-			RunEnvironment.getInstance().setScheduleTickDelay(30);
-		}*/
-		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());
+
+		// set the inventory agents desired level for the incoming inventory
+		inventoryAgent.desiredLevel(lying, desiredInventoryLevel());
 		// 1. processShipments()
 		this.receiveShipments();
 		orderAgent.clearReceivedShipments();
 		// 2. consume()
 		this.consume();
+		
+		//calculate the demand for the next tick
+		calculateNextDemand();
+		
 		// 3.send order that he made the last tick
 		orderAgent.orderIt();
 		// 4. order()
@@ -72,17 +73,20 @@ public class Customer extends BuyingActor
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private int desired() 
+	//TODO comment
+	private int desiredInventoryLevel() 
 	{
-		int nextDemand = this.forecastAgent.customerDemand();
-		//desiredInventoryLevel = nextDemand * 15 / 10;
-		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
+		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? this.nextDemand : lastOrderUpToLevel;
 		
-		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
+		int orderUpToLevel = lastOrderUpToLevel + 1*(this.nextDemand - lastDemand);
 		
-		lastDemand = nextDemand;
+		this.lastDemand = this.nextDemand;
 		
 		return orderUpToLevel;
+	}
+	
+	private void calculateNextDemand() {
+		this.nextDemand = forecastAgent.customerDemand();
 	}
 
 	/**
@@ -121,23 +125,22 @@ public class Customer extends BuyingActor
 	{
 
 		//calculate the demand for the next tick
-		int nextDemand = this.forecastAgent.customerDemand();
 		
 		//what's in the current inventory
 		int currentIncomingInventoryLevel = this.inventoryAgent.getIncomingInventoryLevel();
 		
-		int orderQuantity = nextDemand - currentIncomingInventoryLevel;
+		int orderQuantity = this.nextDemand - currentIncomingInventoryLevel;
 		
 		// If the inventory level is sufficient for the next demand, do not order
 		if (orderQuantity <= 0) {
-			//TODO fix this. Jakobs fault! <---------------										CODE HAS BE REVISED UP TO THIS POINT.
+			//TODO fix this. Jakobs fault!
 			// a order with quantity null has to be made for the process in the orderAgent
 			// (realize the order of the last tick
 			orderQuantity = 0;
 		} else {
 			
 			//craft a new Order object
-			Order order = new Order(orderQuantity, this);
+			Order order = new Order(orderQuantity, this.orderAgent);
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
 			// if he is lying he will order the same at a second supplier
@@ -172,11 +175,11 @@ public class Customer extends BuyingActor
 	
 	//The following methods are necessary for JUnit tests. They aren't being used anywhere else in the documentation
 	public int getNextDemand() {
-		return this.forecastAgent.customerDemand();
+		return this.nextDemand;
 	}
 	
 	public int getNextOrderQuantity() {
-		return this.forecastAgent.customerDemand() - this.inventoryAgent.getIncomingInventoryLevel();
+		return this.nextDemand - this.inventoryAgent.getIncomingInventoryLevel();
 		
 	}
 }

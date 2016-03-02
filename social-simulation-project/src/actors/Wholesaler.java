@@ -24,13 +24,13 @@ public class Wholesaler extends BuySale
 	protected int lastOrderUpToLevel = -1;
 	protected int lastDemand = 0;
 	
-	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
+	public Wholesaler(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel,p);
 		
 		this.price = price;
 		deliveryAgent = new DeliveryAgent(price, this, 3, 4);
-		this.productionAgent = new ProductionAgent(2, 1, this.inventoryAgent);
+		this.productionAgent = new ProductionAgent(2, 1, this.inventoryAgent, this);
 	}
 	
 	// method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)	
@@ -38,7 +38,7 @@ public class Wholesaler extends BuySale
 	public void run() 
 	{
 		// 1. harvest
-		this.harvest();
+		this.productionAgent.transferInventories();
 		// set the inventory agents desired level
 		inventoryAgent.desiredLevel(lying, desired());		
 		// 2. processShipments() receive shipments
@@ -57,14 +57,10 @@ public class Wholesaler extends BuySale
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private void harvest()
-	{
-		this.productionAgent.harvest();
-	}
 	
 	public void produce()
 	{
-		this.productionAgent.produce2();
+		this.productionAgent.produce();
 	}
 	
 	public void order() 

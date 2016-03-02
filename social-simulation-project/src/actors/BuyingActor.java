@@ -31,17 +31,17 @@ public abstract class BuyingActor extends SupplyChainMember
 	 * A list with possible upstream business partners.
 	 * I.e. this is a list with potential "sellers" at which the BuyingActor may satisfy his own demand.
 	 */
-	protected ArrayList<Sale> sellerList;
+	protected ArrayList<SellingActor> sellerList;
 	
 	private ArrayList<DeliveryAgent> deliveryAgents; // list of the delivery agents of the sellers
 	
-	public BuyingActor(ArrayList<Sale> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile profile) 
+	public BuyingActor(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile profile) 
 	{	
 		super(incomingInventoryLevel, outgoingInventoryLevel, profile);
 		deliveryAgents = new ArrayList<DeliveryAgent>();
 		// a list will be filled with all the delivery Agents of the sellers
 		// because that is the contact where this buyer will order
-		for (Sale singleSeller : sellerList)
+		for (SellingActor singleSeller : sellerList)
 		{
 			deliveryAgents.add(singleSeller.getDeliveryAgent());
 		}
