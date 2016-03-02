@@ -11,6 +11,12 @@ public class KPI {
 	private Order shipment;
 	private Trust trust;
 	
+	public KPI(Order shipment, Trust trust)
+	{
+		this.shipment = shipment;
+		this.trust = trust;
+	}
+	
 	// Calculate the average distance of two supply chain Member profiles, i.e. their dimension-ratings in order to simulation shared values.
 	private double compareSharedValues(SupplyChainMember s1, SupplyChainMember s2) 
 	{
@@ -65,11 +71,6 @@ public class KPI {
 		}
 	}
 	
-	public KPI(Order shipment, Trust trust)
-	{
-		this.shipment = shipment;
-		this.trust = trust;
-	}
 	
 	// Return the KPI between 0..1 for a specific trust dimension
 	public double getKPIForDimension(DimensionType dimensionType) 
