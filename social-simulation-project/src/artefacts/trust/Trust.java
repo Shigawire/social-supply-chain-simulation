@@ -80,6 +80,7 @@ public class Trust
 	
 	// write the new competence value.. 
 	// TODO can be removed?
+	// Basically this value depitcs the competence between two supply chain members. 
 	public void setCurrentCompetenceValue(double competence) 
 	{
 		// Ensure the competence value is never below 0 or above 1.

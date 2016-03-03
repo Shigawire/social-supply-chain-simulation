@@ -21,7 +21,8 @@ import artefacts.Profile;
 */
 public class Manufacturer extends SupplyChainMember implements SellingActor
 {	
-	private int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
+	// for the subtraction from the order caused by knowing he will not order at me
+	private int subtractionByTrust = 0; 
 	
 	private int nextDemand;
 	
@@ -97,7 +98,7 @@ public class Manufacturer extends SupplyChainMember implements SellingActor
 	}
 	
 	// the list of what amount which orderAgent ordered is updated with every order
-	public void updateList(OrderAgent orderer, int orderAtYou)
+	public void updateClientList(OrderAgent orderer, int orderAtYou)
 	{
 		// when the buyer is not already in the map
 		if (!buyer.containsKey(orderer)) {
