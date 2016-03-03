@@ -11,12 +11,16 @@ import agents.ProductionAgent;
 import artefacts.Order;
 import artefacts.Profile;
 
-// Combination of Interface Sale and class buy
+// Combination of  SellingActor and class BuyingActor - i.e. Wholesaler, Retailer, Distributor
 public abstract class BuySale extends BuyingActor implements SellingActor
 {
-	protected int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
+	// for the subtraction from the order caused by knowing he will not order at me
+	protected int subtractionByTrust = 0; 
+	
 	protected int desiredInventoryLevel;
-	protected int nextDemand; // demand of next tick
+	
+	// demand of next tick
+	protected int nextDemand;
 	protected int price; // price for our goods
 	protected int orderQuantity; // the quantity should be ordered this tick
 	protected DeliveryAgent deliveryAgent;
@@ -129,7 +133,7 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 		}	
 	}
 	
-	public void updateList(OrderAgent orderer, int orderAtYou)
+	public void updateClientList(OrderAgent orderer, int orderAtYou)
 	{
 		// when the buyer is not already in the map
 		if (!buyer.containsKey(orderer)) {

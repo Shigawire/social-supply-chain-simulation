@@ -74,10 +74,10 @@ public class TrustAssessment
 	public void assertTrustUpdate() 
 	{
 		
-		ReliabilityDimension reliability = new ReliabilityDimension(0.25, 0.5);
-		CompetenceDimension competence = new CompetenceDimension(0.25, 0.5);
-		QualityDimension quality = new QualityDimension(0.25, 0.5);
-		SharedValuesDimension shared_values = new SharedValuesDimension(0.25, 0.5);
+		ReliabilityDimension reliability = new ReliabilityDimension(0.25);
+		CompetenceDimension competence = new CompetenceDimension(0.25);
+		QualityDimension quality = new QualityDimension(0.25);
+		SharedValuesDimension shared_values = new SharedValuesDimension(0.25);
 		Trust trust = new Trust(reliability, competence, quality, shared_values);
 		
 		assertEquals("Initial Trust Value is not correct.", 0.5, trust.getUnifiedTrustValue(), 0);

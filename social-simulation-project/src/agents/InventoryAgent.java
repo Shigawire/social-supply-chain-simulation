@@ -77,7 +77,7 @@ public class InventoryAgent
 				shipment.getDeliveryAgent().getParent().returning(shipment.getPartDelivery());
 				
 				//TODO what's that?
-				shipment.partDelivery(shipment.getUnfullfilledQuantity());
+				shipment.fulfill(shipment.getUnfullfilledQuantity());
 				
 				//finally, set the shipment as fulfilled.
 				shipment.setProcessed(true);
