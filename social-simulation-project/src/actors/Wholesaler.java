@@ -41,7 +41,7 @@ public class Wholesaler extends BuySale
 		this.productionAgent.transferInventories();
 		
 		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevelForLyingBehaviour());
 		
 		// receive incoming shipments and process them
 		this.receiveShipments();
@@ -122,9 +122,9 @@ public class Wholesaler extends BuySale
 			orderAgent.order(this.trustAgent, order);
 			
 			// if he is lying he will order the same amount at a second supplier
-			if (lying) {
-				Order order2 = new Order(orderQuantity, this.orderAgent);
-				orderAgent.secondOrder(this.trustAgent, order2);
+			if (this.isLying) {
+				Order orderToBeCancelled = new Order(orderQuantity, this.orderAgent);
+				orderAgent.secondOrder(this.trustAgent, orderToBeCancelled);
 			}
 		}
 	}
