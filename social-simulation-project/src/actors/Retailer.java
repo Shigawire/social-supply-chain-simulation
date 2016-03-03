@@ -36,7 +36,7 @@ public class Retailer extends BuySale
 		// 1. harvest()
 		this.productionAgent.transferInventories();
 		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevelForLyingBehaviour());
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// 3. updateTrust()

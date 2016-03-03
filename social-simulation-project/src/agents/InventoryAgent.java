@@ -38,7 +38,7 @@ public class InventoryAgent
 	//defines the desired inventory level - usually computed by the forecast agent and then stored for further processing
 	private int desiredInventoryLevel;
 	
-	private boolean lying;
+	private boolean isLying;
 	
 
 	/**
@@ -67,7 +67,7 @@ public class InventoryAgent
 		 *  if it is a lying agent it is possible that he will cancel the order based on his desired inventory level
 		 *  and return the shipment or partial delivery
 		 */
-		if (this.lying) {
+		if (this.isLying) {
 			
 			//cancel an order and return at least a part of the shipment
 			if (this.desiredInventoryLevel < this.outgoingInventory.getLevel()) {
@@ -94,10 +94,10 @@ public class InventoryAgent
 		this.incomingInventory.setLevel(this.incomingInventory.getLevel() + undamagedQuantity);
 	}
 	
-	//set the desired inventory level and determine if the agent will change the lying behaviour for future shipments.
+	//set the desired inventory level and set to lying if the parent actor is a lying actor
 	public void desiredLevel(boolean lying, int desired) 
 	{
-		this.lying = lying;
+		this.isLying = lying;
 		desiredInventoryLevel = desired;
 	}
 	

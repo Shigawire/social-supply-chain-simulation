@@ -36,8 +36,8 @@ public class Distributor extends BuySale
 		//move incoming items into the outgoing inventory
 		this.productionAgent.transferInventories();		
 		
-		// set the inventory agents desired level(doubled because of production process)
-		inventoryAgent.desiredLevel(this.lying, desired());
+		// set the inventory agents desired level
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevelForLyingBehaviour());
 		
 		// receive incoming shipments and process them
 		this.receiveShipments();

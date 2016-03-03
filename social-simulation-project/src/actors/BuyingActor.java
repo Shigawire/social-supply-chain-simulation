@@ -25,7 +25,7 @@ public abstract class BuyingActor extends SupplyChainMember
 	protected TrustAgent trustAgent;
 	
 	//Should this actor be lying? Initially, no actor is lying until it is told to be.
-	protected boolean lying = false;
+	protected boolean isLying = false;
 	
 	/**
 	 * A list with possible upstream business partners.
@@ -72,6 +72,6 @@ public abstract class BuyingActor extends SupplyChainMember
 	
 	public void setLying()
 	{
-		lying = true;
+		isLying = true;
 	}
 }

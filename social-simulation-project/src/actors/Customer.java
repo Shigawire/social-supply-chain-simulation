@@ -55,7 +55,7 @@ public class Customer extends BuyingActor
 	{	
 
 		// set the inventory agents desired level for the incoming inventory
-		inventoryAgent.desiredLevel(lying, desiredInventoryLevel());
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevel());
 		// 1. processShipments()
 		this.receiveShipments();
 		orderAgent.clearReceivedShipments();
@@ -144,9 +144,11 @@ public class Customer extends BuyingActor
 			// Choose retailer
 			orderAgent.order(this.trustAgent, order);
 			// if he is lying he will order the same at a second supplier
-			if (lying) {
-				Order order2 = new Order(orderQuantity, this.orderAgent);
-				orderAgent.secondOrder(this.trustAgent, order2);
+			if (this.isLying) {
+				//Usually, the order will be sent back partially - i.e. cancelled
+				Order orderToBeCancelled = new Order(orderQuantity, this.orderAgent);
+				
+				orderAgent.secondOrder(this.trustAgent, orderToBeCancelled);
 			}
 		}
 	}

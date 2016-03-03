@@ -78,7 +78,7 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 		lastOrderUpToLevel = orderUpToLevel;
 		
 		int currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
-		// if current bigger than desiredlevel return
+		// if current outgoing bigger than the desired level return - we don't need more items in the inventory
 		if (currentOutgoingInventoryLevel > desiredInventoryLevel) {
 			return;
 		}
@@ -105,7 +105,7 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 			// Choose seller
 			orderAgent.order(this.trustAgent, order);
 			// if he is lying he will order the same at a second supplier
-			if (lying) {
+			if (this.isLying) {
 				Order order2 = new Order(orderQuantity, this.orderAgent);
 				orderAgent.secondOrder(this.trustAgent, order2);
 			}
@@ -113,16 +113,20 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 	}
 	
 	// just a method used if he is a lying agent 
-	public int desired()
+	public int desiredInventoryLevelForLyingBehaviour()
 	{
-		if (lying) {
+		if (this.isLying) {
 			nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 			desiredInventoryLevel = nextDemand * 15 / 10;
 			// System.out.println("desiredInventoryLevel" + desiredInventoryLevel);
 			return desiredInventoryLevel;
+		} else {
+			
+			//never reaching this state as the function is only processed when the actor is lying
+			//could need some refactoring, though
+			//TODO
+			return 0;
 		}
-		return 0;
-		//return 1000;
 	}
 	
 	// if a possible buyer trust this actor enough, but will not order at him, he will tell it
