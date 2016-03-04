@@ -137,7 +137,7 @@ public class OrderAgent
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
 			TrustSetter s = TrustSetter.getInstance();
 			if (s.getInformationSharingIntegrated()) {
-				// if trusted very good (profile)immediatly order the last and the actual order
+				// if trusted very good (profile) immediately order the last and the actual order
 				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > borderLargeTrust) {
 					deliveryAgent.receiveOrder(order);
 					// return because all orders are send!
@@ -155,7 +155,7 @@ public class OrderAgent
 	}
 	
 	/*
-	 * from the Superagent like customer
+	 * from the parent, e.g. the customer
 	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
@@ -177,11 +177,11 @@ public class OrderAgent
 	
 	/*
 	 * from delivery agent of the next tier
-	 * this structure for one tick delay between receive by the order and actual receiving by the super agent
+	 * this structure for one tick delay between receive by the order and actual receiving by the parent class
 	 */
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
-		// System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
+		 System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
 		// set time of the first received
 		// shipment.received();
 		// information for the procurement agent 
