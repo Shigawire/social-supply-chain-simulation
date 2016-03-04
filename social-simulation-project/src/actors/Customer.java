@@ -108,13 +108,13 @@ public class Customer extends BuyingActor
 		 * If the customer wants to consume more than the current inventory allows
 		 * the remaining inventory will be consumed and the inventory be set to 0.
 		 */
-		this.inventoryAgent.reduceIncomingInventoryLevel(consumption);
+		
 		if (consumption > currentIncomingInventoryLevel) {
 			// Inventory can provide less than requested. Customer consumes as much as possible and not more.
 			this.inventoryAgent.setIncomingInventoryLevel(0);
 		} else {
 			this.inventoryAgent.reduceIncomingInventoryLevel(consumption);
-		}
+		}	
 	}
 	
 	/**
@@ -181,6 +181,7 @@ public class Customer extends BuyingActor
 	}
 	
 	public int getNextOrderQuantity() {
+		System.out.println(this.inventoryAgent.getIncomingInventoryLevel());
 		return this.nextDemand - this.inventoryAgent.getIncomingInventoryLevel();
 		
 	}

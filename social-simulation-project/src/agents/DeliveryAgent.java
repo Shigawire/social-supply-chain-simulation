@@ -50,15 +50,15 @@ public class DeliveryAgent extends Agent
 	//Basically we just don't want to ship out a single item if there's partial delivery outstanding
 	private int minimumShipmentQuantity = 8;
 	
-	public DeliveryAgent(int price, SupplyChainMember parent, int mean, int deviation) 
+	public DeliveryAgent(int price, SupplyChainMember parent, int failureMean, int failureDeviation) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
 		this.everReceivedOrders = new ArrayList<Order>();
 		this.openOrders = new ArrayList<Order>();
 		this.price = price;
 		this.parent = parent;
-		this.failureMean = mean;
-		this.failureDeviation = deviation;
+		this.failureMean = failureMean;
+		this.failureDeviation = failureDeviation;
 	}
 	
 	/**
@@ -94,6 +94,7 @@ public class DeliveryAgent extends Agent
 		
 		for (Order order : receivedOrders) 
 		{	
+			//System.out.println("REcieved order: "+ order.getQuantity());
 			// if the order is already processed, it will just disapper (when set e.g. by the
 			// inventory Agent after cancellation
 			if (order.getProcessed()) {
@@ -107,9 +108,9 @@ public class DeliveryAgent extends Agent
 				
 				order.fulfill(this.currentOutgoingInventoryLevel);
 				
-				//calculate a failure percentage for the specific order.
+				//calculate a failure percentage for the specific order - i.e. how many items are DOA
 				order.setfailurePercentage((failureMean + RandomHelper.nextDoubleFromTo(+failureDeviation, -failureDeviation))/100);
-				
+								
 				openOrders.add(order);
 				
 				// shortage will be increased by the higher need
@@ -137,11 +138,16 @@ public class DeliveryAgent extends Agent
 				//mark the order as fully processed.
 				order.setProcessed(true);
 				
+				//calculate a failure percentage for the specific order - i.e. how many items are DOA
+				order.setfailurePercentage((failureMean + RandomHelper.nextDoubleFromTo(+failureDeviation, -failureDeviation))/100);
+								
 				//fulfill the order completely
 				order.fulfill(buffer);
 				
 				//push the order as shipment to the inbox of the customers order Agent
 				order.getOrderAgent().receiveShipment(order,this);
+				
+				
 				
 				// recduce outgoing inventory as the order has been sent
 				inventoryAgent.reduceOutgoingInventoryLevel(buffer);

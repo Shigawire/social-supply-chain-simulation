@@ -187,7 +187,7 @@ public class Order
 		// set the time it needed to deliver
 		if (!cancelled) {
 			ProcurementAgent receiver = (ProcurementAgent) orderAgent.getParent().getProcurementAgent();
-			receiver.updateTime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
+			receiver.updateShipmentRuntime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
 		}
 		// System.out.println(id + " " + quantity +" " + oftenProcessed);
 		this.processed = processed;	
@@ -195,7 +195,9 @@ public class Order
 	
 	public void setExpectedDeliveryDuration(double duration) 
 	{
-		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
+		//TODO evaluate in which way this changes the trust assessment quality
+        //this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
+		this.expectedDelivery = this.orderedAt + duration;
 	}
 	
 	public void setCancelled() 
