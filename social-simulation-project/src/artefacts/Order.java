@@ -184,32 +184,24 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		// set the time it needed to deliver
+		// Tell the Procurement Agent about the shipment's runtime after it's been completely processed
 		if (!cancelled) {
 			ProcurementAgent receiver = (ProcurementAgent) orderAgent.getParent().getProcurementAgent();
 			receiver.updateShipmentRuntime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
 		}
-		// System.out.println(id + " " + quantity +" " + oftenProcessed);
 		this.processed = processed;	
 	}
 	
 	public void setExpectedDeliveryDuration(double duration) 
 	{
-		//TODO evaluate in which way this changes the trust assessment quality
-        //this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
 		this.expectedDelivery = this.orderedAt + duration;
 	}
 	
 	public void setCancelled() 
 	{
 		cancelled = true;
-		// TODO Auto-generated method stub	
 	}
 	
-//	public void setQuantity(int quantity) 
-//	{
-//		this.quantity = quantity;
-//	}
 	
 	public void setfailurePercentage(double failure)
 	{
