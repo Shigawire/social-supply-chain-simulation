@@ -6,7 +6,6 @@ import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
-import actors.SellingActor;
 import actors.SupplyChainMember;
 import actors.Wholesaler;
 import artefacts.trust.Trust;
@@ -20,13 +19,13 @@ public class IndirectTrustAgent
 	private ArrayList<Distributor> distributorList;
 	private ArrayList<Wholesaler> wholesalerList;
 	private ArrayList<Retailer> retailerList;
-	private  ArrayList<Customer> customerList;
+	private ArrayList<Customer> customerList;
 	
 	private static IndirectTrustAgent indirectTrustAgent = new IndirectTrustAgent();
 	
 	private IndirectTrustAgent()
 	{
-		
+
 	}
 	
 	// set lists of all actors that are in the simulation
