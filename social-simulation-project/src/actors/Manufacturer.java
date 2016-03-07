@@ -143,7 +143,6 @@ public class Manufacturer extends SupplyChainMember implements SellingActor
 			productionQuantity = nextDemand - currentOutgoingInventoryLevel+ deliveryAgent.getShortage();
 		}
 		
-		//TODO what's that?
 		subtractionByTrust = 0;
 	
 		// If the inventory level is sufficient for the next demand,
