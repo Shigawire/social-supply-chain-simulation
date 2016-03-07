@@ -1,15 +1,15 @@
 package social_simulation_project;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
-import artefacts.Order;
+//import artefacts.Order;
 
 // class that observes all open orders
 public class OrderObserver 
 {
 	private static OrderObserver observer = new OrderObserver();
 	private int amount = 0;
-	private ArrayList<Integer> orderHistory= new ArrayList<Integer>();	
+//	private ArrayList<Integer> orderHistory= new ArrayList<Integer>();	
 
 	private OrderObserver()
 	{
