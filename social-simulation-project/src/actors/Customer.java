@@ -24,7 +24,6 @@ import social_simulation_project.BWeffectMeasurer;
 */
 public class Customer extends BuyingActor 
 {
-	
 	private int lastOrderUpToLevel = -1;
 	private int lastDemand = 0;
 	private int nextDemand = 0;
@@ -73,7 +72,6 @@ public class Customer extends BuyingActor
 		orderAgent.trustWhereIOrder();
 	}
 	
-	//TODO comment
 	private int desiredInventoryLevel() 
 	{
 		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? this.nextDemand : lastOrderUpToLevel;
@@ -85,7 +83,8 @@ public class Customer extends BuyingActor
 		return orderUpToLevel;
 	}
 	
-	private void calculateNextDemand() {
+	private void calculateNextDemand() 
+	{
 		this.nextDemand = forecastAgent.customerDemand();
 	}
 
