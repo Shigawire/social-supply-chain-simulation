@@ -73,7 +73,6 @@ public class Customer extends BuyingActor
 		orderAgent.trustWhereIOrder();
 	}
 	
-	//TODO comment
 	private int desiredInventoryLevel() 
 	{
 		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? this.nextDemand : lastOrderUpToLevel;
@@ -133,9 +132,6 @@ public class Customer extends BuyingActor
 		
 		// If the inventory level is sufficient for the next demand, do not order
 		if (orderQuantity <= 0) {
-			//TODO fix this. Jakobs fault!
-			// a order with quantity null has to be made for the process in the orderAgent
-			// (realize the order of the last tick
 			orderQuantity = 0;
 		} else {
 			

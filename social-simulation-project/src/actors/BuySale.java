@@ -124,7 +124,6 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 			
 			//never reaching this state as the function is only processed when the actor is lying
 			//could need some refactoring, though
-			//TODO
 			return 0;
 		}
 	}

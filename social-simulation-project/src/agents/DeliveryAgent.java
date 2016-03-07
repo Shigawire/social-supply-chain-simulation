@@ -183,7 +183,6 @@ public class DeliveryAgent extends Agent
 	
 	public double getExpectedDeliveryTime() 
 	{
-		//TODO implement?
 		return 2;
 	}
 	
