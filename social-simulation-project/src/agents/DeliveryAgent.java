@@ -101,7 +101,7 @@ public class DeliveryAgent extends Agent
 				
 			}
 			// if the needed rest quantity of the order is higher than the inventory and the need is bigger than minimumShipmentQuantity (8) (he will not deliver just 7 goods)
-			else if (order.getUnfullfilledQuantity() > this.currentOutgoingInventoryLevel && this.currentOutgoingInventoryLevel > this.minimumShipmentQuantity) {
+			else if (order.getUnfullfilledQuantity() > this.currentOutgoingInventoryLevel && this.currentOutgoingInventoryLevel >= this.minimumShipmentQuantity) {
 				
 				// if the needed rest quantity of the order is higher than the inventory
 				// part of the order will be delivered

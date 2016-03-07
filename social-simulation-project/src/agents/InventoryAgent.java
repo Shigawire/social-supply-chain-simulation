@@ -73,10 +73,8 @@ public class InventoryAgent
 			if (this.desiredInventoryLevel < this.outgoingInventory.getLevel()) {
 				shipment.setCancelled();
 				
-				//TODO can this be simplified?
 				shipment.getDeliveryAgent().getParent().returning(shipment.getPartDelivery());
 				
-				//TODO what's that?
 				shipment.fulfill(shipment.getUnfullfilledQuantity());
 				
 				//finally, set the shipment as fulfilled.
