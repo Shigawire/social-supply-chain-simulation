@@ -13,11 +13,16 @@ public class Trust
 	private QualityDimension quality;
 	private SharedValuesDimension sharedValues;
 	
+	//trust Value - initialized with 0.5
 	private double tValue = 0.5;
+	
+	//historical trust Value
 	private double oldtValue = 0.5;
 	
+	//The current competence value between two supply chain members
 	private double currentCompetenceValue = 0.5;
 	
+	//Map the dimension types to a specific trust dimension
 	private Map<DimensionType, TrustDimension> dimensionMapping = new HashMap<DimensionType, TrustDimension>();
 	
 	// Create a Trust Object the encapsulates the four dimensions
@@ -79,7 +84,7 @@ public class Trust
 	}
 	
 	// write the new competence value.. 
-	// TODO can be removed?
+		// Basically this value depicts the competence between two supply chain members. 
 	public void setCurrentCompetenceValue(double competence) 
 	{
 		// Ensure the competence value is never below 0 or above 1.

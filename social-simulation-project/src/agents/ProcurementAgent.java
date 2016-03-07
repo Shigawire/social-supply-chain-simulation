@@ -168,7 +168,7 @@ public class ProcurementAgent
 	}
 
 	// updates the needed time by the last order arrived
-	public void updateTime(int ticksTillDelivery, DeliveryAgent deliverer) 
+	public void updateShipmentRuntime(int ticksTillDelivery, DeliveryAgent deliverer) 
 	{
 		int update = deliveryAgents.indexOf(deliverer);
 		values[1][update] = (values[1][update] * oftenUpdated[update] + ticksTillDelivery) / (oftenUpdated[update] + 1);

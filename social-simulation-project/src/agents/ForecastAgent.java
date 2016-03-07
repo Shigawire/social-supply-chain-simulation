@@ -149,9 +149,8 @@ public class ForecastAgent
     
 	public int customerDemand() 
 	{
-		//int dem = RandomHelper.nextIntFromTo(10, 25);
 		Normal normaldistribution= RandomHelper.createNormal(10,1);
-		int dem= normaldistribution.nextInt();
+		int dem = normaldistribution.nextInt();
 		// System.out.println(dem);
 		return dem;
 	}

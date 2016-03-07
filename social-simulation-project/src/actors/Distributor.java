@@ -12,56 +12,59 @@ import artefacts.Profile;
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 /**
-* This class represents a distributor. Distributors do not
-* differ from retailers or wholesalers. The only 
-* difference is their position in the supply chain.
+* This class represents a distributor. 
 *
 * @author  PS Development Team
 * @since   2015-12-04
 */
 public class Distributor extends BuySale 
 {
-	public Distributor(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
+	//construct a Distributor
+	public Distributor(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile profile) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, profile);
 		
 		this.price = price;
-		
 		this.deliveryAgent = new DeliveryAgent(price, this, 2, 2);
-		this.productionAgent = new ProductionAgent(1, 1, this.inventoryAgent);
+		this.productionAgent = new ProductionAgent(1, 1, this.inventoryAgent, this);
 	}
 	
 	// method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)
 	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void run() 
 	{
-		// 1. harvest
-		this.harvest();		
-		// set the inventory agents desired level(doubled because of prouction process)
-		inventoryAgent.desiredLevel(lying, desired());
-		// 2. processShipments() receive shipments
+		//move incoming items into the outgoing inventory
+		this.productionAgent.transferInventories();		
+		
+		// set the inventory agents desired level
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevelForLyingBehaviour());
+		
+		// receive incoming shipments and process them
 		this.receiveShipments();
-		// clear receivedShipments;
+		
+		// clear receivedShipments - i.e. erase them from the incoming list.
+		//This is a special case here - but since the receivedShipments are further processed we need to tell the orderAgent specifically to clear this list.
 		orderAgent.clearReceivedShipments();
-		// 3. produce
+		
+		// produce
 		this.produce();
-		// 4. deliver()
+		// deliver produced items to the customers
 		this.deliver();
-		// 5.send order that he made the last tick
+		
+		// Order the items at a supplier (chosen by the procurementAgent) that were defined in the previous tick
+		// we are delaying orders here to better simulate the delay of information flow in a supply chain
 		orderAgent.orderIt();
-		// 6. order()
+		
+		// create new orders based on the inventory levels and demand
 		this.order();
-		// 7. say those suppliers which I trust, that I will not order at them
+		
+		// tell those suppliers which I trust, that I will not order at them
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private void harvest()
-	{
-		this.productionAgent.harvest();
-	}
 	
 	public void produce()
 	{
-		this.productionAgent.produce1();
+		this.productionAgent.produce();
 	}	
 }

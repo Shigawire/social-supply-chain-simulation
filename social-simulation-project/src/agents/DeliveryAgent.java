@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
 import social_simulation_project.OrderObserver;
-import actors.Sale;
+import actors.SellingActor;
 import actors.SupplyChainMember;
 import artefacts.Order;
 
@@ -19,46 +19,68 @@ import artefacts.Order;
 * @author  PS Development Team
 * @since   2015-11-30
 */
-public class DeliveryAgent 
+public class DeliveryAgent extends Agent
 {
-	// price for the goods
+	// price for the offered items
 	private int price;
+	
 	private int currentOutgoingInventoryLevel;
-	private double failurePercentage;
-	private ArrayList<Order> receivedOrders; // list for all received orders
-	private ArrayList<Order> everReceivedOrders; // all orders ever received
-	private ArrayList<Order> openOrders; // list to transfer open orders
-	private int shortage = 0; // gives the shortage of the last tick, will be used for the forecast
-	private SupplyChainMember parent; // to which SupplyChainMember it belongs
+	
+	// list for all received orders
+	// this list is filled at the beginning of each tick and subsequently processed - basically this is the "inbox".
+	private ArrayList<Order> receivedOrders;
+	
+	// all orders ever received - not the same as receivedOrders!
+	private ArrayList<Order> everReceivedOrders; 
+	
+	// list to transfer open orders
+	private ArrayList<Order> openOrders; 
+	
+	// gives the shortage of the last tick, will be used for the forecast
+	private int shortage = 0; 
+	
+	 // to which SupplyChainMember it belongs
+	private SupplyChainMember parent;
 	
 	private double failureMean;
 	private double failureDeviation;
 	
-	public DeliveryAgent(int price, SupplyChainMember parent, int mean, int deviation) 
+	//How many items are necessary for a shipment? 
+	//Just if the overall order quantity is larger - obviously
+	//Basically we just don't want to ship out a single item if there's partial delivery outstanding
+	private int minimumShipmentQuantity = 8;
+	
+	public DeliveryAgent(int price, SupplyChainMember parent, int failureMean, int failureDeviation) 
 	{
 		this.receivedOrders = new ArrayList<Order>();
 		this.everReceivedOrders = new ArrayList<Order>();
 		this.openOrders = new ArrayList<Order>();
 		this.price = price;
 		this.parent = parent;
-		this.failureMean = mean;
-		this.failureDeviation = deviation;
+		this.failureMean = failureMean;
+		this.failureDeviation = failureDeviation;
 	}
 	
 	/**
 	   * This method receives orders.
 	   * 
-	   * @param order Order of the callee with details about amount etc.
-	   * @return Nothing.
+	   * @param order Order of the buyer with details about amount etc.
 	   */
 	public void receiveOrder(Order order) 
 	{
+		//assign myself to the received order as the "handling" delivery agent
 		order.setDeliveryAgent(this);
+		
+		//push the order to the receivedOrders List
 		receivedOrders.add(order);
+		
+		//and put at record in our eternal history
 		everReceivedOrders.add(order);
-		parent.updateList(order.getOrderAgent(), order.getQuantity());
+		
+		//push the order to the supply chain members client list
+		parent.updateClientList(order.getOrderAgent(), order.getQuantity());
 	}
-	//? wer auch immer das geschrieben hat h� :D
+	
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 
@@ -67,45 +89,69 @@ public class DeliveryAgent
 	   */
 	public void deliver(InventoryAgent inventoryAgent)
 	{
-		currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
-		shortage = 0;
+		this.currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
+		this.shortage = 0;
+		
 		for (Order order : receivedOrders) 
 		{	
+			//System.out.println("REcieved order: "+ order.getQuantity());
 			// if the order is already processed, it will just disapper (when set e.g. by the
 			// inventory Agent after cancellation
 			if (order.getProcessed()) {
 				
 			}
-			// if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8(he will not deliver just 7 goods)
-			else if (order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel && currentOutgoingInventoryLevel > 8) {
-				// if the needed rest quantity of the order is higher then the inventory
+			// if the needed rest quantity of the order is higher than the inventory and the need is bigger than minimumShipmentQuantity (8) (he will not deliver just 7 goods)
+			else if (order.getUnfullfilledQuantity() > this.currentOutgoingInventoryLevel && this.currentOutgoingInventoryLevel >= this.minimumShipmentQuantity) {
+				
+				// if the needed rest quantity of the order is higher than the inventory
 				// part of the order will be delivered
-				order.partDelivery(currentOutgoingInventoryLevel);
+				
+				order.fulfill(this.currentOutgoingInventoryLevel);
+				
+				//calculate a failure percentage for the specific order - i.e. how many items are DOA
 				order.setfailurePercentage((failureMean + RandomHelper.nextDoubleFromTo(+failureDeviation, -failureDeviation))/100);
+								
 				openOrders.add(order);
+				
 				// shortage will be increased by the higher need
-				shortage =+ order.getUnfullfilledQuantity();
+				this.shortage =+ order.getUnfullfilledQuantity();
+				
 				// what was delivered will be taken out of the inventory
-				inventoryAgent.reduceOutgoingInventoryLevel(currentOutgoingInventoryLevel);
-				order.getOrderAgent().receiveShipment(order,this);
-				currentOutgoingInventoryLevel = 0;
+				inventoryAgent.reduceOutgoingInventoryLevel(this.currentOutgoingInventoryLevel);
+				
+				//push the order as shipment to the inbox of the customers order Agent
+				this.currentOutgoingInventoryLevel = 0;
+
+				order.getOrderAgent().receiveShipment(order, this);
+				
 			}
 			// if <=8 no delivery will be made
-			else if(order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel) {
-				shortage =+ order.getUnfullfilledQuantity();
+			else if(order.getUnfullfilledQuantity() > this.currentOutgoingInventoryLevel) {
+				this.shortage =+ order.getUnfullfilledQuantity();
 				openOrders.add(order);
 			}
 			// if the order can be completly fullfilled, it will be
 			else {
 				// just a buffer of the unfullfilled
 				int buffer = order.getUnfullfilledQuantity();
+				
+				//mark the order as fully processed.
 				order.setProcessed(true);
-				order.partDelivery(buffer);
-				// sub the amount because the order is not open anymore
+				
+				//calculate a failure percentage for the specific order - i.e. how many items are DOA
+				order.setfailurePercentage((failureMean + RandomHelper.nextDoubleFromTo(+failureDeviation, -failureDeviation))/100);
+								
+				//fulfill the order completely
+				order.fulfill(buffer);
+				
+				//push the order as shipment to the inbox of the customers order Agent
 				order.getOrderAgent().receiveShipment(order,this);
-				// System.out.println(order.getQuantity());
+				
+				
+				
+				// recduce outgoing inventory as the order has been sent
 				inventoryAgent.reduceOutgoingInventoryLevel(buffer);
-				currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
+				this.currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
 			}
 		}
 		// the received list must be deleted completly and filled with the openOrder list
@@ -127,7 +173,7 @@ public class DeliveryAgent
 	public int getShortage() 
 	{
 		// gives half of the shortage
-		return (shortage / 2);
+		return (this.shortage / 2);
 	}
 	
 	public ArrayList<Order> getAllOrders()
@@ -137,7 +183,6 @@ public class DeliveryAgent
 	
 	public double getExpectedDeliveryTime() 
 	{
-		//TODO implement?
 		return 2;
 	}
 	
@@ -151,6 +196,6 @@ public class DeliveryAgent
 	 */
 	public void setShortage(int i) 
 	{
-		shortage = 0;	
+		this.shortage = 0;	
 	}
 }

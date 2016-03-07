@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.random.RandomHelper;
 import social_simulation_project.BWeffectMeasurer;
 import social_simulation_project.OrderObserver;
 import actors.SupplyChainMember;
 import agents.DeliveryAgent;
 import agents.OrderAgent;
 import agents.ProcurementAgent;
-import artefacts.trust.Trust;
 
 /**
 * This class represents an order. 
@@ -21,27 +19,42 @@ import artefacts.trust.Trust;
 */
 public class Order 
 {
-	// quantity that has to be completly fullfilled
-	private final int quantity;
-	private double failurePercentage;	
-	private int orderedAt; // tick it is orderd
-	private int receivedAt; // tick it is received
-	private int oftenProcessed = 0; // how often has parts of the order been processed
-	private int firstDelivery; // how much was fullfilled in the first fullfillment
-	private int firstTick;
-	boolean cancelled = false;
-	private String id;
-	// Who ordered?
-	private OrderAgent orderAgent; // who ordered
-	private DeliveryAgent deliveryAgent; // who delivered
+	//depicts the quantity of the order
+	private int quantity;
 	
-	private double expectedDelivery; //expected time the delivery will need
-	
-	// Order received and sent
-	private boolean processed; // is completly processed --> done
 	private int sum;
-	private int fullfilledQuantity; // till now fullfilled quantity
-	private int partDelivery = 0; // partdelivery at the moment
+	
+	//depicts the percentage of how many items are arriving in a "damaged" state
+	private double failurePercentage;	
+	
+	//The tick the order is placed
+	private int orderedAt; 
+	
+	//The tick the order is fully received and 100% fulfilled
+	private int receivedAt;
+	
+	//has the order been cancelled?
+	boolean cancelled = false;
+	
+	// Who ordered?
+	private OrderAgent orderAgent;
+	
+	//who is the supplier for the order?
+	private DeliveryAgent deliveryAgent;
+	
+	//expected tick when the order will be fully processed
+	private double expectedDelivery;
+	
+	// is completely processed --> done
+	private boolean processed; 
+	
+	//private int sum;
+	
+	//How many items from the desired quantity are already fulfilled?
+	private int fullfilledQuantity;
+	
+	//current part Delivery
+	private int partDelivery;
 	
 	private double shipmentQuality;
 	
@@ -52,13 +65,14 @@ public class Order
 		OrderObserver.giveObserver().addAmount(quantity);
 		
 		this.quantity = quantity;
-		// generate an ID, so it is easier to track the Order through the system :)
-		this.id = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		this.sum = quantity;
 		this.orderedAt = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 		this.orderAgent = orderAgent;
-		fullfilledQuantity = 0;
+		this.fullfilledQuantity = 0;
+		this.partDelivery = 0;
 		this.processed = false;
-		sum = quantity;
+		
+		System.out.println(quantity);
 		BWeffectMeasurer.getMeasurer().update(this);
 	}
 	
@@ -73,13 +87,8 @@ public class Order
 	}
 	
 	// a part or the whole delivery
-	public void partDelivery(int delivery)
+	public void fulfill(int delivery)
 	{	
-		if (oftenProcessed == 0) {
-			firstDelivery = delivery;
-			firstTick = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-		}
-		oftenProcessed++;
 		this.partDelivery = delivery;
 		OrderObserver.giveObserver().subAmount(delivery);
 		fullfilledQuantity += delivery;
@@ -103,10 +112,6 @@ public class Order
 		return this.orderAgent;	
 	}
 	
-	public String getId() 
-	{
-		return this.id;
-	}
 	
 	public int getOrderedAt() 
 	{
@@ -179,30 +184,24 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		// set the time it needed to deliver
+		// Tell the Procurement Agent about the shipment's runtime after it's been completely processed
 		if (!cancelled) {
 			ProcurementAgent receiver = (ProcurementAgent) orderAgent.getParent().getProcurementAgent();
-			receiver.updateTime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
+			receiver.updateShipmentRuntime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
 		}
-		// System.out.println(id + " " + quantity +" " + oftenProcessed);
 		this.processed = processed;	
 	}
 	
 	public void setExpectedDeliveryDuration(double duration) 
 	{
-		this.expectedDelivery = (int)RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + duration;
+		this.expectedDelivery = this.orderedAt + duration;
 	}
 	
 	public void setCancelled() 
 	{
 		cancelled = true;
-		// TODO Auto-generated method stub	
 	}
 	
-//	public void setQuantity(int quantity) 
-//	{
-//		this.quantity = quantity;
-//	}
 	
 	public void setfailurePercentage(double failure)
 	{

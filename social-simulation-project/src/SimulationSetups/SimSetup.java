@@ -7,16 +7,16 @@ import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
-import actors.Sale;
+import actors.SellingActor;
 import actors.SupplyChainMember;
 import actors.Wholesaler;
 
 public abstract class SimSetup 
 {
-	protected ArrayList<Sale> manufacturerList;
-	protected ArrayList<Sale> distributorList;
-	protected ArrayList<Sale> wholesalerList;
-	protected ArrayList<Sale> retailerList;
+	protected ArrayList<SellingActor> manufacturerList;
+	protected ArrayList<SellingActor> distributorList;
+	protected ArrayList<SellingActor> wholesalerList;
+	protected ArrayList<SellingActor> retailerList;
 	protected ArrayList<Customer> customerList;
 	protected boolean trustIntegrated;
 	protected boolean indirectTrustIntegrated;
@@ -24,10 +24,10 @@ public abstract class SimSetup
 	
 	public SimSetup()
 	{
-		manufacturerList = new ArrayList<Sale>();
-		distributorList = new ArrayList<Sale>();
-		wholesalerList = new ArrayList<Sale>();
-		retailerList = new ArrayList<Sale>();
+		manufacturerList = new ArrayList<SellingActor>();
+		distributorList = new ArrayList<SellingActor>();
+		wholesalerList = new ArrayList<SellingActor>();
+		retailerList = new ArrayList<SellingActor>();
 		customerList = new ArrayList<Customer>();
 	}
 
@@ -39,22 +39,22 @@ public abstract class SimSetup
 		return this.customerList;
 	}
 	
-	public ArrayList<Sale> getManufacturerList()
+	public ArrayList<SellingActor> getManufacturerList()
 	{
 		return this.manufacturerList;
 	}
 	
-	public ArrayList<Sale> getDistributorList()
+	public ArrayList<SellingActor> getDistributorList()
 	{
 		return this.distributorList;
 	}
 	
-	public ArrayList<Sale> getWholesalerList()
+	public ArrayList<SellingActor> getWholesalerList()
 	{
 		return this.wholesalerList;
 	}
 	
-	public ArrayList<Sale> getRetailerList()
+	public ArrayList<SellingActor> getRetailerList()
 	{
 		return this.retailerList;
 	}

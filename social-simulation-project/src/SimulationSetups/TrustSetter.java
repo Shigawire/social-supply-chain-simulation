@@ -24,7 +24,7 @@ public class TrustSetter
 		return trustIntegrated;
 	}
   	
-	public boolean getIndirectTrustIndegrated()
+	public boolean getIndirectTrustIntegrated()
 	{
 		return indirectTrustIntegrated;
 	}

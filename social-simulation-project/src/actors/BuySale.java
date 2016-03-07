@@ -11,12 +11,16 @@ import agents.ProductionAgent;
 import artefacts.Order;
 import artefacts.Profile;
 
-// Combination of Interface Sale and class buy
-public abstract class BuySale extends Buy implements Sale
+// Combination of  SellingActor and class BuyingActor - i.e. Wholesaler, Retailer, Distributor
+public abstract class BuySale extends BuyingActor implements SellingActor
 {
-	protected int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
+	// for the subtraction from the order caused by knowing he will not order at me
+	protected int subtractionByTrust = 0; 
+	
 	protected int desiredInventoryLevel;
-	protected int nextDemand; // demand of next tick
+	
+	// demand of next tick
+	protected int nextDemand;
 	protected int price; // price for our goods
 	protected int orderQuantity; // the quantity should be ordered this tick
 	protected DeliveryAgent deliveryAgent;
@@ -27,9 +31,10 @@ public abstract class BuySale extends Buy implements Sale
 	
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
-	public BuySale(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel,Profile p) 
+
+	public BuySale(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel, p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, p);
 	}
 	
 	// receiving the shipments that was delivered last tick
@@ -72,9 +77,8 @@ public abstract class BuySale extends Buy implements Sale
 		lastDemand = nextDemand;
 		lastOrderUpToLevel = orderUpToLevel;
 		
-		// 2.
-		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
-		// if current bigger than desiredlevel return
+		int currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
+		// if current outgoing bigger than the desired level return - we don't need more items in the inventory
 		if (currentOutgoingInventoryLevel > desiredInventoryLevel) {
 			return;
 		}
@@ -101,7 +105,7 @@ public abstract class BuySale extends Buy implements Sale
 			// Choose seller
 			orderAgent.order(this.trustAgent, order);
 			// if he is lying he will order the same at a second supplier
-			if (lying) {
+			if (this.isLying) {
 				Order order2 = new Order(orderQuantity, this.orderAgent);
 				orderAgent.secondOrder(this.trustAgent, order2);
 			}
@@ -109,16 +113,19 @@ public abstract class BuySale extends Buy implements Sale
 	}
 	
 	// just a method used if he is a lying agent 
-	public int desired()
+	public int desiredInventoryLevelForLyingBehaviour()
 	{
-		if (lying) {
+		if (this.isLying) {
 			nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
 			desiredInventoryLevel = nextDemand * 15 / 10;
 			// System.out.println("desiredInventoryLevel" + desiredInventoryLevel);
 			return desiredInventoryLevel;
+		} else {
+			
+			//never reaching this state as the function is only processed when the actor is lying
+			//could need some refactoring, though
+			return 0;
 		}
-		return 0;
-		//return 1000;
 	}
 	
 	// if a possible buyer trust this actor enough, but will not order at him, he will tell it
@@ -129,7 +136,7 @@ public abstract class BuySale extends Buy implements Sale
 		}	
 	}
 	
-	public void updateList(OrderAgent orderer, int orderAtYou)
+	public void updateClientList(OrderAgent orderer, int orderAtYou)
 	{
 		// when the buyer is not already in the map
 		if (!buyer.containsKey(orderer)) {

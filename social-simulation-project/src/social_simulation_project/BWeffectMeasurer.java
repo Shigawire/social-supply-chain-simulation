@@ -3,7 +3,6 @@ package social_simulation_project;
 import java.util.ArrayList;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import agents.DeliveryAgent;
 import artefacts.Order;
 import actors.Customer;
 import actors.Distributor;
@@ -13,136 +12,131 @@ import actors.Wholesaler;
 public class BWeffectMeasurer 
 {
 	// Dummys for Comparison of classes only
-	Customer c;
-	Retailer r;
-	Wholesaler w;
-	Distributor d;
+	Customer customer;
+	Retailer retailer;
+	Wholesaler wholesaler;
+	Distributor distributor;
+	
 	// Singleton;
 	private static BWeffectMeasurer measurer = new BWeffectMeasurer();
-	// list in which for every for every tier the whole value of orders this tier made is saved
+	// list in which for every tier the whole value of orders this tier made is saved
 	// + one integer to save the sum of one tick
-	private ArrayList<Integer> customer = new ArrayList<Integer>();
+	private ArrayList<Integer> customerList = new ArrayList<Integer>();
 	private int tickCustomer = 0;
-	private ArrayList<Integer> retailer = new ArrayList<Integer>();
+	private ArrayList<Integer> retailerList = new ArrayList<Integer>();
 	private int tickRetailer = 0;
-	private ArrayList<Integer> wholesaler = new ArrayList<Integer>();
+	private ArrayList<Integer> wholesalerList = new ArrayList<Integer>();
 	private int tickWholesaler = 0;
-	private ArrayList<Integer> distributor = new ArrayList<Integer>();
+	private ArrayList<Integer> distributorList = new ArrayList<Integer>();
 	private int tickDistributor = 0;
-	private ArrayList<Integer> manufacturer = new ArrayList<Integer>();
+	private ArrayList<Integer> manufacturerList = new ArrayList<Integer>();
 	private int tickManufacturer = 0;
-	//attributes to save the BWEValues in and put them into an excel-sheet
-	private double customerValue;
+	
+	// attributes to save the BWEValues in and put them into an excel-sheet
 	private double retailerValue;
 	private double wholesalerValue;
 	private double distributorValue;
 	private double manufacturerValue;
 	
-	
 	private BWeffectMeasurer()
 	{
+		
 	}
 	
-	//update the per tick order counter for every tier (will be used by update
-	public void updateCustomer(int order_amount)
+	// update the per tick order counter for every tier (will be used by update
+	public void updateCustomer(int orderAmount)
 	{
-		measurer.setTickCustomer(measurer.getTickCustomer() + order_amount);
+		measurer.setTickCustomer(measurer.getTickCustomer() + orderAmount);
 	}
 	
-	public void updateRetailer(int order_amount)
+	public void updateRetailer(int orderAmount)
 	{
-		measurer.setTickRetailer(measurer.getTickRetailer() + order_amount);
+		measurer.setTickRetailer(measurer.getTickRetailer() + orderAmount);
 	}
 	
-	public void updateWholesaler(int order_amount)
+	public void updateWholesaler(int orderAmount)
 	{
-		measurer.setTickWholesaler(measurer.getTickWholesaler() + order_amount);
+		measurer.setTickWholesaler(measurer.getTickWholesaler() + orderAmount);
 	}
 	
-	public void updateDistributor(int order_amount)
+	public void updateDistributor(int orderAmount)
 	{
-		measurer.setTickDistributor(measurer.getTickDistributor() + order_amount);
+		measurer.setTickDistributor(measurer.getTickDistributor() + orderAmount);
 	}
-	//special update for manufacturer as he does not order
-	public void updateManufacturer(int produceQuantity) {
-		measurer.setTickManufacturer(measurer.getTickManufacturer()+ produceQuantity);
-			
+	
+	// special update for manufacturer as he does not order
+	public void updateManufacturer(int produceQuantity) 
+	{
+		measurer.setTickManufacturer(measurer.getTickManufacturer() + produceQuantity);		
 	}	
 	
-	
-
 	// enter the orders every whole tier made in every step to the list
 	@ScheduledMethod(start = 2, interval = 1, priority = 6)
 	public void run()
 	{
 		// append value of customer for the last tick
-		if (measurer.getCustomer().size() < 52) {
-			measurer.getCustomer().add(measurer.getTickCustomer());
+		if (measurer.getCustomerList().size() < 52) {
+			measurer.getCustomerList().add(measurer.getTickCustomer());
 		} else {
-			measurer.getCustomer().remove(0);
-			measurer.getCustomer().add(measurer.getTickCustomer());
+			measurer.getCustomerList().remove(0);
+			measurer.getCustomerList().add(measurer.getTickCustomer());
 		}
 		
 		// append value of Retailer for the last tick
-		if (measurer.getRetailer().size() < 52) {
-			measurer.getRetailer().add(measurer.getTickRetailer());
+		if (measurer.getRetailerList().size() < 52) {
+			measurer.getRetailerList().add(measurer.getTickRetailer());
 		} else {
-			measurer.getRetailer().remove(0);
-			measurer.getRetailer().add(measurer.getTickRetailer());
+			measurer.getRetailerList().remove(0);
+			measurer.getRetailerList().add(measurer.getTickRetailer());
 		}
 		
 		// append value of Wholesaler for the last tick
-		if (measurer.getWholesaler().size() < 52) {
-			measurer.getWholesaler().add(measurer.getTickWholesaler());
+		if (measurer.getWholesalerList().size() < 52) {
+			measurer.getWholesalerList().add(measurer.getTickWholesaler());
 		} else {
-			measurer.getWholesaler().remove(0);
-			measurer.getWholesaler().add(measurer.getTickWholesaler());
+			measurer.getWholesalerList().remove(0);
+			measurer.getWholesalerList().add(measurer.getTickWholesaler());
 		}
 		
 		// append value of Distributor for the last tick
-		if (measurer.getDistributor().size() < 52) {
-			measurer.getDistributor().add(measurer.getTickDistributor());
+		if (measurer.getDistributorList().size() < 52) {
+			measurer.getDistributorList().add(measurer.getTickDistributor());
 		} else {
-			measurer.getDistributor().remove(0);
-			measurer.getDistributor().add(measurer.getTickDistributor());
-		}
-		if (measurer.getManufacturer().size() < 52) {
-			measurer.getManufacturer().add(measurer.getTickManufacturer());
-		} else {
-			measurer.getManufacturer().remove(0);
-			measurer.getManufacturer().add(measurer.getTickManufacturer());
+			measurer.getDistributorList().remove(0);
+			measurer.getDistributorList().add(measurer.getTickDistributor());
 		}
 		
-		// set the counters for the next tick =0
+		if (measurer.getManufacturerList().size() < 52) {
+			measurer.getManufacturerList().add(measurer.getTickManufacturer());
+		} else {
+			measurer.getManufacturerList().remove(0);
+			measurer.getManufacturerList().add(measurer.getTickManufacturer());
+		}
+		
+		// set the counters for the next tick = 0
 		measurer.setTickCustomer(0);
 		measurer.setTickRetailer(0);
 		measurer.setTickWholesaler(0);
 		measurer.setTickDistributor(0);
 		measurer.setTickManufacturer(0);
 		
-		// System.out.println();
 		// compute the variances
-		 double customerVar = variance(measurer.getCustomer());
-		 double retailerVar = variance(measurer.getRetailer());
-		 double wholesalerVar = variance(measurer.getWholesaler());
-		 double distributorVar = variance(measurer.getDistributor());
-		 double manufacturerVar = variance(measurer.getManufacturer());
-		 //bullwhip meaurements:
-		 retailerValue = retailerVar/customerVar;
+		 double customerVar = variance(measurer.getCustomerList());
+		 double retailerVar = variance(measurer.getRetailerList());
+		 double wholesalerVar = variance(measurer.getWholesalerList());
+		 double distributorVar = variance(measurer.getDistributorList());
+		 double manufacturerVar = variance(measurer.getManufacturerList());
+		 // bullwhip meaurements:
+		 retailerValue = retailerVar / customerVar;
 		 //System.out.println(retailerVar/customerVar);
-		 wholesalerValue = wholesalerVar/customerVar;
+		 wholesalerValue = wholesalerVar / customerVar;
 		 //System.out.println(wholesalerVar/customerVar);
-		 distributorValue = distributorVar/customerVar;
+		 distributorValue = distributorVar / customerVar;
 		 //System.out.println(distributorVar/customerVar);
-		 manufacturerValue = manufacturerVar/customerVar;
+		 manufacturerValue = manufacturerVar / customerVar;
 		 //System.out.println(manufacturerVar/customerVar);
 	}
 	
-	private ArrayList<Integer> getManufacturer() {
-		// TODO Auto-generated method stub
-		return manufacturer;
-	}
-
 	// computes the variance for list of integers
 	public double variance(ArrayList<Integer> toCompute)
 	{
@@ -161,30 +155,32 @@ public class BWeffectMeasurer
 			partComputation = part - mid;
 			variance += partComputation * partComputation;
 		}
-		// System.out.println("variance"+variance);
+		// System.out.println("variance" + variance);
 		return variance;
 	}
 	
 	// update the with new order
 	public void update(Order order) 
 	{
-		if (order.getOrderAgent().getParent().getClass().equals(c.getClass())) {
+		System.out.println(customer.getClass());
+		System.out.println(order.getOrderAgent().getParent().getClass().equals("a"));
+		
+		if (order.getOrderAgent().getParent().getClass().equals(customer.getClass())) {
 			measurer.updateCustomer(order.getQuantity());
 		}
 		
-		else if (order.getOrderAgent().getParent().getClass().equals(r.getClass())) {
+		else if (order.getOrderAgent().getParent().getClass().equals(retailer.getClass())) {
 			measurer.updateRetailer(order.getQuantity());			
 		}
 		
-		else if (order.getOrderAgent().getParent().getClass().equals(w.getClass())) {
+		else if (order.getOrderAgent().getParent().getClass().equals(wholesaler.getClass())) {
 			measurer.updateWholesaler(order.getQuantity());			
 		}
 		
-		else if (order.getOrderAgent().getParent().getClass().equals(d.getClass())) {
+		else if (order.getOrderAgent().getParent().getClass().equals(distributor.getClass())) {
 			measurer.updateDistributor(order.getQuantity());			
 		}
 	}
-	
 	
 	/*
 	 * GETTERS
@@ -193,19 +189,25 @@ public class BWeffectMeasurer
 	{
 		return tickCustomer;
 	}
-
-	private int getTickManufacturer() {
-		// TODO Auto-generated method stub
-		return tickManufacturer;
+	
+	public int getTickRetailer() 
+	{
+		return tickRetailer;
 	}
+	
 	public int getTickWholesaler() 
 	{
 		return tickWholesaler;
 	}
-
-	public int getTickRetailer() 
+	
+	public int getTickDistributor() 
 	{
-		return tickRetailer;
+		return tickDistributor;
+	}
+
+	private int getTickManufacturer() 
+	{
+		return tickManufacturer;
 	}
 	
 	public static BWeffectMeasurer getMeasurer()
@@ -213,98 +215,84 @@ public class BWeffectMeasurer
 		return measurer;
 	}
 	
-	public int getTickDistributor() 
+	public ArrayList<Integer> getCustomerList() 
 	{
-		return tickDistributor;
+		return customerList;
 	}
 	
-	public ArrayList<Integer> getCustomer() 
+	public ArrayList<Integer> getRetailerList() 
 	{
-		return customer;
-	}
-	
-	public ArrayList<Integer> getRetailer() 
-	{
-		return retailer;
+		return retailerList;
 	}
 
-	public ArrayList<Integer> getWholesaler() 
+	public ArrayList<Integer> getWholesalerList() 
 	{
-		return wholesaler;
+		return wholesalerList;
 	}
 	
-	public ArrayList<Integer> getDistributor() 
+	public ArrayList<Integer> getDistributorList() 
 	{
-		return distributor;
+		return distributorList;
 	}
 	
-	public double getRetailerBWEValue(){
+	private ArrayList<Integer> getManufacturerList() 
+	{
+		return manufacturerList;
+	}
+	
+	public double getRetailerBWEValue()
+	{
 		return retailerValue;
 	}
-	public double getWholesalerBWEValue(){
+	
+	public double getWholesalerBWEValue()
+	{
 		return wholesalerValue;
 	}
-	public double getDistributorBWEValue(){
+	
+	public double getDistributorBWEValue()
+	{
 		return distributorValue;
 	}
-	public double getManufacturerBWEValue(){
+	
+	public double getManufacturerBWEValue()
+	{
 		return manufacturerValue;
 	}
-	
 	
 	/*
 	 * SETTERS
 	 */
-	public void setTickRetailer(int tickRetailer) 
-	{
-		this.tickRetailer = tickRetailer;
-	}
-	private void setTickManufacturer(int tickManufacturer) {
-		this.tickManufacturer=tickManufacturer;
-		
-	}
 	public void setTickCustomer(int tickCustomer) 
 	{
 		this.tickCustomer = tickCustomer;
 	}
-
+	
+	public void setTickRetailer(int tickRetailer) 
+	{
+		this.tickRetailer = tickRetailer;
+	}
+	
 	public void setTickWholesaler(int tickWholesaler) 
 	{
 		this.tickWholesaler = tickWholesaler;
 	}
-
+	
 	public void setTickDistributor(int tickDistributor) 
 	{
 		this.tickDistributor = tickDistributor;
 	}
-
-	public void setCustomer(ArrayList<Integer> customer) 
+	
+	private void setTickManufacturer(int tickManufacturer) 
+	{
+		this.tickManufacturer=tickManufacturer;
+	}
+	
+	public void setTheDummys(Customer customer, Retailer retailer, Wholesaler wholesaler, Distributor distributor)
 	{
 		this.customer = customer;
-	}
-
-	public void setRetailer(ArrayList<Integer> retailer) 
-	{
 		this.retailer = retailer;
-	}
-
-	public void setWholesaler(ArrayList<Integer> wholesaler) 
-	{
 		this.wholesaler = wholesaler;
-	}
-
-	public void setDistributor(ArrayList<Integer> distributor) 
-	{
 		this.distributor = distributor;
 	}
-	
-	public void setTheDummys(Customer c, Retailer r, Wholesaler w, Distributor d)
-	{
-		this.c = c;
-		this.r = r;
-		this.w = w;
-		this.d = d;
-	}
-
-	
 }

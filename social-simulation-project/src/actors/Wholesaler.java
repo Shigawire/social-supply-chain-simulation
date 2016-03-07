@@ -19,52 +19,58 @@ import artefacts.Profile;
 */
 public class Wholesaler extends BuySale
 {
-	protected int almostFinished;
-	
+	//historical orderUpTo value. 
 	protected int lastOrderUpToLevel = -1;
+	
 	protected int lastDemand = 0;
 	
-	public Wholesaler(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
+	public Wholesaler(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel,p);
 		
 		this.price = price;
 		deliveryAgent = new DeliveryAgent(price, this, 3, 4);
-		this.productionAgent = new ProductionAgent(2, 1, this.inventoryAgent);
+		this.productionAgent = new ProductionAgent(2, 1, this.inventoryAgent, this);
 	}
 	
 	// method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)	
 	@ScheduledMethod(start = 1, interval = 1, priority = 3)
 	public void run() 
 	{
-		// 1. harvest
-		this.harvest();
+		// move incoming items into the outgoing inventory
+		this.productionAgent.transferInventories();
+		
 		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());		
-		// 2. processShipments() receive shipments
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevelForLyingBehaviour());
+		
+		// receive incoming shipments and process them
 		this.receiveShipments();
-		// 3. updateTrust()	
+		
+		// clear receivedShipments - i.e. erase them from the incoming list.
+		// This is a special case here - but since the receivedShipments are further processed we need to tell the orderAgent specifically to clear this list.
 		orderAgent.clearReceivedShipments();
-		// 4. produce
+		
+		// produce
 		this.produce();
-		// 5. deliver()
+		
+		// deliver produced items to the customers
 		this.deliver();
-		// 6.send order that he made the last tick
+				
+		// Order the items at a supplier (chosen by the procurementAgent) that were defined in the previous tick
+		// we are delaying orders here to better simulate the delay of information flow in a supply chain
 		orderAgent.orderIt();
-		// 7. order()
+				
+		// create new orders based on the inventory levels and demand
 		this.order();
-		// 8. say those suppliers which I trust, that I will not order at them
+				
+		// tell those suppliers which I trust, that I will not order at them
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private void harvest()
-	{
-		this.productionAgent.harvest();
-	}
 	
 	public void produce()
 	{
-		this.productionAgent.produce2();
+		this.productionAgent.produce();
 	}
 	
 	public void order() 
@@ -76,22 +82,21 @@ public class Wholesaler extends BuySale
 		// 1. multiplied with 2 because he need twice of the outgoing because ot the production process
 		nextDemand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
 		
-		//desiredInventoryLevel = nextDemand * 15 / 10;
-		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
+		
+		//if this is the first time that we're setting lastOrderUpToLevel use the nextDemand variable
+		this.lastOrderUpToLevel = (this.lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
 		
 		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
 		
+		//desiredInventoryLevel = order up to level (have a look at the documentation for the explanation)
 		desiredInventoryLevel = orderUpToLevel;
-		lastDemand = nextDemand;
-		lastOrderUpToLevel = orderUpToLevel;
-		
-		
+		this.lastDemand = nextDemand;
+		this.lastOrderUpToLevel = orderUpToLevel;
 		
 		// 2.
-		currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
-		// if current bigger than desiredlevel return
+		int currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
+		// if current bigger than the desired inventory level return
 		if (currentOutgoingInventoryLevel > desiredInventoryLevel) {
-			// deliveryAgent.setShortage(0);
 			return;
 		}
 		// 3.
@@ -111,14 +116,15 @@ public class Wholesaler extends BuySale
 			orderQuantity = 0;
 			orderAgent.order(this.trustAgent, null);
 		} else {
-			// System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
+			
 			Order order = new Order(orderQuantity, this.orderAgent);
-			// Choose seller
+			// Choose supplier
 			orderAgent.order(this.trustAgent, order);
-			// if he is lying he will order the same at a second supplier
-			if (lying) {
-				Order order2 = new Order(orderQuantity, this.orderAgent);
-				orderAgent.secondOrder(this.trustAgent, order2);
+			
+			// if he is lying he will order the same amount at a second supplier
+			if (this.isLying) {
+				Order orderToBeCancelled = new Order(orderQuantity, this.orderAgent);
+				orderAgent.secondOrder(this.trustAgent, orderToBeCancelled);
 			}
 		}
 	}

@@ -6,7 +6,6 @@ import actors.Customer;
 import actors.Distributor;
 import actors.Manufacturer;
 import actors.Retailer;
-import actors.Sale;
 import actors.SupplyChainMember;
 import actors.Wholesaler;
 import artefacts.trust.Trust;
@@ -20,13 +19,13 @@ public class IndirectTrustAgent
 	private ArrayList<Distributor> distributorList;
 	private ArrayList<Wholesaler> wholesalerList;
 	private ArrayList<Retailer> retailerList;
-	private  ArrayList<Customer> customerList;
+	private ArrayList<Customer> customerList;
 	
 	private static IndirectTrustAgent indirectTrustAgent = new IndirectTrustAgent();
 	
 	private IndirectTrustAgent()
 	{
-		
+
 	}
 	
 	// set lists of all actors that are in the simulation
@@ -47,7 +46,7 @@ public class IndirectTrustAgent
 	public static ArrayList<Trust> getTrustValue(TrustAgent trustAgent, DeliveryAgent deliveryAgent)
 	{
 		// looking for the parent of the trustagent
-		SupplyChainMember parent = trustAgent.getSupplyChainMember();
+		SupplyChainMember parent = trustAgent.getParent();
 		ArrayList<Trust> trustList = new ArrayList<Trust>();
 		
 		// differentiates from which class the trust has to be gotten

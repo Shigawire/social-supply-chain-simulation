@@ -20,13 +20,13 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Retailer extends BuySale
 {
-	public Retailer(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price,Profile p) 
+	public Retailer(ArrayList<SellingActor> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price,Profile p) 
 	{
 		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel, p);
 		
 		this.price = price;
 		deliveryAgent = new DeliveryAgent(price, this, 1, 1);
-		this.productionAgent = new ProductionAgent(1, 1, this.inventoryAgent);
+		this.productionAgent = new ProductionAgent(1, 1, this.inventoryAgent, this);
 	}
 	
 	// method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)	
@@ -34,9 +34,9 @@ public class Retailer extends BuySale
 	public void run() 
 	{
 		// 1. harvest()
-		this.harvest();
+		this.productionAgent.transferInventories();
 		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());
+		inventoryAgent.desiredLevel(this.isLying, desiredInventoryLevelForLyingBehaviour());
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// 3. updateTrust()
@@ -53,13 +53,9 @@ public class Retailer extends BuySale
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private void harvest()
-	{
-		this.productionAgent.harvest();
-	}
 	
 	public void produce() 
 	{
-		this.productionAgent.produce1();
+		this.productionAgent.produce(0);
 	}
 }
