@@ -30,9 +30,8 @@ public abstract class SupplyChainMember
 	
 	// Map with dimension ratings gives the importance for every dimension
 	// of trust for every Supply Chain member based on the profiles
-	/**
-	 * This variable maps the trust-dimensions (reliability, competence, shared values, quality) to the agent-specific ratings.
-	 */
+	
+	//This variable maps the trust-dimensions (reliability, competence, shared values, quality) to the agent-specific ratings.
 	
 	protected Map<DimensionType, Double> dimensionRatings;
 														
@@ -89,7 +88,7 @@ public abstract class SupplyChainMember
 
 	public Object getProcurementAgent() 
 	{
-		// implemented for relevant actors in Buy
+		// implemented for relevant actors in BuyingActor
 		return null;
 	}
 	public void setProfile(Profile profile){

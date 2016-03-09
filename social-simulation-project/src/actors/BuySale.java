@@ -11,7 +11,7 @@ import agents.ProductionAgent;
 import artefacts.Order;
 import artefacts.Profile;
 
-// Combination of Interface Sale and class buy
+//Combination of  SellingActor and class BuyingActor - i.e. Wholesaler, Retailer, Distributor
 public abstract class BuySale extends BuyingActor implements SellingActor
 {
 	// for the subtraction from the order caused by knowing he will not order at me
@@ -36,12 +36,12 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 	protected int lastOrderUpToLevel = -1;
 	protected int lastDemand = 0;
 	
+	// a list of all purchasers and their submitted substractionByTrust value
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 	
-
-	public BuySale(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile p) 
+	public BuySale(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, Profile profile) 
 	{
-		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, profile);
 	}
 	
 	// receiving the shipments that was delivered last tick
@@ -132,7 +132,7 @@ public abstract class BuySale extends BuyingActor implements SellingActor
 		return 0;
 	}
 	
-	// if a possible buyer trust this actor enough, but will not order at him, he will tell it
+	// if a possible buyer trusts this actor enough, but will not order at him, he will tell him this
 	public void going2order(OrderAgent noOrderer)
 	{
 		if (buyer.containsKey(noOrderer)) {
