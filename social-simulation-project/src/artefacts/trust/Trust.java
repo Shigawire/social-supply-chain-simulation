@@ -1,23 +1,21 @@
 package artefacts.trust;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Trust 
 {
-	private ArrayList<TrustDimension> trustDimensions; 
 	
-	private ReliabilityDimension reliability;
-	private CompetenceDimension competence;
-	private QualityDimension quality;
-	private SharedValuesDimension sharedValues;
-	
+	//trust Value - initialized with 0.5
 	private double tValue = 0.5;
+	
+	//historical trust Value
 	private double oldtValue = 0.5;
 	
+	//The current competence value between two supply chain members
 	private double currentCompetenceValue = 0.5;
 	
+	//Map the dimension types to a specific trust dimension
 	private Map<DimensionType, TrustDimension> dimensionMapping = new HashMap<DimensionType, TrustDimension>();
 	
 	// Create a Trust Object the encapsulates the four dimensions
@@ -26,10 +24,6 @@ public class Trust
 			     QualityDimension quality, 
 			     SharedValuesDimension sharedValues)
 	{
-		this.reliability = reliability;
-		this.competence = competence;
-		this.quality = quality;
-		this.sharedValues = sharedValues;
 		
 		// Map all dimensions to their type.
 		dimensionMapping.put(DimensionType.RELIABILITY, reliability);
@@ -52,10 +46,8 @@ public class Trust
 		if (this.oldtValue > this.tValue) {
 			return false;
 			// negative
-			// System.out.println("Trust update is negative [from "+ _oldtValue + " to " + _newtValue +  "]");
 		} else {
 			return true;
-			// System.out.println("Trust update is positive [from "+ _oldtValue + " to " + _newtValue +  "]");
 		}
 	}
 	
@@ -79,7 +71,7 @@ public class Trust
 	}
 	
 	// write the new competence value.. 
-	// TODO can be removed?
+		// Basically this value depicts the competence between two supply chain members. 
 	public void setCurrentCompetenceValue(double competence) 
 	{
 		// Ensure the competence value is never below 0 or above 1.

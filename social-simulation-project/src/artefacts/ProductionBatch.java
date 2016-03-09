@@ -4,8 +4,6 @@ package artefacts;
 * This class represents a production batch.
 * It is used by the manufacturer for production.
 *
-* @author  PS Development Team
-* @since   2015-11-30
 */
 public class ProductionBatch 
 {
@@ -36,5 +34,9 @@ public class ProductionBatch
 	public int getQuantity() 
 	{
 		return this.quantity;
+	}
+	
+	public int getTotalProductionTime() {
+		return this.totalProductionTime;
 	}
 }

@@ -181,7 +181,6 @@ public class TrustAssessmentTest
 			this.schedule.schedule(retailer1);
 
 	    	this.schedule.execute();
-	    	//System.out.println("Reta. inc. inv" + retailer1.getInventoryAgent().getIncomingInventoryLevel());
 		}
 		
 		//By now the shipment should have been processed by the retailer and returned to the customer as fulfilled shipment
@@ -237,7 +236,7 @@ public class TrustAssessmentTest
 		
 		double updatedCompetenceValue = (competenceKPI - competence.getDimensionRating()) * competence.getDimensionRating();
 		
-		assertEquals("The updated competence value is not correct.", 0.02275, (double)Math.round(updatedCompetenceValue * 100000d) / 100000d, 0);
+		assertEquals("The updated competence value is not correct.", 0.0275, (double)Math.round(updatedCompetenceValue * 100000d) / 100000d, 0);
 		
 		double updatedsharedValuesValue = (sharedValuesKPI - sharedValues.getDimensionRating()) * sharedValues.getDimensionRating();
 		
