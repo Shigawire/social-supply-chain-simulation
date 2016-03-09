@@ -28,15 +28,20 @@ public class OrderAgent
 	//based on profiles
 	private double borderLargeTrust;
 	private double borderMediumTrust;
+	
 	//map open orders at every deliveryAgent
 	private Map<DeliveryAgent, Integer> numberOfOpenOrders = new HashMap<DeliveryAgent, Integer>();
+	
 	private SupplyChainMember parent;
 	// list of received Orders
 	private ArrayList<Order> receivedShipments;
-	// List which orders have to be made amd which this tick
+	
+	// List which orders have to be made the next tick
 	private ArrayList<Order> nextTickOrder = new ArrayList<Order>();
-	// where will I order next ticks
+	
+	// All suppliers I am going to order during the next ticks. necessary for the indirect trust assessment
 	ArrayList<DeliveryAgent> willOrder = new ArrayList<DeliveryAgent>();
+	
 	private ProcurementAgent procurementAgent;
 	private ArrayList<DeliveryAgent> deliveryAgents;
 	private int thisTickReceived;
@@ -66,7 +71,6 @@ public class OrderAgent
 	public void orderIt() 
 	{
 		// do the last tick order
-		
 		if (!nextTickOrder.isEmpty()) {
 			for (Order orderToDo : nextTickOrder)
 			{
@@ -78,12 +82,11 @@ public class OrderAgent
 		nextTickOrder.clear();
 	}
 	
-	// order at the by the procurement agent chosen deliverer
+	// order the procurement agent chosen supplier
 	// order will be received one tick later
-	// Because of the structure an order (even one that is empty) has to be made every tick
+	// Because of the structure an order has to be made every tick
 	public void order(TrustAgent trustAgent, Order order) 
 	{
-		// e.g. select Retailer. with customer.procurementAgent
 		if (order != null) {
 			
 			DeliveryAgent deliveryAgent = procurementAgent.chooseSupplier(numberOfOpenOrders);
@@ -98,15 +101,20 @@ public class OrderAgent
 			
 			// the delivery Agent is put into a list where are all at which I want to order
 			willOrder.add(deliveryAgent);
+			
+			//get an expected delivery date from the deliveryAgent and set it on the order object.
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
+			
 			order.setDeliveryAgent(deliveryAgent);
+			
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
-			TrustSetter s = TrustSetter.getInstance();
-			if (s.getInformationSharingIntegrated()) {	
-				// if trusted very good (profile)immediatly order the last and the actual order
+			
+			TrustSetter trustOracle = TrustSetter.getInstance();
+			if (trustOracle.getInformationSharingIntegrated()) {	
+				// if trusted very good (profile) immediately order the last and the actual orders
 				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > borderLargeTrust) {
 					deliveryAgent.receiveOrder(order);
-					// return because all orders are send!
+					// return because all orders are sent
 					return;
 				}
 			}
@@ -135,12 +143,12 @@ public class OrderAgent
 			double expectedDeliveryDuration = deliveryAgent.getExpectedDeliveryTime();
 			order.setDeliveryAgent(deliveryAgent);
 			order.setExpectedDeliveryDuration(expectedDeliveryDuration);
-			TrustSetter s = TrustSetter.getInstance();
-			if (s.getInformationSharingIntegrated()) {
-				// if trusted very good (profile)immediatly order the last and the actual order
+			TrustSetter trustOracle = TrustSetter.getInstance();
+			if (trustOracle.getInformationSharingIntegrated()) {
+				// if trusted very good (profile)immediately order the last and the actual order
 				if ((parent.getTrustAgent().getTrustValue(order.getDeliveryAgent())) > borderLargeTrust) {
 					deliveryAgent.receiveOrder(order);
-					// return because all orders are send!
+					// return because all orders are sent
 					return;
 				}
 			}
@@ -155,11 +163,10 @@ public class OrderAgent
 	}
 	
 	/*
-	 * from the Superagent like customer
+	 * from the super class like customer
 	 */
 	public void receiveShipments(InventoryAgent inventoryAgent) 
 	{	
-		// System.out.println("[Order Agent] receiving shipment list");
 		thisTickReceived = 0;
 		if (!receivedShipments.isEmpty()) {
 			for (Order shipment : receivedShipments) 
@@ -181,21 +188,17 @@ public class OrderAgent
 	 */
 	public void receiveShipment(Order shipment, DeliveryAgent deliverer) 
 	{
-		// System.out.println("[Order Agent] received shipment with qty "+shipment.getQuantity());
 		// set time of the first received
-		// shipment.received();
 		// information for the procurement agent 
 		
 		receivedShipments.add(shipment);
 		
 		//remove a shipment from the global mapping to the suppliers
-		
 		if (shipment.getProcessed()) {
 
 			numberOfOpenOrders.put(deliverer, numberOfOpenOrders.get(deliverer) -1);
 
 		}
-//		receivedOrders.add(shipment);
 	}
 	
 	public void clearReceivedShipments() 

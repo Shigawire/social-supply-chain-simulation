@@ -11,9 +11,8 @@ import artefacts.Order;
 * This class represents an inventory agent. This one is 
 * responsible for inventory handling (all supply chain members).
 *
-* @author  PS Development Team
-* @since   2015-11-30
 */
+
 public class InventoryAgent 
 {
 	/**
@@ -38,7 +37,7 @@ public class InventoryAgent
 	//defines the desired inventory level - usually computed by the forecast agent and then stored for further processing
 	private int desiredInventoryLevel;
 	
-	private boolean lying;
+	private boolean isLying;
 	
 
 	/**
@@ -67,16 +66,16 @@ public class InventoryAgent
 		 *  if it is a lying agent it is possible that he will cancel the order based on his desired inventory level
 		 *  and return the shipment or partial delivery
 		 */
-		if (this.lying) {
+		if (this.isLying) {
 			
 			//cancel an order and return at least a part of the shipment
 			if (this.desiredInventoryLevel < this.outgoingInventory.getLevel()) {
 				shipment.setCancelled();
 				
-				//TODO can this be simplified?
+
 				shipment.getDeliveryAgent().getParent().returning(shipment.getPartDelivery());
 				
-				//TODO what's that?
+
 				shipment.fulfill(shipment.getUnfullfilledQuantity());
 				
 				//finally, set the shipment as fulfilled.
@@ -97,7 +96,7 @@ public class InventoryAgent
 	//set the desired inventory level and determine if the agent will change the lying behaviour for future shipments.
 	public void desiredLevel(boolean lying, int desired) 
 	{
-		this.lying = lying;
+		this.isLying = lying;
 		desiredInventoryLevel = desired;
 	}
 	
