@@ -14,8 +14,6 @@ import agents.ProcurementAgent;
 /**
 * This class represents an order. 
 *
-* @author  PS Development Team
-* @since   ?
 */
 public class Order 
 {
@@ -72,14 +70,8 @@ public class Order
 		this.partDelivery = 0;
 		this.processed = false;
 		
-		System.out.println(quantity);
 		BWeffectMeasurer.getMeasurer().update(this);
 	}
-	
-//	public boolean finished() 
-//	{
-//		return (this.backlog > 0);
-//	}
 	
 	private void received() 
 	{
@@ -145,7 +137,6 @@ public class Order
 	
 	public boolean getProcessed() 
 	{
-		// TODO Auto-generated method stub
 		return processed;
 	}
 	
@@ -184,12 +175,12 @@ public class Order
 	 */
 	public void setProcessed(boolean processed) 
 	{
-		// set the time it needed to deliver
+		//if the order was
 		if (!cancelled) {
 			ProcurementAgent receiver = (ProcurementAgent) orderAgent.getParent().getProcurementAgent();
+			// set the time it needed to deliver
 			receiver.updateTime(this.getOrderedAt() - this.getReceivedAt(), deliveryAgent);
 		}
-		// System.out.println(id + " " + quantity +" " + oftenProcessed);
 		this.processed = processed;	
 	}
 	
@@ -201,13 +192,8 @@ public class Order
 	public void setCancelled() 
 	{
 		cancelled = true;
-		// TODO Auto-generated method stub	
 	}
-	
-//	public void setQuantity(int quantity) 
-//	{
-//		this.quantity = quantity;
-//	}
+
 	
 	public void setfailurePercentage(double failure)
 	{

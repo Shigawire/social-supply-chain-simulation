@@ -2,10 +2,11 @@ package artefacts.trust;
 
 import java.util.Map;
 
-import repast.simphony.random.RandomHelper;
 import actors.SupplyChainMember;
 import artefacts.Order;
-
+/**
+ * This class represents a KPI for every shipment that is being assessed by the trust agent and used for the calculation of a trust value.
+ */
 public class KPI {
 	
 	private Order shipment;

@@ -135,12 +135,10 @@ public class OrderTest
     	assertTrue("Demand for next tick is out of range (9..11): " + customer1.getNextDemand(), (8 <= customer1.getNextDemand()) && (customer1.getNextDemand() <= 12));
     	
     	// the next order quantity is larger than 0 and smaller or equal to the customer demand
-    	System.out.println("Customer order quantity: " +customer1.getNextOrderQuantity());
     	assertTrue("Next order quantity is out of range", customer1.getNextOrderQuantity() >= 0 && customer1.getNextOrderQuantity() <= customer1.getNextDemand());
   
     	// Let's do a custom order with qty 1. This order must be received in tick 3.
     	Order order = new Order(1, customer1.getOrderAgent());
-    	//System.out.println(order.getId());
     	customer1.getOrderAgent().order(customer1.getTrustAgent(), order);
     	
     	// somewhere in the next Ticks I want my order from to be arrived.
