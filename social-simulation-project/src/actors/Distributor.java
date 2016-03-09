@@ -39,7 +39,7 @@ public class Distributor extends BuySale
 		this.productionAgent.transferInventories();		
 		
 		// set the inventory agents desired level(doubled because of production process)
-		inventoryAgent.desiredLevel(lying, desired());
+		inventoryAgent.desiredLevel(isLying, desired());
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// clear receivedShipments;

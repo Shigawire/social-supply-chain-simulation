@@ -18,10 +18,11 @@ import artefacts.Profile;
 * @since   2015-12-04
 */
 public class Wholesaler extends BuySale
-{
-	protected int almostFinished;
-	
+{	
+	//historical order up to value
 	protected int lastOrderUpToLevel = -1;
+	
+	//historical demand
 	protected int lastDemand = 0;
 	
 	public Wholesaler(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
@@ -37,23 +38,34 @@ public class Wholesaler extends BuySale
 	@ScheduledMethod(start = 1, interval = 1, priority = 3)
 	public void run() 
 	{
-		// 1. harvest
+		//move incoming items into the outgoing inventory
+		
 		this.productionAgent.transferInventories();
+		
 		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());		
-		// 2. processShipments() receive shipments
+		inventoryAgent.desiredLevel(isLying, desired());		
+		
+		//receive incoming shipments and process them
 		this.receiveShipments();
-		// 3. updateTrust()	
+		
+		// clear receivedShipments - i.e. erase them from the incoming list.
+		// This is a special case here - but since the receivedShipments are further processed we need to tell the orderAgent specifically to clear this list.
 		orderAgent.clearReceivedShipments();
-		// 4. produce
+		
+		// produce items
 		this.produce();
-		// 5. deliver()
+		
+		// deliver produced items to the customers
 		this.deliver();
-		// 6.send order that he made the last tick
+		
+		// Order the items at a supplier (chosen by the procurementAgent) that were defined in the previous tick
+		// we are delaying orders here to better simulate the delay of information flow in a supply chain
 		orderAgent.orderIt();
-		// 7. order()
+		
+		// create new orders for the inventory levels and demand.
 		this.order();
-		// 8. say those suppliers which I trust, that I will not order at them
+		
+		// tell those suppliers which I trust enough that I am NOT going to order at them
 		orderAgent.trustWhereIOrder();
 	}
 	
@@ -72,7 +84,7 @@ public class Wholesaler extends BuySale
 		// 1. multiplied with 2 because he need twice of the outgoing because ot the production process
 		nextDemand = 2*(this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders()));
 		
-		//desiredInventoryLevel = nextDemand * 15 / 10;
+		//if this is the first time that we're setting lastOrderUpToLevel use the nextDemand variable
 		lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
 		
 		int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
@@ -82,12 +94,10 @@ public class Wholesaler extends BuySale
 		lastOrderUpToLevel = orderUpToLevel;
 		
 		
-		
 		// 2.
 		int currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
 		// if current bigger than desiredlevel return
 		if (currentOutgoingInventoryLevel > desiredInventoryLevel) {
-			// deliveryAgent.setShortage(0);
 			return;
 		}
 		// 3.
@@ -107,12 +117,11 @@ public class Wholesaler extends BuySale
 			orderQuantity = 0;
 			orderAgent.order(this.trustAgent, null);
 		} else {
-			// System.out.println("[Buy_Sale] order_quantity is  " + order_quantity);
 			Order order = new Order(orderQuantity, this.orderAgent);
 			// Choose seller
 			orderAgent.order(this.trustAgent, order);
 			// if he is lying he will order the same at a second supplier
-			if (lying) {
+			if (isLying) {
 				Order order2 = new Order(orderQuantity, this.orderAgent);
 				orderAgent.secondOrder(this.trustAgent, order2);
 			}
