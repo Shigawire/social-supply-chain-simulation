@@ -105,9 +105,9 @@ public class KPI {
 				
 				//and update the competence KPI accordingly.
 				if (direction) {
-					trust.setCurrentCompetenceValue(competenceValue + 0.005);
+					trust.setCurrentCompetenceValue(competenceValue + 0.1);
 				} else {
-					trust.setCurrentCompetenceValue(competenceValue - 0.035);
+					trust.setCurrentCompetenceValue(competenceValue - 0.1);
 				}
 				
 				// return the new competence value

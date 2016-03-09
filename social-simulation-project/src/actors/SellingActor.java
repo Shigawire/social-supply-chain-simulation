@@ -19,7 +19,7 @@ public interface SellingActor
 	
 	public void deliver();
 	// the update list method for register the buyers
-	public void updateList(OrderAgent orderer, int orderAtYou);
+	public void updateClientList(OrderAgent orderer, int orderAtYou);
 	public void going2order(OrderAgent orderAgent);
 	public void produce();
 	DeliveryAgent getDeliveryAgent();

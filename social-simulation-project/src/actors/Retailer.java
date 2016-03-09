@@ -36,7 +36,7 @@ public class Retailer extends BuySale
 		// 1. harvest()
 		this.productionAgent.transferInventories();
 		// set the inventory agents desired level
-		inventoryAgent.desiredLevel(lying, desired());
+		inventoryAgent.desiredLevel(isLying, desired());
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// 3. updateTrust()
@@ -49,13 +49,13 @@ public class Retailer extends BuySale
 		orderAgent.orderIt();
 		// 7. order()
 		this.order();
-		// 8. say those suppliers which I trust, that I will not order at them
+		// 8. tell those suppliers which I trust enough that I am NOT going to order at them
 		orderAgent.trustWhereIOrder();
 	}
 	
 	
 	public void produce() 
 	{
-		this.productionAgent.produce(0);
+		this.productionAgent.produce();
 	}
 }

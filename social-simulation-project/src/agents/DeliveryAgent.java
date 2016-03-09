@@ -56,7 +56,7 @@ public class DeliveryAgent
 		order.setDeliveryAgent(this);
 		receivedOrders.add(order);
 		everReceivedOrders.add(order);
-		parent.updateList(order.getOrderAgent(), order.getQuantity());
+		parent.updateClientList(order.getOrderAgent(), order.getQuantity());
 	}
 	//? wer auch immer das geschrieben hat h� :D
 	/**

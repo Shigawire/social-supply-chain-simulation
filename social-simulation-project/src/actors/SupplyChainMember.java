@@ -69,7 +69,7 @@ public abstract class SupplyChainMember
 	
 	// updates the list of buyers needed for information sharing
 	// is implemented in every subclass except for customer
-	public void updateList(OrderAgent orderAgent, int quantity)
+	public void updateClientList(OrderAgent orderAgent, int quantity)
 	{
 		
 	}
