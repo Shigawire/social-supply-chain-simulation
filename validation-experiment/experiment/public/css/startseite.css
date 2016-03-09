@@ -1,0 +1,53 @@
+body {
+    padding-top: 50px;
+}
+
+.navbar {
+    background-color: #862439;
+    color: white;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: white;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.btn-primary {
+    background-color: #862439;
+    color: white;
+    border-color: #862439;
+}
+
+.btn-primary:hover {
+    background-color: grey;
+    color: white;
+    border-color: grey;
+}
+
+.heading {
+    color: #862439;
+}
+
+hr {
+    border: solid 1px grey;
+}
+
+p {
+    font-size: 16px;
+}
+
+.info {
+    background-color: #CCCCCC;
+    padding: 10px;
+}
+
+ul {
+    font-size: 16px;
+}
+
+.progress-bar {
+    background-color: #862439;
+}
