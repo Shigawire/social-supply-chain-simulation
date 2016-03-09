@@ -18,25 +18,39 @@ public class ProcurementAgent
 {	
 	private ArrayList<DeliveryAgent> deliveryAgents;
 	private TrustAgent trustAgent;
+	
+	//initialize the relevances will be later on defined by the profile of the parent
 	private double trustRelevance = 1;
 	private double averageDeliveryTimeRelevance = 1;
 	private double priceRelevance = 1;
+	
+	//best possible Dimension for every Dimension will be needed for the computation
 	private double[] bestPossibleDimensionValues = { 1.0, 1.0, 1.0 };
-	private int[] oftenUpdated; // how often was delivery time updated
-	private double[][] values; // store the values for the dimensions (1. trust, 2. averageDeliveryTime, 3. price)
+	
+	// how often was delivery time updated needed for the average deliverytime
+	private int[] oftenUpdated;
+	
+	// store the values for the dimensions (1. trust, 2. averageDeliveryTime, 3. price)
+	private double[][] values; 
 	
 	public ProcurementAgent(ArrayList<DeliveryAgent> deliveryAgents, TrustAgent trustAgent, Profile myProfile) 
 	{
 		this.trustAgent = trustAgent;
 		this.deliveryAgents = deliveryAgents;
+		
 		// how big the array must be
 		values = new double[3][deliveryAgents.size()];
+		
 		oftenUpdated = new int[deliveryAgents.size()];
+		
 		for (int i = 0; i < oftenUpdated.length; i++)
 		{
 			oftenUpdated[i] = 0; // oftenUpdated with 0 initialized
 		}
+		
+		//fill with initalizision values
 		valueFill();
+		
 		//get profilerelavances
 		trustRelevance = myProfile.getTrustRelevance();
 		averageDeliveryTimeRelevance = myProfile.getDeliveryTimeRelevance();
@@ -75,6 +89,7 @@ public class ProcurementAgent
 		}
 	}
 	
+	//choose supplier 
 	public DeliveryAgent chooseSupplier(Map<DeliveryAgent, Integer> numberOfOpenOrders) 
 	{
 
@@ -98,11 +113,6 @@ public class ProcurementAgent
 					highestPoint = i;
 					highest = moment;
 				}
-				
-				//if there are already a lot of open orders with this supplier we don't really want to order at him
-				//if (numberOfOpenOrders.get(deliveryAgents.get(i)) > 3) {
-					
-				//}
 						
 			}
 			return deliveryAgents.get(highestPoint);
