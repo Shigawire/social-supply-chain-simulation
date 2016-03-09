@@ -17,7 +17,7 @@ public class BWeffectMeasurer
 	Retailer r;
 	Wholesaler w;
 	Distributor d;
-	// Singleton;
+	// Singleton, therefore it need this static initalization
 	private static BWeffectMeasurer measurer = new BWeffectMeasurer();
 	// list in which for every for every tier the whole value of orders this tier made is saved
 	// + one integer to save the sum of one tick
