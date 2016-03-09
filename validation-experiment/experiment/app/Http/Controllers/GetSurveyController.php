@@ -18,16 +18,26 @@ use App\Helpers\General;
 
 class GetSurveyController extends Controller
 {
+    /*
+     * Put in authentication middleware in order
+     * to protect from unauthorized users
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /*
+     * Welcome page of the experiment
+     */
     public function getSurvey()
     {
         return view('survey.willkommen');
     }
 
+    /*
+     * Show Week 1 which has no previous actions
+     */
     public function getWeek1(Request $request)
     {
         $suppliers = Supplier::where('step', '=', '1')->get();
@@ -42,6 +52,10 @@ class GetSurveyController extends Controller
         return view('survey.week_1', ['survey' => $request->session()->get('survey')])->with('suppliers', $suppliers);
     }
 
+    /*
+     * Generalizes week 2 - 17 since they have
+     * repetitive actions
+     */
     public function getWeekX(Request $request)
     {
         // Get the current user
@@ -123,6 +137,9 @@ class GetSurveyController extends Controller
                 ->with('lagerkosten', $lagerkosten);
     }
 
+    /*
+     * Show week 18 and redirect to trust questions
+     */
     public function getWeek18(Request $request)
     {
         // Get the current user
@@ -200,6 +217,9 @@ class GetSurveyController extends Controller
             ->with('lagerkosten', $lagerkosten);
     }
 
+    /*
+     * Show results after week 18
+     */
     public function getEndBericht(Request $request)
     {
         // Get the current user
@@ -277,6 +297,10 @@ class GetSurveyController extends Controller
             ->with('lagerkosten', $lagerkosten);
     }
 
+    /*
+     * Generalizes week 19 - 30 since they have
+     * repetitive actions
+     */
     public function getWeekX2(Request $request)
     {
         // Get the current user
@@ -358,6 +382,9 @@ class GetSurveyController extends Controller
             ->with('lagerkosten', $lagerkosten);
     }
 
+    /*
+     * Show generic page for shipment evaluations
+     */
     public function getBewertung(Request $request)
     {
         // Get the current user
@@ -370,16 +397,25 @@ class GetSurveyController extends Controller
                                                                                            ->with('user_session', $user_session);
     }
 
+    /*
+     * Show page to evaluate values
+     */
     public function get99Punkte(Request $request)
     {
         return view('survey.99_Punkte', ['survey' => $request->session()->get('survey')]);
     }
 
+    /*
+     * Show page to evaluate trust dimensions
+     */
     public function get100Punkte(Request $request)
     {
         return view('survey.100_Punkte', ['survey' => $request->session()->get('survey')]);
     }
 
+    /*
+     * Show page with highscore
+     */
     public function getHighscore(Request $request)
     {
         $surveys = Survey::orderBy('kontostand_week30', 'desc')->where('current_step', '=', 31)->get();
@@ -388,11 +424,17 @@ class GetSurveyController extends Controller
         return view('highscore', ['survey' => $request->session()->get('survey')])->with('surveys', $surveys);
     }
 
+    /*
+     * Show page with last questions
+     */
     public function getEndFragen(Request $request)
     {
         return view('survey.endfragen', ['survey' => $request->session()->get('survey')]);
     }
 
+    /*
+     * Show description for second part of the experiment
+     */
     public function getTeil2(Request $request)
     {
         return view('survey.teil2', ['survey' => $request->session()->get('survey')]);

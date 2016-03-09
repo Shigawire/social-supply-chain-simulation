@@ -6,19 +6,32 @@ use App\Lieferung;
 use App\Back_Order;
 use App\Umsatz;
 
+
+/*
+ * This class generalizes some repetitive operations
+ * of the experiment and can be used everywhere since
+ * its methods are static.
+ */
 class General
 {
+    /*
+     * Creates a new shipment with predefined quality and
+     * reliability attributes depending on the week number
+     */
     public static function create_lieferung($selected_supplier, $user_session, $bestellmenge_stepX, $request)
     {
+        // prepare lower and upper bound for random number generator
         $min = 40;
         $max = 60;
 
+        // Set quality for weeks 2, 8, 14
         if ($user_session->current_step == 2 || $user_session->current_step == 8 || $user_session->current_step == 14)
         {
             $quality = 60;
             $gelieferte_menge = round($bestellmenge_stepX * 0.6);
             $quality = 100 - (($gelieferte_menge / $bestellmenge_stepX) * 100);
         }
+        // Set quality for weeks 5, 6, 11, 17, 18, 20, 24, 28
         else if ($user_session->current_step == 5 ||
                  $user_session->current_step == 6 ||
                  $user_session->current_step == 11 ||
@@ -32,12 +45,14 @@ class General
             $gelieferte_menge = round($bestellmenge_stepX * 0.8);
             $quality = 100 - (($gelieferte_menge / $bestellmenge_stepX) * 100);
         }
+        // Set quality for week 12
         else if ($user_session->current_step == 12)
         {
             $quality = 20;
             $gelieferte_menge = round($bestellmenge_stepX * 0.2);
             $quality = 100 - (($gelieferte_menge / $bestellmenge_stepX) * 100);
         }
+        // Every other week
         else
         {
             $quality = 0;
@@ -64,8 +79,12 @@ class General
         $request->session()->put('lieferungen', $lieferung);
     }
 
+    /*
+     * Check if shipments of previous orders have arrived
+     */
     public static function check_lieferungen($besteller)
     {
+        // Get all shipments that would arrive in the next week
         $lieferungen = Lieferung::where('besteller', '=', $besteller)->where('verbl_lieferzeit', '=', 1)->get();
         $angekommen = 0;
         foreach ($lieferungen as $lieferung)
@@ -76,6 +95,10 @@ class General
         return $angekommen;
     }
 
+    /*
+     * Try to fulfill back orders if inventory level
+     * is sufficient. If not update back orders.
+     */
     public static function fulfill_back_orders($teilnehmer, $lagerbestand)
     {
         $gesamtgewinn = 0;
@@ -115,6 +138,10 @@ class General
         return array($verkaufte_menge, $lagerbestand, $gesamtgewinn);
     }
 
+    /*
+     * Try to fulfill demand. If inventory level
+     * not sufficient, create back order
+     */
     public static function fulfill_demand($lagerbestand, $user_session)
     {
         $verkaufte_menge = 0;
@@ -161,6 +188,9 @@ class General
         return array($verkaufte_menge, $lagerbestand, $gesamtgewinn, $back_order_menge);
     }
 
+    /*
+     * Reduce remaining delivery time of all open shipments
+     */
     public static function lieferzeit_verringern($user_session)
     {
         $lieferungen_ende = Lieferung::where('besteller', '=', $user_session->id)->get();
@@ -172,6 +202,9 @@ class General
         }
     }
 
+    /*
+     * Refresh all remaining back orders and devaluate its price
+     */
     public static function back_orders($user_session)
     {
         $back_orders_ende = Back_Order::where('teilnehmer', '=', $user_session->id)->get();
@@ -186,6 +219,9 @@ class General
         }
     }
 
+    /*
+     * Update the user's data to the database
+     */
     public static function update_survey($request, $user_session,
                                          $neuer_kontostand, $bestellkosten,
                                          $umsatz, $lagerkosten,
@@ -213,7 +249,9 @@ class General
     }
 
 
-
+    /*
+     * Create revenue for sells
+     */
     public static function create_umsatz($verkaufspreis, $verkaufte_menge,
                                          $umsatz, $nachfrage_aus_runde,
                                          $umsatz_erzielt_in_runde, $verbl_nachfrage,

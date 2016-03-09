@@ -37,6 +37,7 @@ Route::get('login', function() {
     return view('login');
 });
 
+// create a new user
 Route::get('newUser', function()
 {
     User::create([
@@ -46,7 +47,6 @@ Route::get('newUser', function()
 
     return 'User created';
 });
-
 
 Route::controllers([
     '/' => 'Auth\AuthController',

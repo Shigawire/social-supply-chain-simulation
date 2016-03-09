@@ -75,20 +75,6 @@ return [
             'schema'   => 'public',
         ],
 
-        'mysql-tunnel' => [
-            'driver'    => 'mysql',
-            'host'      => 'social-sim.mysql.eu2.frbit.com',
-            'port'      => '3306',
-            'database'  => 'social-sim',
-            'username'  => 'social-sim',
-            // don't save the password with your code
-            'password'  => env('DB_PASSWORD', ''),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
-
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
             'host'     => env('DB_HOST', 'localhost'),

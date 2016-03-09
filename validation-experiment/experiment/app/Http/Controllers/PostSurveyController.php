@@ -16,15 +16,30 @@ use App\Umsatz;
 use Illuminate\Support\Facades\Redirect;
 use App\Helpers\General;
 
+
+/*
+ * This controller contains all
+ * post request of the survey
+ */
 class PostSurveyController extends Controller
 {
+    /*
+     * Protect all functionality of this
+     * controller against users that are
+     * not logged in
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /*
+     * Process the beginning of the survey and
+     * save the user's entered name
+     */
     public function postSurvey(Request $request)
     {
+        // Validation for user input
         $this->validate($request, [
             'name' => 'required|min:2|max:16|unique:surveys,name'
         ], [
@@ -34,6 +49,7 @@ class PostSurveyController extends Controller
             'name.unique' => 'Der Name ist bereits vergeben'
         ]);
 
+        // Store initial data to database using the Survey Model
         $survey = Survey::Create([
             'name' => $request->input('name'),
             'current_step' => 1,
@@ -43,14 +59,22 @@ class PostSurveyController extends Controller
 
         $request->session()->put('survey', $survey);
 
+        // Redirect to the first Week 1 of the experiment
         return redirect()->action('GetSurveyController@getWeek1');
     }
 
+    /*
+     * The first week has (still) its own controller
+     * because it is different to upcoming weeks
+     * - no back orders
+     * - no shipments coming in
+     */
     public function processWeek1(Request $request)
     {
         // 1. Get all relevant data
         $user_session = $request->session()->get('survey');
         $bestellmenge_week1 = $request->input('bestellmenge_week1');
+        // Get all Suppliers for the current week from the database
         $selected_supplier = Supplier::where('id', '=', $request->input('gewaehlter_lieferant_week1'))->first();
         $bisheriger_lagerbestand = $user_session->lagerbestand_week0;
 
@@ -63,41 +87,42 @@ class PostSurveyController extends Controller
             'bestellmenge_week1.required' => 'Bitte Bestellmenge angeben',
         ]);
 
-        // 3. Lieferung erstellen
+        // 3. Create shipment if something has been ordered
         if ($bestellmenge_week1 > 0)
         {
+            // Create shipment with helper class
             General::create_lieferung($selected_supplier, $user_session, $bestellmenge_week1, $request);
         }
 
-        // 4. Bestellkosten berechnen
+        // 4. Calculate order cost
         $bestellkosten = $bestellmenge_week1 * $selected_supplier->preis;
 
-        // 5. Prüfen, ob Lieferungen angekommen sind
+        // 5. Check, whether shipments of previous orders have arrived
         $erhaltene_menge = General::check_lieferungen($user_session->id);
 
-        // 6. Lagerstand aktualieren
+        // 6. Refresh inventory level
         $neuer_lagerbestand = $bisheriger_lagerbestand + $erhaltene_menge;
 
-        // 7. Versuchen neue Nachfrage zu erfüllen
+        // 7. Try to fulfill demand
         $back_order_menge = 0;
         $verkaufte_menge = 0;
         $umsatz = 0;
+        // fulfill demand using helper class method
         $results = General::fulfill_demand($neuer_lagerbestand, $user_session);
         $verkaufte_menge += $results[0];
         $neuer_lagerbestand = $results[1];
         $umsatz += $results[2];
         $back_order_menge = $results[3];
 
-        // 8. Lagerkosten berechnen
+        // 8. Calculate holding costs
         $lagerkosten = $neuer_lagerbestand * 10;
 
-        // 9. Ergebnis berechnen
+        // 9. Calculate earnings
         $ergebnis = $umsatz - $bestellkosten;
         $bisheriger_kontostand = $user_session->kontostand_week0;
         $neuer_kontostand = $bisheriger_kontostand + $ergebnis;
 
-        // 10. Daten des Teilnehmers aktualisieren
-
+        // 10. Refresh data of the user for the database
         $request->session()->get('survey')->update([
             'current_step' => 2,
             'kontostand_week1' => $neuer_kontostand,
@@ -113,16 +138,19 @@ class PostSurveyController extends Controller
             'back_order_kosten_week1' => 0,
         ]);
 
-        // 11. Verbleibende Zeiten aller Lieferungen aktualisieren
+        // 11. Refresh remaining delivery time of shipments
         General::lieferzeit_verringern($user_session);
 
-        // 12. Back_orders aktualisieren (verlieren an Wert)
+        // 12. Refresh remaining back orders (they lose value=)
         General::back_orders($user_session);
 
-        // 13. Zur nächsten Woche weiterleiten
+        // 13. Redirect to the next week
         return redirect()->action('GetSurveyController@getWeekX');
     }
 
+    /*
+     * This method processes week 2 to week 17
+     */
     public function processWeekX(Request $request)
     {
         // 1. Get all relevant data
@@ -231,6 +259,9 @@ class PostSurveyController extends Controller
         return redirect()->action('GetSurveyController@getWeekX');
     }
 
+    /*
+     * This method processes week 19 to week 30
+     */
     public function processWeekX2(Request $request)
     {
         // 1. Get all relevant data
@@ -338,12 +369,16 @@ class PostSurveyController extends Controller
         return redirect()->action('GetSurveyController@getWeekX2');
     }
 
+    /*
+     * Process evaluations of shipments
+     */
     public function postBewertung(Request $request)
     {
         $user_session = $request->session()->get('survey');
         $current_step = $user_session->current_step;
         $lieferungen = Lieferung::where('besteller', '=', $user_session->id)->where('verbl_lieferzeit', '=', 0)->where('gelieferte_menge', '>', 0)->get();
 
+        // validate all shipments that have arrived
         foreach($lieferungen as $lieferung)
         {
             $this->validate($request, [
@@ -366,6 +401,7 @@ class PostSurveyController extends Controller
             ]);
         }
 
+        // update all shipments that have arrived
         foreach($lieferungen as $lieferung)
         {
             $quality_differenz = $lieferung->quality_bewertung - $request->input('quality_bewertung'.$lieferung->id);
