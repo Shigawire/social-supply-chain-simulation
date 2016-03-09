@@ -14,14 +14,15 @@ import artefacts.Profile;
 
 /**
 * This class represents the manufacturer. The manufacturer
-* does not order, but produces. He has no trust agent (?).
+* does not order, but produces. He has no trust agent as he doesn't need one.
 *
 * @author  PS Development Team
 * @since   2015-11-30
 */
 public class Manufacturer extends SupplyChainMember implements SellingActor
 {
-	private int subtractionByTrust = 0; // for the subtraction from the order caused by knowing he will not order at me
+	// for the subtraction from the order caused by knowing he will not order at me
+	private int subtractionByTrust = 0; 
 
 	private int nextDemand;
 
@@ -30,9 +31,11 @@ public class Manufacturer extends SupplyChainMember implements SellingActor
 
 	private DeliveryAgent deliveryAgent;
 	private ProductionAgent productionAgent;
-
+	
+	// a list of all purchasers and their submitted substractionByTrust value
 	private Map<OrderAgent, Integer> buyer = new HashMap<OrderAgent, Integer>();
 
+	
 	private int lastOrderUpToLevel = -1;
 
 	private int lastDemand = 0;
@@ -75,7 +78,6 @@ public class Manufacturer extends SupplyChainMember implements SellingActor
 	/**
 	   * This method receives goods at the beginning of each tick
 	   *
-	   * @return Nothing.
 	   */
 	public void receiveShipments()
 	{
@@ -116,67 +118,6 @@ public class Manufacturer extends SupplyChainMember implements SellingActor
 		buyer.remove(orderer);
 		buyer.put(orderer, newValue);
 	}
-
-
-
-
-	  /*
-    public void produce()
-    {
-        // 1. need in the next tick
-        // 2. whats about my inventory
-        // 3. order difference: +shortage-the value I do not need because of information sharing
-
-        // 1.
-        nextDemand = this.forecastAgent.calculateDemand(this.deliveryAgent.getAllOrders());
-        lastOrderUpToLevel = (lastOrderUpToLevel != -1) ? nextDemand : lastOrderUpToLevel;
-        int orderUpToLevel = lastOrderUpToLevel + 1*(nextDemand - lastDemand);
-
-        desiredInventoryLevel = orderUpToLevel;
-        lastDemand = nextDemand;
-        lastOrderUpToLevel = orderUpToLevel;
-        // 2.
-
-        currentOutgoingInventoryLevel = this.inventoryAgent.getOutgoingInventoryLevel();
-
-        //if current bigger than desiredlevel return
-        if(currentOutgoingInventoryLevel > desiredInventoryLevel){
-
-            return;
-        }
-
-        // 3.
-        TrustSetter s = TrustSetter.getInstance();
-
-
-
-
-        if(s.getInformationSharingIntegrated()) {
-            productionQuantity = nextDemand - currentOutgoingInventoryLevel+ deliveryAgent.getShortage()-subtractionByTrust;
-        }
-        else
-        {
-        	productionQuantity = nextDemand - currentOutgoingInventoryLevel+ deliveryAgent.getShortage();
-        }
-
-
-
-        subtractionByTrust=0;
-
-        // If the inventory level is sufficient for the next demand,
-        // do not order
-        if (productionQuantity < 0)
-        {
-            //a order with quantity null has to be made for the process in the orderAgent
-            // (realize the order of the last tick)
-        	productionQuantity = 0;
-
-        }
-
-            this.productionAgent.produce(productionQuantity);
-    }
-    */
-
 
 
 	public void produce()

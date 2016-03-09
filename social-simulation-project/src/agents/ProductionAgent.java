@@ -12,7 +12,7 @@ import actors.SupplyChainMember;
 import actors.Wholesaler;
 import artefacts.ProductionBatch;
 
-public class ProductionAgent extends Agent
+public class ProductionAgent
 {
 	
 	private int machineQuantity;

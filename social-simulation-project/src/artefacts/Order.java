@@ -87,7 +87,7 @@ public class Order
 	}
 	
 	// a part or the whole delivery
-	public void partDelivery(int delivery)
+	public void fulfill(int delivery)
 	{	
 		this.partDelivery = delivery;
 		OrderObserver.giveObserver().subAmount(delivery);
