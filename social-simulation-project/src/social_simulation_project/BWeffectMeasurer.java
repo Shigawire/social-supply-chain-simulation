@@ -17,7 +17,7 @@ public class BWeffectMeasurer
 	Retailer r;
 	Wholesaler w;
 	Distributor d;
-	// Singleton;
+	// Singleton, therefore it need this static initalization
 	private static BWeffectMeasurer measurer = new BWeffectMeasurer();
 	// list in which for every for every tier the whole value of orders this tier made is saved
 	// + one integer to save the sum of one tick
@@ -120,7 +120,6 @@ public class BWeffectMeasurer
 		measurer.setTickDistributor(0);
 		measurer.setTickManufacturer(0);
 		
-		// System.out.println();
 		// compute the variances
 		 double customerVar = variance(measurer.getCustomer());
 		 double retailerVar = variance(measurer.getRetailer());
@@ -129,13 +128,9 @@ public class BWeffectMeasurer
 		 double manufacturerVar = variance(measurer.getManufacturer());
 		 //bullwhip meaurements:
 		 retailerValue = retailerVar/customerVar;
-		 //System.out.println(retailerVar/customerVar);
 		 wholesalerValue = wholesalerVar/customerVar;
-		 //System.out.println(wholesalerVar/customerVar);
 		 distributorValue = distributorVar/customerVar;
-		 //System.out.println(distributorVar/customerVar);
 		 manufacturerValue = manufacturerVar/customerVar;
-		 //System.out.println(manufacturerVar/customerVar);
 	}
 	
 	private ArrayList<Integer> getManufacturer() {
@@ -154,20 +149,19 @@ public class BWeffectMeasurer
 			mid += part;
 		}
 
-		// System.out.println("mid"+mid);
 		mid = mid / toCompute.size();
 		for (Integer part : toCompute)
 		{
 			partComputation = part - mid;
 			variance += partComputation * partComputation;
 		}
-		// System.out.println("variance"+variance);
 		return variance;
 	}
 	
 	// update the with new order
 	public void update(Order order) 
 	{
+		
 		if (order.getOrderAgent().getParent().getClass().equals(c.getClass())) {
 			measurer.updateCustomer(order.getQuantity());
 		}

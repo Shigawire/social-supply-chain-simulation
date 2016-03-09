@@ -21,24 +21,25 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 */
 public class Distributor extends BuySale 
 {
-	public Distributor(ArrayList<Sale> sailorList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile p) 
+	//construct a Distributor
+	public Distributor(ArrayList<SellingActor> sellerList, int incomingInventoryLevel, int outgoingInventoryLevel, int price, Profile profile) 
 	{
-		super(sailorList, incomingInventoryLevel, outgoingInventoryLevel,p);
+		super(sellerList, incomingInventoryLevel, outgoingInventoryLevel, profile);
 		
 		this.price = price;
-		
 		this.deliveryAgent = new DeliveryAgent(price, this, 2, 2);
-		this.productionAgent = new ProductionAgent(1, 1, this.inventoryAgent);
+		this.productionAgent = new ProductionAgent(1, 1, this.inventoryAgent, this);
 	}
 	
 	// method for every run, start: start tick, priority: which priority it has in the simulation(higher --> better priority)
 	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void run() 
 	{
-		// 1. harvest
-		this.harvest();		
-		// set the inventory agents desired level(doubled because of prouction process)
-		inventoryAgent.desiredLevel(lying, desired());
+		//move incoming items into the outgoing invetory
+		this.productionAgent.transferInventories();		
+		
+		// set the inventory agents desired level(doubled because of production process)
+		inventoryAgent.desiredLevel(isLying, desired());
 		// 2. processShipments() receive shipments
 		this.receiveShipments();
 		// clear receivedShipments;
@@ -55,13 +56,9 @@ public class Distributor extends BuySale
 		orderAgent.trustWhereIOrder();
 	}
 	
-	private void harvest()
-	{
-		this.productionAgent.harvest();
-	}
 	
 	public void produce()
 	{
-		this.productionAgent.produce1();
+		this.productionAgent.produce();
 	}	
 }

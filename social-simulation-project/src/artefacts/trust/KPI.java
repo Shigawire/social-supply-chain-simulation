@@ -2,14 +2,21 @@ package artefacts.trust;
 
 import java.util.Map;
 
-import repast.simphony.random.RandomHelper;
 import actors.SupplyChainMember;
 import artefacts.Order;
-
+/**
+ * This class represents a KPI for every shipment that is being assessed by the trust agent and used for the calculation of a trust value.
+ */
 public class KPI {
 	
 	private Order shipment;
 	private Trust trust;
+	
+	public KPI(Order shipment, Trust trust)
+	{
+		this.shipment = shipment;
+		this.trust = trust;
+	}
 	
 	// Calculate the average distance of two supply chain Member profiles, i.e. their dimension-ratings in order to simulation shared values.
 	private double compareSharedValues(SupplyChainMember s1, SupplyChainMember s2) 
@@ -65,11 +72,6 @@ public class KPI {
 		}
 	}
 	
-	public KPI(Order shipment, Trust trust)
-	{
-		this.shipment = shipment;
-		this.trust = trust;
-	}
 	
 	// Return the KPI between 0..1 for a specific trust dimension
 	public double getKPIForDimension(DimensionType dimensionType) 
@@ -104,9 +106,9 @@ public class KPI {
 				
 				//and update the competence KPI accordingly.
 				if (direction) {
-					trust.setCurrentCompetenceValue(competenceValue + 0.005);
+					trust.setCurrentCompetenceValue(competenceValue + 0.1);
 				} else {
-					trust.setCurrentCompetenceValue(competenceValue - 0.035);
+					trust.setCurrentCompetenceValue(competenceValue - 0.1);
 				}
 				
 				// return the new competence value

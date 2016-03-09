@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
 import social_simulation_project.OrderObserver;
-import actors.Sale;
+import actors.SellingActor;
 import actors.SupplyChainMember;
 import artefacts.Order;
 
@@ -14,25 +14,42 @@ import artefacts.Order;
 * distributors and the manufacturer). 
 * Delivery agents communicate with
 * - the user's inventory agent
-* - the callee's order agent
-*
-* @author  PS Development Team
-* @since   2015-11-30
+* - the orderers's order agent
+
 */
 public class DeliveryAgent 
 {
-	// price for the goods
+	// price for the offered goods
 	private int price;
-	private int currentOutgoingInventoryLevel;
-	private double failurePercentage;
-	private ArrayList<Order> receivedOrders; // list for all received orders
-	private ArrayList<Order> everReceivedOrders; // all orders ever received
-	private ArrayList<Order> openOrders; // list to transfer open orders
-	private int shortage = 0; // gives the shortage of the last tick, will be used for the forecast
-	private SupplyChainMember parent; // to which SupplyChainMember it belongs
 	
+	private int currentOutgoingInventoryLevel;
+	
+	// list for all received orders
+	// this list is filled at the beginning of each tick and subsequently processed - basically this is the "inbox".
+	private ArrayList<Order> receivedOrders; 
+	
+	// all orders ever received - not the same as receivedOrders!
+	private ArrayList<Order> everReceivedOrders; 
+	
+	// list to transfer open orders
+	private ArrayList<Order> openOrders; 
+	
+	 // gives the shortage of the last tick, will be used for the forecast
+	private int shortage = 0;
+	
+	// to which SupplyChainMember it belongs
+	private SupplyChainMember parent; 
+	
+	//the mean for a failing shipment
 	private double failureMean;
+	
+	//the deviation for the failing shipment
 	private double failureDeviation;
+	
+	//How many items are necessary for a shipment? 
+	//Just if the overall order quantity is larger - obviously
+	//Basically we just don't want to ship out a single item if there's partial delivery outstanding
+	private int minimumShipmentQuantity = 8;
 	
 	public DeliveryAgent(int price, SupplyChainMember parent, int mean, int deviation) 
 	{
@@ -48,17 +65,23 @@ public class DeliveryAgent
 	/**
 	   * This method receives orders.
 	   * 
-	   * @param order Order of the callee with details about amount etc.
-	   * @return Nothing.
+	   * @param order Order of the orderer with details about amount etc.
 	   */
 	public void receiveOrder(Order order) 
 	{
+		//assign myself to the received order as the "handling" delivery agent
 		order.setDeliveryAgent(this);
+		
+		//push the order to the receivedOrders List
 		receivedOrders.add(order);
+		
+		//and put at record in our eternal history
 		everReceivedOrders.add(order);
-		parent.updateList(order.getOrderAgent(), order.getQuantity());
+		
+		//push the order to the supply chain members client list
+		parent.updateClientList(order.getOrderAgent(), order.getQuantity());
 	}
-	//? wer auch immer das geschrieben hat h� :D
+	
 	/**
 	   * This method receives goods at the beginning of each tick
 	   * 
@@ -76,39 +99,58 @@ public class DeliveryAgent
 			if (order.getProcessed()) {
 				
 			}
-			// if the needed rest quantity of the order is higher then the inventory and the need is bigger then 8(he will not deliver just 7 goods)
-			else if (order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel && currentOutgoingInventoryLevel > 8) {
+			// if the needed rest quantity of the order is higher then the inventory and the need is bigger than the mimimumShipmentQuantity (8) (he will not deliver just 7 goods)
+			
+			else if (order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel && currentOutgoingInventoryLevel > minimumShipmentQuantity) {
 				// if the needed rest quantity of the order is higher then the inventory
 				// part of the order will be delivered
-				order.partDelivery(currentOutgoingInventoryLevel);
+				
+				order.fulfill(currentOutgoingInventoryLevel);
+				
+				//calculate a failure percentage for the specific order - i.e. how many items are DOA
 				order.setfailurePercentage((failureMean + RandomHelper.nextDoubleFromTo(+failureDeviation, -failureDeviation))/100);
+				
 				openOrders.add(order);
+				
 				// shortage will be increased by the higher need
 				shortage =+ order.getUnfullfilledQuantity();
+				
 				// what was delivered will be taken out of the inventory
 				inventoryAgent.reduceOutgoingInventoryLevel(currentOutgoingInventoryLevel);
+				
+				//push the order as shipment to the inbox of the customers order Agent
 				order.getOrderAgent().receiveShipment(order,this);
+				
+				//set the inventory to 0 as we could not fulfill the order entire.
 				currentOutgoingInventoryLevel = 0;
 			}
-			// if <=8 no delivery will be made
+			// if <= MimumShipmentQuantity (8) no delivery will be made
 			else if(order.getUnfullfilledQuantity() > currentOutgoingInventoryLevel) {
 				shortage =+ order.getUnfullfilledQuantity();
 				openOrders.add(order);
 			}
-			// if the order can be completly fullfilled, it will be
+			// if the order can be completely fullfilled, it will be
 			else {
+				
 				// just a buffer of the unfullfilled
 				int buffer = order.getUnfullfilledQuantity();
+				
+				//mark the order as fully processed
 				order.setProcessed(true);
-				order.partDelivery(buffer);
+				
+				//fulfill the order completely
+				order.fulfill(buffer);
+				
 				// sub the amount because the order is not open anymore
 				order.getOrderAgent().receiveShipment(order,this);
-				// System.out.println(order.getQuantity());
+				
+				//reduce outgoing inventory as the order has been shipped
 				inventoryAgent.reduceOutgoingInventoryLevel(buffer);
+				
 				currentOutgoingInventoryLevel = inventoryAgent.getOutgoingInventoryLevel();
 			}
 		}
-		// the received list must be deleted completly and filled with the openOrder list
+		// the received list must be deleted completely and filled with the openOrder list
 		// otherwise RePast has a problem
 		receivedOrders.clear();
 		receivedOrders.addAll(openOrders);
@@ -137,7 +179,6 @@ public class DeliveryAgent
 	
 	public double getExpectedDeliveryTime() 
 	{
-		//TODO implement?
 		return 2;
 	}
 	
