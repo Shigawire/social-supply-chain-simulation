@@ -49,6 +49,7 @@ public class ProductionAgent
 	// 1. figures out how many machines to run, which defines the production quantity
 	// 2. if enough rawmaterial is in the inventory, the production starts
 	// 3. the rawmaterial gets ordered
+	
 	public void produce(int... nextDemand)
 	{ 
 		//Depending on the parent class, the production class is a bit different.
@@ -139,7 +140,7 @@ public class ProductionAgent
 		return i;
 	}
 	
-	//calculates how much Rawmaterial the manufacturer has to order to produce what he could not produce yet in nect tick
+	//calculates how much Rawmaterial the manufacturer has to order to produce what he could not produce yet in next tick
 	public int whatRawMaterialIsNeeded(){
 		int amount=0;
 		for(int i :waitingForProduction)

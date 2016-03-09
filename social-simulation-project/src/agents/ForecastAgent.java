@@ -24,12 +24,16 @@ public class ForecastAgent
 {
 	// List with all previous orders
 	private ArrayList<Order> orderHistory;	
+	
 	// DataSet used to calculate next demand, DataSets get "pushed" into the ForecastingModel
 	private DataSet observedData;
+	
 	// empty Datapoint to add Observations into DataSet
     private DataPoint dp;
+    
     // abstract Model later specified
     private AbstractForecastingModel fcModel;
+    
     // number of last periods to consider
     private int reviewPeriod;  
     private double b;
@@ -70,7 +74,6 @@ public class ForecastAgent
 			orderHistory.add(everReceivedOrders.get(i));
 		}
 		
-		// System.out.println(orderHistory.size());
 		this.observedData = new DataSet();
 		createDataset();
 		int output = getForecast();
@@ -116,7 +119,6 @@ public class ForecastAgent
     // forecasts amount for next period:
     public int getForecast()
     {  
-    	// System.out.println(observedData.toString());
     	if (observedData.size() == 0) return lastForecast;
     	double b = 0; // variable for output	
 
@@ -137,7 +139,6 @@ public class ForecastAgent
 			DataPoint dp = (DataPoint)it.next();
 			b = dp.getDependentValue(); // write forecast into output variable
 		}
-		// System.out.println(b);
 		if (b >= 0)return (int)b;
 		else return 0;
     }
@@ -149,10 +150,8 @@ public class ForecastAgent
     
 	public int customerDemand() 
 	{
-		//int dem = RandomHelper.nextIntFromTo(10, 25);
 		Normal normaldistribution= RandomHelper.createNormal(10,1);
 		int dem= normaldistribution.nextInt();
-		// System.out.println(dem);
 		return dem;
 	}
 	

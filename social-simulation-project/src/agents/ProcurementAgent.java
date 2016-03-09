@@ -51,7 +51,6 @@ public class ProcurementAgent
 		{
 			// procurement asks trust only at a dummy
 			values[0][i] = trustAgent.getTrustValue(deliveryAgents.get(i));
-			// System.out.println("Current Trust Value: " + values[0][i]);
 			values[1][i] = 1;
 			values[2][i] = deliveryAgents.get(i).getPrice();
 		}
@@ -83,15 +82,11 @@ public class ProcurementAgent
 			fillBest();
 			double highest = 0;
 			double moment;
-			int highestPoint = 0; // mit Index benennen
-//			System.out.println("---------Supplier Selection----------");
+			int highestPoint = 0; // start with index
 			for (int i = 0; i < deliveryAgents.size(); i++)
 			{
 				// calculation according to concept team
 				moment = values[0][i] / bestPossibleDimensionValues[0] * trustRelevance + bestPossibleDimensionValues[1] / values[1][i] * averageDeliveryTimeRelevance + bestPossibleDimensionValues[2] / values[2][i] * priceRelevance;
-//				System.out.println("Delivery Agent: " + deliveryAgents.get(i));
-//				System.out.println("Dimensions: [Trust: " + values[0][i] + "; Average Delivery Time: " + values[1][i] + "; Price: " + values[2][i] + "]");
-//				System.out.println("Moment: " + moment);
 				boolean has_many_open_orders= false;
 				if(numberOfOpenOrders.containsKey(deliveryAgents.get(i))){
 					if(numberOfOpenOrders.get(deliveryAgents.get(i)) > 4){
@@ -105,13 +100,11 @@ public class ProcurementAgent
 				}
 				
 				//if there are already a lot of open orders with this supplier we don't really want to order at him
-				//System.out.println("Number of open orders for selected supplier (" + deliveryAgents.get(i) + "): "+ numberOfOpenOrders.get(deliveryAgents.get(i)));
 				//if (numberOfOpenOrders.get(deliveryAgents.get(i)) > 3) {
 					
 				//}
 						
 			}
-//			System.out.println("Most suitable: " + deliveryAgents.get(highestPoint));
 			return deliveryAgents.get(highestPoint);
 	}
 	// method for choosing the second best supplier
@@ -149,20 +142,20 @@ public class ProcurementAgent
 		
 	}
 	
+	//updated after every order
 	private void updateTrust() 
 	{
-		TrustSetter s = TrustSetter.getInstance();
+		TrustSetter trustOracle = TrustSetter.getInstance();
 		for (int i = 0; i < deliveryAgents.size(); i++)
 		{
-			// procurement fragt beim trust nur dummy
-			if (s.getTrustIntegrated()){
+			//if trust assessment is enabled
+			if (trustOracle.getTrustIntegrated()){
 				values[0][i] = trustAgent.getTrustValue(deliveryAgents.get(i));
 			}
 			else{
 				values[0][i]=0;
 			}
 			
-			// System.out.println("Current Trust Value: " + values[0][i]);
 			values[2][i] = deliveryAgents.get(i).getPrice();
 		}
 	}
