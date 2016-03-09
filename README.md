@@ -2,7 +2,7 @@
 
 ## Simulation:
 
-```git clone``` this repository and import the ```social-supply-chain-simulation``` folder to RePast.
+```git clone``` this repository and import the ```social-simulation-project``` folder to RePast.
 
 ## Validation experiment
 
